@@ -28,11 +28,11 @@ public class SetZero extends Command{
 
     @Override
     public void execute(){
-        algae.Algae_Zero();
+        // algae.Algae_Zero();
         arm.Arm_Zero();
-        candle.climb_animation();
-        climber.Climb_Zero();
-        coral.Coral_Stop();
+        // candle.climb_animation();
+        // climber.Climb_Zero();
+        // coral.Coral_Stoep();
         elevator.ELE_Floor();
     }
 }

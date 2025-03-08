@@ -56,7 +56,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
-    private final SwerveRequest.ApplyChassisSpeeds autoRequest = new SwerveRequest.ApplyChassisSpeeds();
+    private final SwerveRequest.ApplyRobotSpeeds autoRequest = new SwerveRequest.ApplyRobotSpeeds();
 
     private void configurePathPlanner() {
         try {
@@ -65,8 +65,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             this::resetPose,  // Consumer for seeding pose against auto
             () -> this.getState().Speeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
-            new PPHolonomicDriveController(new PIDConstants(10, 0, 0),
-                                            new PIDConstants(10, 0, 0)),
+            new PPHolonomicDriveController(new PIDConstants(5.8, 5, 0.05, 20),
+                                            new PIDConstants(4, 0, 0, 0)),
             RobotConfig.fromGUISettings(),
             // Boolean supplier that controls when the path will be mirrored for the red alliance
             // This will flip the path being followed to the red side of the field during auto only.
@@ -86,6 +86,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Command getAutoPath(String pathName) {
         return new PathPlannerAuto(pathName);
+    }
+
+    public void SetPigeonZero(){
+        resetRotation(new Rotation2d(0));
     }
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
@@ -168,6 +172,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        configurePathPlanner();
     }
 
     /**

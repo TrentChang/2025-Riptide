@@ -20,8 +20,8 @@ public class RL1 extends Command {
 
     @Override
     public void execute(){
-        elevator.ELE_RL2();
-        arm.Arm_RL2();
+        elevator.ELE_RL1();
+        arm.Arm_RL1();
 
         // if(coral.CoarlDetected()){
         //     arm.Arm_Station();

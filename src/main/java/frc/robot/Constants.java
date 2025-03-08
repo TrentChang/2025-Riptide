@@ -102,9 +102,9 @@ public final class Constants{
         // Arm Config 
         public static final boolean Arm_Inverted = false;
 
-        public static final double Arm_Zero = 0;
+        public static final double Arm_Zero = 0.08;
         public static final double Arm_StartUp = 0;
-        public static final double Arm_Station = 0.2;
+        public static final double Arm_Station = 0.34;
         public static final double Arm_RL1 = 0.23;
         public static final double Arm_RL2 = 0.24;
         public static final double Arm_RL3 = 0.18;
@@ -113,11 +113,17 @@ public final class Constants{
         public static final double MAX_ACCEL = 500;
         public static final double MAX_VELOCITY = 200;
         
-        // Arm PIDF
-        public static final double Arm_P = 0.9;
-        public static final double Arm_I = 0;
-        public static final double Arm_D = 0;
-        public static final double Arm_F = 0;        
+        // Arm UP PIDF
+        public static final double UP_Arm_P = 1;
+        public static final double UP_Arm_I = 0;
+        public static final double UP_Arm_D = 0;
+        public static final double UP_Arm_F = 0;   
+        
+        // Arm DOWN PIDF
+        public static final double DOWN_Arm_P = 1;
+        public static final double DOWN_Arm_I = 0;
+        public static final double DOWN_Arm_D = 0;
+        public static final double DOWN_Arm_F = 0;   
     }
 
     // Climber Constants
@@ -155,8 +161,8 @@ public final class Constants{
         public static final boolean LeftMotor_Inverted = true;
         public static final boolean RightMotor_Inverted = false;
 
-        public static final double floor = 0;
-        public static final double L1 = 0;
+        public static final double floor = -1;
+        public static final double L1 = -1;
         public static final double L2 = -15;
         public static final double L3 = -26;
         public static final double L4 = -54;

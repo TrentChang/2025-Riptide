@@ -63,7 +63,7 @@ public class Algae extends SubsystemBase {
     }
 
     public void Algae_back(){
-        Algae_Ctrl.set(0.8);
+        Algae_Ctrl.set(0.9);
     }
 
     public void Algae_Stop(){
@@ -71,11 +71,11 @@ public class Algae extends SubsystemBase {
     }
 
     public void suck(){
-        Algae_Roller.set(0.6);
+        Algae_Roller.set(1);
     }
 
     public void shoot(){
-        Algae_Roller.set(-0.8);
+        Algae_Roller.set(-0.5);
     }
 
     public void Stop(){

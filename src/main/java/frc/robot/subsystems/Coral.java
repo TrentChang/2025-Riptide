@@ -46,6 +46,10 @@ public class Coral extends SubsystemBase{
         Coral_Motor.set(0.5);
     }
 
+    public void CoralLShoot(){
+        Coral_Motor.set(0.3);
+    }
+
     public void Coral_Stop(){
         Coral_Motor.set(0);
     }

@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
+import com.ctre.phoenix6.configs.Slot1Configs;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -36,17 +37,23 @@ public class Arm extends SubsystemBase{
                 .withMotionMagicCruiseVelocity(ArmConstants.MAX_VELOCITY));
         
         // Arm PIDConfig
-        Slot0Configs Arm_PIDConfig = new Slot0Configs();
-        Arm_PIDConfig.kP = ArmConstants.Arm_P;
-        Arm_PIDConfig.kI = ArmConstants.Arm_I;
-        Arm_PIDConfig.kD = ArmConstants.Arm_D;
-        Arm_PIDConfig.kV = ArmConstants.Arm_F;
-        Arm_Motor_Config.apply(Arm_PIDConfig);
+        Slot0Configs DOWN_Arm_PIDConfig = new Slot0Configs();
+        DOWN_Arm_PIDConfig.kP = ArmConstants.DOWN_Arm_P;
+        DOWN_Arm_PIDConfig.kI = ArmConstants.DOWN_Arm_I;
+        DOWN_Arm_PIDConfig.kD = ArmConstants.DOWN_Arm_D;
+        DOWN_Arm_PIDConfig.kV = ArmConstants.DOWN_Arm_F;
+        Arm_Motor_Config.apply(DOWN_Arm_PIDConfig);
+
+        Slot1Configs UP_Arm_PIDConfigs = new Slot1Configs();
+        UP_Arm_PIDConfigs.kP = ArmConstants.UP_Arm_P;
+        UP_Arm_PIDConfigs.kI = ArmConstants.UP_Arm_I;
+        UP_Arm_PIDConfigs.kD = ArmConstants.UP_Arm_D;
+        UP_Arm_PIDConfigs.kV = ArmConstants.UP_Arm_F;        
+        Arm_Motor_Config.apply(UP_Arm_PIDConfigs);
     }
 
     public double getArmPos(){
         return Arm_Encoder.getAbsolutePosition().getValueAsDouble();
-        // return Arm_Motor.getPosition().getValueAsDouble();
     }
 
     // Arm 
@@ -79,13 +86,15 @@ public class Arm extends SubsystemBase{
     }
 
     public void Arm_DOWN(){
-        double pos = Arm_Encoder.getPosition().getValueAsDouble();
-        Arm_Motor.setControl(new MotionMagicDutyCycle(pos-0.05));
+        // double pos = Arm_Encoder.getPosition().getValueAsDouble();
+        // Arm_Motor.setControl(new MotionMagicDutyCycle(pos-0.05));
+        Arm_Motor.set(-0.2);
     }
 
     public void Arm_UP(){
-        double pos = Arm_Encoder.getPosition().getValueAsDouble();
-        Arm_Motor.setControl(new MotionMagicDutyCycle(pos+0.05));
+        // double pos = Arm_Encoder.getPosition().getValueAsDouble();
+        // Arm_Motor.setControl(new MotionMagicDutyCycle(pos+0.05));
+        Arm_Motor.set(0.2);
     }
 
     public void Arm_Stop(){

@@ -98,14 +98,18 @@ public class Elevator extends SubsystemBase{
     }
 
     public void ELE_Up(){
-        double pos = Left_Motor.getPosition().getValueAsDouble();
-        Left_Motor.setControl(new MotionMagicDutyCycle(pos-1));
-        Right_Motor.setControl(new MotionMagicDutyCycle(pos-1));
+        // double pos = Left_Motor.getPosition().getValueAsDouble();
+        // Left_Motor.setControl(new MotionMagicDutyCycle(pos-1));
+        // Right_Motor.setControl(new MotionMagicDutyCycle(pos-1));
+        Left_Motor.set(-0.6);
+        Right_Motor.set(-0.6);
     }
     public void ELE_Down(){
-        double pos = Left_Motor.getPosition().getValueAsDouble();
-        Left_Motor.setControl(new MotionMagicDutyCycle(pos+1));
-        Right_Motor.setControl(new MotionMagicDutyCycle(pos+1));
+    //     double pos = Left_Motor.getPosition().getValueAsDouble();
+    //     Left_Motor.setControl(new MotionMagicDutyCycle(pos+1));
+    //     Right_Motor.setControl(new MotionMagicDutyCycle(pos+1));
+        Left_Motor.set(0.4);
+        Right_Motor.set(0.4);
     }
 
     public void ELE_Stop(){
