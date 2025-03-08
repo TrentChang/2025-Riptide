@@ -84,26 +84,29 @@ public class RobotContainer {
         configureBindings();
         Driver_ConfigureBindings();
         Assist_ConfigureBindings();
+        
+        NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
+        NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
+
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("auto", autoChooser);
 
-        NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
-        NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
+        
     }
 
     private void Driver_ConfigureBindings(){
 
-            new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(algae::Algae_out));
-            new JoystickButton(Driver_Ctrl, 2).whileTrue(new InstantCommand(algae::Algae_back)).onFalse(new InstantCommand(algae::Algae_Stop));
+            new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(algae::Algae_out, algae));
+            new JoystickButton(Driver_Ctrl, 2).whileTrue(new InstantCommand(algae::Algae_back, algae)).onFalse(new InstantCommand(algae::Algae_Stop,algae));
         
-            new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up)).onFalse(new InstantCommand(climber::Stop));
-            new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down)).onFalse(new InstantCommand(climber::Stop));
+            new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber)).onFalse(new InstantCommand(climber::Stop, climber));
+            new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber)).onFalse(new InstantCommand(climber::Stop, climber));
         
-            new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck)).onFalse(new InstantCommand(algae::Stop));
-            new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(algae::shoot)).onFalse(new InstantCommand(algae::Stop));
+            new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck, algae)).onFalse(new InstantCommand(algae::Stop, algae));
+            new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(algae::shoot, algae)).onFalse(new InstantCommand(algae::Stop, algae));
         
-            new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck)).onFalse(new InstantCommand(coral::Coral_Stop));
-            new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot)).onFalse(new InstantCommand(coral::Coral_Stop));
+            new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
+            new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
                             
             new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
             new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
@@ -112,23 +115,23 @@ public class RobotContainer {
         }
 
         private void Assist_ConfigureBindings(){
-        new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(climber::Climb));
+        new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(climber::Climb, climber));
         // new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(elevator::test)).onFalse(new InstantCommand(elevator::ELE_Stop));
-        new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up)).onFalse(new InstantCommand(climber::Stop));
-        new JoystickButton(Assist_Ctrl, 3).whileTrue(new InstantCommand(climber::Down)).onFalse(new InstantCommand(climber::Stop));
+        new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up, climber)).onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(Assist_Ctrl, 3).whileTrue(new InstantCommand(climber::Down, climber)).onFalse(new InstantCommand(climber::Stop, climber));
         
         new JoystickButton(Assist_Ctrl, 4).onTrue(CMD_SetZero);
     
         // new JoystickButton(Assist_Ctrl, 5).onTrue(suckCoral);
-        new JoystickButton(Assist_Ctrl, 5).onTrue(new InstantCommand(arm::Arm_Station));
-        new JoystickButton(Assist_Ctrl, 6).onTrue(new InstantCommand(drivetrain::SetPigeonZero));
-        new JoystickButton(Assist_Ctrl, 7).whileTrue(new InstantCommand(coral::CoralLShoot)).onFalse(new InstantCommand(coral::Coral_Stop));
+        new JoystickButton(Assist_Ctrl, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
+        new JoystickButton(Assist_Ctrl, 6).onTrue(new InstantCommand(drivetrain::SetPigeonZero, drivetrain));
+        new JoystickButton(Assist_Ctrl, 7).whileTrue(new InstantCommand(coral::L1CoralShoot, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
     
-        new POVButton(Assist_Ctrl, 0).whileTrue(new InstantCommand(elevator::ELE_Up)).onFalse(new InstantCommand(elevator::ELE_Stop));
-        new POVButton(Assist_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down)).onFalse(new InstantCommand(elevator::ELE_Stop));
+        new POVButton(Assist_Ctrl, 0).whileTrue(new InstantCommand(elevator::ELE_Up, elevator)).onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
+        new POVButton(Assist_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down, elevator)).onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
         new POVButton(Assist_Ctrl, 90).whileTrue(new
-         InstantCommand(arm::Arm_UP)).onFalse(new InstantCommand(arm::Arm_Stop));
-        new POVButton(Assist_Ctrl, 270).whileTrue(new InstantCommand(arm::Arm_DOWN)).onFalse(new InstantCommand(arm::Arm_Stop));
+         InstantCommand(arm::Arm_UP, arm)).onFalse(new InstantCommand(arm::Arm_Stop, arm));
+        new POVButton(Assist_Ctrl, 270).whileTrue(new InstantCommand(arm::Arm_DOWN, arm)).onFalse(new InstantCommand(arm::Arm_Stop, arm));
         // new POVButton(Assist_Ctrl, 0).whileTrue(new InstantCommand(elevator::ELE_Up));
         // new POVButton(Assist_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down));
         // new POVButton(Assist_Ctrl, 90).whileTrue(new InstantCommand(arm::Arm_UP));

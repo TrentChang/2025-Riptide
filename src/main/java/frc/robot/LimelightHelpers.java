@@ -1680,4 +1680,21 @@ public class LimelightHelpers {
     //                                     Utils.fpgaToCurrentTime(megatag.timestampSeconds));
     //     }
     // }
+
+      public static void tryUpdateVisionMeasurement(CommandSwerveDrivetrain swerve){
+        boolean doRejectUpdate = false;
+        SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
+        PoseEstimate megatag = getBotPoseEstimate_wpiBlue_MegaTag2("");
+
+        if(Math.abs((swerve.getAngularVelocity())) > 720 ){
+            doRejectUpdate = true;
+        }
+        if(megatag == null || megatag.tagCount == 0){
+            doRejectUpdate = true;
+        }
+        if(!doRejectUpdate){
+            swerve.setVisionMeasurementStdDevs(VecBuilder.fill(0.003, 0.003, 9999999));
+            swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
+        }
+    }
 }

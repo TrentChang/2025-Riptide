@@ -23,9 +23,10 @@ public class AutoShootCoral extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(coral, arm);
-    addCommands(new InstantCommand(()->System.out.println("test")));
+    // addRequirements(coral);
+    // addCommands(new InstantCommand(()->System.out.println("test")));
     addCommands(new InstantCommand(() -> arm.Arm_RL1(), arm));
-    // addCommands(new WaitCommand(1.5));
+    addCommands(new WaitCommand(1.5));
     addCommands(new InstantCommand(() -> coral.Coral_Shoot(), coral));
     addCommands(new WaitCommand(2));
     addCommands(new InstantCommand(() -> coral.Coral_Stop(), coral));

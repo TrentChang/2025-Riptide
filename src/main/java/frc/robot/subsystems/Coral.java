@@ -46,7 +46,7 @@ public class Coral extends SubsystemBase{
         Coral_Motor.set(0.5);
     }
 
-    public void CoralLShoot(){
+    public void L1CoralShoot(){
         Coral_Motor.set(0.3);
     }
 
@@ -58,12 +58,12 @@ public class Coral extends SubsystemBase{
     public void periodic(){
         // SmartDashboard.putBoolean("Algae_Detected", CoarlDetected());
 
-        if(Coral_Motor.getSupplyCurrent().getValueAsDouble() > 5){
-            getCoral = true;
-        }
-        else{
-            getCoral = false;
-        }
-        SmartDashboard.putBoolean("Get_Coral", getCoral);
+        // if(Coral_Motor.getSupplyCurrent().getValueAsDouble() > 5){
+        //     getCoral = true;
+        // }
+        // else{
+        //     getCoral = false;
+        // }
+        // SmartDashboard.putBoolean("Get_Coral", getCoral);
     }
 }
