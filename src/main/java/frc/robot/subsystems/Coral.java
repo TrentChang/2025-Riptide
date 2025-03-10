@@ -13,9 +13,9 @@ public class Coral extends SubsystemBase{
     // private final DigitalInput Coral_Detect = new DigitalInput(CoralConstants.Coral_Sensor_ID);
     private final TalonFX Coral_Motor = new TalonFX(CoralConstants.Coral_Motor_ID, "mech");
 
+    private final Elevator elevator = new Elevator();
     public boolean getCoral = false;
     public Coral(){
-
         Coral_Motor.setNeutralMode(NeutralModeValue.Brake);
 
         Coral_Motor.setInverted(CoralConstants.Coral_Inverted);
@@ -43,7 +43,12 @@ public class Coral extends SubsystemBase{
     }
 
     public void Coral_Shoot(){
-        Coral_Motor.set(0.5);
+        if(elevator.getAbsolutePosition() < -35){
+            Coral_Motor.set(0.3);
+        }
+        else{
+            Coral_Motor.set(0.6);
+        }
     }
 
     public void L1CoralShoot(){
@@ -58,12 +63,12 @@ public class Coral extends SubsystemBase{
     public void periodic(){
         // SmartDashboard.putBoolean("Algae_Detected", CoarlDetected());
 
-        // if(Coral_Motor.getSupplyCurrent().getValueAsDouble() > 5){
-        //     getCoral = true;
-        // }
-        // else{
-        //     getCoral = false;
-        // }
-        // SmartDashboard.putBoolean("Get_Coral", getCoral);
+        if(Coral_Motor.getSupplyCurrent().getValueAsDouble() > 8){
+            getCoral = true;
+        }
+        else{
+            getCoral = false;
+        }
+        SmartDashboard.putBoolean("Get_Coral", getCoral);
     }
 }

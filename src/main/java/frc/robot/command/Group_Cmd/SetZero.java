@@ -32,7 +32,7 @@ public class SetZero extends Command{
         arm.Arm_Zero();
         // candle.climb_animation();
         // climber.Climb_Zero();
-        // coral.Coral_Stoep();
+        coral.Coral_Stop();
         elevator.ELE_Floor();
     }
 }

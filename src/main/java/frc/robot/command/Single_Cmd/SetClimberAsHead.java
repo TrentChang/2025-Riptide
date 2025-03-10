@@ -15,6 +15,8 @@ public class SetClimberAsHead extends Command {
   public SetClimberAsHead(CommandSwerveDrivetrain swerve) {
     this.swerve = swerve;
     addRequirements(swerve);
+    
+    
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -25,7 +27,9 @@ public class SetClimberAsHead extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    swerve.resetRotation(new Rotation2d(Math.PI));
+    swerve.ResetPigeon();
+    // swerve.resetOdo
+    // swerve.resetRotation(new Rotation2d(Math.PI));
   }
 
   // Called once the command ends or is interrupted.

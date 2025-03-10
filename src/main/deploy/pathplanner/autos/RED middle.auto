@@ -21,6 +21,12 @@
           "data": {
             "name": "SetClimberAsHead"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ReefToStation"
+          }
         }
       ]
     }

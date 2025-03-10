@@ -58,31 +58,31 @@ public class Arm extends SubsystemBase{
 
     // Arm 
     public void Arm_Zero(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Zero));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Zero).withSlot(0));
     }
 
     public void Arm_StartUp(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_StartUp));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_StartUp).withSlot(0));
     }
 
     public void Arm_Station(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Station));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Station).withSlot(1));
     }
 
     public void Arm_RL1(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL1));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL1).withSlot(0));
     }
 
     public void Arm_RL2(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL2));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL2).withSlot(0));
     }
 
     public void Arm_RL3(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL3));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL3).withSlot(0));
     }
 
     public void Arm_RL4(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL4));
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL4).withSlot(0));
     }
 
     public void Arm_DOWN(){

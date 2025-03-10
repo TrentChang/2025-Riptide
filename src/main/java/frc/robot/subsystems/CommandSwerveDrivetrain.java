@@ -20,6 +20,7 @@ import com.pathplanner.lib.path.PathConstraints;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
@@ -92,9 +93,27 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return new PathPlannerAuto(pathName);
     }
 
-    public void SetPigeonZero(){
-        resetRotation(new Rotation2d(0));
+
+    // public void getPose(){
+    //     double aprilTagID = LimelightHelpers.getFiducialID("");
+    //     Pose2d botPose;
+    //     // stop when no AprilTag is detected
+    //     if (aprilTagID == 0) {
+    //         botPose = this.getState().Pose;
+    //     }
+    //     else{
+    //         botPose = LimelightHelpers.getBotPose2d_wpiBlue("");
+    //     }
+    // }
+
+    public void ResetPigeon(){
+        this.getPigeon2().setYaw(180);
+        // resetRotation(new Rotation2d(0));
     }
+
+    // public void resetOdometry() {
+    //     // reset
+    // }
 
     public double getYaw() {
         return this.getState().Pose.getRotation().getDegrees();
@@ -299,6 +318,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putData("Bot_Pose", m_field2d);
 
         LimelightHelpers.tryUpdateVisionMeasurement(this);
+
+        SmartDashboard.putNumber("Bot_X", this.getState().Pose.getX());
+        SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
+        SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
+        SmartDashboard.putNumber("Pigeon", this.getYaw());
     }
 
     private void startSimThread() {
