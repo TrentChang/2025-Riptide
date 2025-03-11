@@ -19,7 +19,13 @@
         {
           "type": "named",
           "data": {
-            "name": "SetClimberAsHead"
+            "name": "CoralSuck"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSuckCoral"
           }
         },
         {

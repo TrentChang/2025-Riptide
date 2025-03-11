@@ -25,7 +25,7 @@ public class Coral extends SubsystemBase{
      * Get the sensor value of the sensor.
      * @return Whether the digital sensor is detecting an Algae.
      */
-    // public boolean CoarlDetected() {
+    // public boolean CoralDetected() {
     //     return !Coral_Detect.get();
     // }
 

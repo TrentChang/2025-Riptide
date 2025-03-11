@@ -89,9 +89,9 @@ import frc.robot.LimelightHelpers.PoseEstimate;
             deltaRobotHeadingDeg();
             // getLLPose();
 
-        LL_Pose.setRobotPose(avgPose);
-        // LL_Pose.setRobotPose(getRobotPose_two().toPose2d());
-        // SmartDashboard.putData("LL_Pose", LL_Pose);
+        // LL_Pose.setRobotPose(avgPose);
+        LL_Pose.setRobotPose(getRobotPose().toPose2d());
+        SmartDashboard.putData("LL_Pose", LL_Pose);
         SmartDashboard.putNumber("LX", LimelightHelpers.getTX("limelight-two"));
         SmartDashboard.putNumber("LY", LimelightHelpers.getTY("limelight-two"));
         SmartDashboard.putNumber("LR", getRobotPose_two().getRotation().getAngle());

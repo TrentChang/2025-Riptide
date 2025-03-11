@@ -25,15 +25,18 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.command.Auto_Cmd.AutoAim;
+import frc.robot.command.Auto_Cmd.AutoShootCoral;
+import frc.robot.command.Auto_Cmd.AutoSuckCoral;
 import frc.robot.command.Group_Cmd.RL1;
 import frc.robot.command.Group_Cmd.RL2;
 import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
-import frc.robot.command.Single_Cmd.AutoAim;
-import frc.robot.command.Single_Cmd.AutoShootCoral;
+import frc.robot.command.Single_Cmd.Aim;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
+import frc.robot.command.Single_Cmd.AbsAutoAim;
 import frc.robot.command.Swerve_CMD.ChassisSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Algae;
@@ -44,8 +47,6 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.limelight;
-import frc.robot.*;
-
 
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
@@ -60,6 +61,8 @@ public class RobotContainer {
     public final Elevator elevator = new Elevator();
     public final limelight limelight = new limelight();
 
+    public final TargetChooser targetChooser = new TargetChooser();
+
     public final RL1 CMD_RL1 = new RL1(arm, coral, elevator);
     public final RL2 CMD_RL2 = new RL2(arm, coral, elevator);
     public final RL3 CMD_RL3 = new RL3(arm, coral, elevator);
@@ -67,9 +70,12 @@ public class RobotContainer {
     public final SetZero CMD_SetZero = new SetZero(algae, arm, candle, climber, coral, elevator);
     public final SuckCoral suckCoral = new SuckCoral(coral, arm);
 
+    public final AbsAutoAim CMD_abs = new AbsAutoAim(drivetrain, limelight, targetChooser);
+    public final Aim CMD_Aim = new Aim(drivetrain);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
     public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
+    public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
 
     // public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator);
     
@@ -97,6 +103,9 @@ public class RobotContainer {
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
+        // NamedCommands.registerCommand("AutoSuckCoral", CMD_AutoSuckCoral);
+        NamedCommands.registerCommand("AutoSuckCoral", CMD_SuckCoral);
+        NamedCommands.registerCommand("CoralSuck", new InstantCommand(coral::Coral_Suck));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("auto", autoChooser);
@@ -123,20 +132,22 @@ public class RobotContainer {
     }
 
         private void Assist_ConfigureBindings(){
-        new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(coral::Coral_Suck).alongWith(new InstantCommand(arm::Arm_Station)).alongWith(new WaitCommand(0.5)).andThen(CMD_SuckCoral).andThen(new InstantCommand(coral::Coral_Suck)).alongWith(new WaitCommand(0.5)).andThen(new InstantCommand(coral::Coral_Stop)));
-        // new JoystickButton(Assist_Ctrl, 1).onTrue(CMD_SuckCoral);
+        new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(coral::Coral_Suck).alongWith(new WaitCommand(0.5)).andThen(CMD_SuckCoral));
+        //new JoystickButton(Assist_Ctrl, 1).whileTrue(CMD_AutoSuckCoral);
+        new JoystickButton(Assist_Ctrl, 2).onTrue(CMD_Aim);
+
         // new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(climber::Climb, climber));
         // new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(elevator::test)).onFalse(new InstantCommand(elevator::ELE_Stop));
-        new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up, climber)).onFalse(new InstantCommand(climber::Stop, climber));
+        // new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up, climber)).onFalse(new InstantCommand(climber::Stop, climber));
         new JoystickButton(Assist_Ctrl, 3).whileTrue(new InstantCommand(climber::Down, climber)).onFalse(new InstantCommand(climber::Stop, climber));
         
         new JoystickButton(Assist_Ctrl, 4).onTrue(CMD_SetZero);
     
-        // new JoystickButton(Assist_Ctrl, 5).onTrue(suckCoral);
+        // new JoystickButton(Assist_Ctrl, 1).onTrue(suckCoral);
         new JoystickButton(Assist_Ctrl, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
         new JoystickButton(Assist_Ctrl, 6).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
         new JoystickButton(Assist_Ctrl, 7).whileTrue(new InstantCommand(coral::L1CoralShoot, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
-        // new JoystickButton(Assist_Ctrl, 8).whileTrue(CMD_AutoAim);
+        // new JoystickButton(Assist_Ctrl, 1).whileTrue(CMD_SuckCoral);
     
         new POVButton(Assist_Ctrl, 0).whileTrue(new InstantCommand(elevator::ELE_Up, elevator)).onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
         new POVButton(Assist_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down, elevator)).onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
@@ -149,6 +160,7 @@ public class RobotContainer {
         }
             
     private void configureBindings() {
+        /*
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
@@ -159,6 +171,7 @@ public class RobotContainer {
                      .withRotationalRate(-Driver_Ctrl.getRightX() * MaxAngularRate * 4) // Drive counterclockwise with negative X (left)
             )
         );
+        */
 
         // Driver_Ctrl.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // Driver_Ctrl.b().whileTrue(drivetrain.applyRequest(() ->

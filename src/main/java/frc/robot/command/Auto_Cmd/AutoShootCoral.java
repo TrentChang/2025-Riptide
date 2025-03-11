@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.command.Single_Cmd;
+package frc.robot.command.Auto_Cmd;
 
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -39,7 +39,7 @@ public class AutoShootCoral extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> arm.Arm_RL4(), arm));
     addCommands(new WaitCommand(1));
     addCommands(new InstantCommand(() -> coral.Coral_Shoot(), coral));
-    addCommands(new WaitCommand(2));
+    addCommands(new WaitCommand(1));
     addCommands(new InstantCommand(() -> coral.Coral_Stop(), coral));
     addCommands(new InstantCommand(() -> elevator.ELE_Floor(), elevator));
     addCommands(new InstantCommand(() -> arm.Arm_StartUp(), arm));

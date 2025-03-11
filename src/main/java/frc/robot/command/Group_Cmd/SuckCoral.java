@@ -5,6 +5,8 @@
 package frc.robot.command.Group_Cmd;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Coral;
 
@@ -27,7 +29,9 @@ public class SuckCoral extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    coral.Coral_Suck();
     arm.Arm_Station();
+    new WaitCommand(0.5);
     coral.Coral_Suck();
   }
 

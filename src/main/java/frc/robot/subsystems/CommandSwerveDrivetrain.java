@@ -93,27 +93,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return new PathPlannerAuto(pathName);
     }
 
-
-    // public void getPose(){
-    //     double aprilTagID = LimelightHelpers.getFiducialID("");
-    //     Pose2d botPose;
-    //     // stop when no AprilTag is detected
-    //     if (aprilTagID == 0) {
-    //         botPose = this.getState().Pose;
-    //     }
-    //     else{
-    //         botPose = LimelightHelpers.getBotPose2d_wpiBlue("");
-    //     }
-    // }
-
     public void ResetPigeon(){
         this.getPigeon2().setYaw(180);
         // resetRotation(new Rotation2d(0));
     }
-
-    // public void resetOdometry() {
-    //     // reset
-    // }
 
     public double getYaw() {
         return this.getState().Pose.getRotation().getDegrees();
@@ -303,6 +286,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
+        // LimelightHelpers.tryUpda*teVisionMeasurement(this);
+
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
@@ -316,8 +301,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         m_field2d.setRobotPose(this.getState().Pose);
         SmartDashboard.putData("Bot_Pose", m_field2d);
-
-        LimelightHelpers.tryUpdateVisionMeasurement(this);
 
         SmartDashboard.putNumber("Bot_X", this.getState().Pose.getX());
         SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
@@ -388,7 +371,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(180));
 
     PathConstraints constraints = new PathConstraints(
-          2.0, 1.0,
+          5.6, 
+          1243,
           Units.degreesToRadians(270), Units.degreesToRadians(180));
 
 
