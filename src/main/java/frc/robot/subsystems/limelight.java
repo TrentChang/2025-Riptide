@@ -32,15 +32,21 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     public boolean getTag(){
         TagID = (int) LimelightHelpers.getFiducialID("");
-        TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
+        // TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
 
-        if(TagID == -1 && TagID2 == -1){
-            return tag = false;
-        }
-        else if(TagID != -1 || TagID2 != -1){
+        // if(TagID == -1 && TagID2 == -1){
+        //     return tag = false;
+        // }
+        // else if(TagID != -1 || TagID2 != -1){
+        //     return tag = true;
+        // }
+        // return false;
+        if(TagID != -1){
             return tag = true;
         }
-        return false;
+        else{
+            return tag = false;
+        }
     }
 
     public Pose3d getRobotPose(){

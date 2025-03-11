@@ -286,7 +286,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        // LimelightHelpers.tryUpda*teVisionMeasurement(this);
+        LimelightHelpers.tryUpdateVisionMeasurement(this);
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
@@ -371,8 +371,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(180));
 
     PathConstraints constraints = new PathConstraints(
-          5.6, 
-          1243,
+          2.0, 
+          1.0,
           Units.degreesToRadians(270), Units.degreesToRadians(180));
 
 

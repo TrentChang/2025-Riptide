@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.LimelightHelpers;
-import frc.robot.TargetChooser;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.TargetChooser;
 import frc.robot.subsystems.limelight;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -53,13 +53,12 @@ public class AbsAutoAim extends Command {
       return;
     }
 
-    Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve);
+    swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
     // Commands.runOnce(() -> targetChooser.identify(aprilTagID, Robot_Pose));
-    if(targetChooser.map != null){
     swerve.driveToPose(targetChooser.identify(aprilTagID, Robot_Pose));
-    }
-
-    // Commands.runOnce(() -> swerve.driveToPose(new Pose2d(5.766, 3.892, Rotation2d.fromDegrees(180))));
+    // Commands.runOnce(() -> System.out.println("here"));
+    
+    // swerve.driveToPose(new Pose2d(5.766, 3.892, Rotation2d.fromDegrees(180)));
   }
 
   // Called once the command ends or is interrupted.
