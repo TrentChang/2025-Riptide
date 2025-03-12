@@ -4,31 +4,23 @@
 
 package frc.robot.subsystems;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-
-import org.opencv.core.Point;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.units.measure.Distance;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import frc.robot.LimelightHelpers;
 
 /** Add your docs here. */
 public class TargetChooser extends SubsystemBase{
+       
+        public Pose2d TargetPose = new Pose2d();
+        private Field2d field2d = new Field2d();
+        public TargetChooser(){}
 
     // public static HashMap<Integer, List<Pose2d>> map = new HashMap<>();
     public static HashMap<Integer, List<Pose2d>> map;// = new ObjectMapper().readValue("SOMETHING", HashMap.class);
@@ -66,6 +58,7 @@ public class TargetChooser extends SubsystemBase{
         double deltaY = Math.abs(p1.getY() - p2.getY());
         return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     }
+    
 
     public Pose2d identify(int apriltag, Pose2d currPose) {
         List<Pose2d> candidate = map.get(apriltag);
@@ -77,4 +70,31 @@ public class TargetChooser extends SubsystemBase{
             return candidate.get(0);
         }
     }
+
+    
+    public boolean isFinished(){
+        double aprilTagID = LimelightHelpers.getFiducialID("");
+        if (aprilTagID == -1) {
+                return true;
+        }
+        if (!(6 <= aprilTagID && aprilTagID <= 11) && !(17 <= aprilTagID && aprilTagID <= 22)) {
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void periodic(){
+        double aprilTagID = LimelightHelpers.getFiducialID("");
+        if (aprilTagID != -1 || (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22)) {
+                Pose2d Robot_Pose = LimelightHelpers.getBotPose2d_wpiBlue("");
+                TargetPose = identify((int)aprilTagID, Robot_Pose);
+                SmartDashboard.putNumber("X", identify((int)aprilTagID, Robot_Pose).getX());
+                SmartDashboard.putNumber("Y", identify((int)aprilTagID, Robot_Pose).getY());
+                SmartDashboard.putNumber("targetposX", TargetPose.getX());
+                SmartDashboard.putNumber("targetposY", TargetPose.getY());
+        }
+        field2d.setRobotPose(TargetPose);
+        SmartDashboard.putData("target",field2d);
+   }
 }

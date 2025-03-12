@@ -36,7 +36,6 @@ import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
 import frc.robot.command.Single_Cmd.Aim;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
-import frc.robot.command.Single_Cmd.AbsAutoAim;
 import frc.robot.command.Swerve_CMD.ChassisSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Algae;
@@ -72,7 +71,7 @@ public class RobotContainer {
     public final SetZero CMD_SetZero = new SetZero(algae, arm, candle, climber, coral, elevator);
     public final SuckCoral suckCoral = new SuckCoral(coral, arm);
 
-    public final AbsAutoAim CMD_abs = new AbsAutoAim(drivetrain, limelight, targetChooser);
+    // public final AbsAutoAim CMD_abs = new AbsAutoAim(drivetrain, limelight, targetChooser);
     public final Aim CMD_Aim = new Aim(drivetrain, limelight, targetChooser);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
@@ -163,7 +162,6 @@ public class RobotContainer {
 
     private void TestConfigureBindings(){
         new JoystickButton(ctrl, 1).whileTrue(CMD_Aim);
-        new JoystickButton(ctrl, 2).whileTrue(CMD_abs);
     }
             
     private void configureBindings() {

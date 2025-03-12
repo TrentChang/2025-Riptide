@@ -1697,4 +1697,9 @@ public class LimelightHelpers {
             swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
         }
     }
+
+    public static Object getRobotPose() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getRobotPose'");
+    }
 }
