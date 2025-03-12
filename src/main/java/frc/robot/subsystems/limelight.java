@@ -50,7 +50,12 @@ import frc.robot.LimelightHelpers.PoseEstimate;
     }
 
     public Pose3d getRobotPose(){
-        return LimelightHelpers.getBotPose3d_wpiBlue("");
+        if(getTag()){
+            return LimelightHelpers.getBotPose3d_wpiBlue("");
+        }
+        else{
+            return new Pose3d();
+        }
     }
 
     public Pose3d getRobotPose_two(){

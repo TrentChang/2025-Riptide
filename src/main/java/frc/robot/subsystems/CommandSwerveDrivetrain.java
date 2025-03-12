@@ -373,7 +373,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     PathConstraints constraints = new PathConstraints(
           2.0, 
           1.0,
-          Units.degreesToRadians(270), Units.degreesToRadians(180));
+          Units.degreesToRadians(270), 
+          Units.degreesToRadians(180)
+    );
 
 
   // Since AutoBuilder is configured, we can use it to build pathfinding commands

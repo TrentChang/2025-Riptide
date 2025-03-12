@@ -16,15 +16,18 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+
 import frc.robot.LimelightHelpers;
+import frc.robot.TargetChooser;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.TargetChooser;
 import frc.robot.subsystems.limelight;
 
 public class Aim extends SequentialCommandGroup {
   private final CommandSwerveDrivetrain swerve;
   private final limelight limelight;
   private final TargetChooser targetChooser;
+  private Pose2d robotPose, llPose;
+  private final int aprilTagID;
   //private final Field2d m_Field2d;
 
   public Aim(CommandSwerveDrivetrain swerve, limelight limelight, TargetChooser targetChooser) {
@@ -33,9 +36,19 @@ public class Aim extends SequentialCommandGroup {
     this.targetChooser = targetChooser;
     addRequirements(swerve, limelight);
     
-    addCommands(Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
-    addCommands(swerve.driveToPose(targetChooser.TargetPose));
-    // addCommands(swerve.driveToPose(targetChooser.identify((int)LimelightHelpers.getFiducialID(""),
-    //                                                       LimelightHelpers.getBotPose2d_wpiBlue("")))); 
+    // addCommands(Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
+    // addCommands(Commands.runOnce(() -> SmartDashboard.putNumber("here", targetChooser.TargetPose.getY())));
+    aprilTagID = (int)LimelightHelpers.getFiducialID("");
+    llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
+    if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22)) {
+      if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
+        robotPose = swerve.getState().Pose;
+      } else {
+        robotPose = llPose;
+      }
+      addCommands(swerve.driveToPose(targetChooser.identify((int)LimelightHelpers.getFiducialID(""), robotPose)));
+    }
+    // addCommands(swerve.driveToPose(targetChooser.TargetPose));
+    // addCommands(swerve.driveToPose(new Pose2d(3.684, 2.999, Rotation2d.fromDegrees(60.0))));
   }
 }

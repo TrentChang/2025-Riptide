@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.subsystems;
+package frc.robot;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,20 +12,21 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj2.command.Command;
+
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.LimelightHelpers;
 
 /** Add your docs here. */
-public class TargetChooser extends SubsystemBase{
+public class TargetChooser {
        
-        public Pose2d TargetPose = new Pose2d();
-        private Field2d field2d = new Field2d();
-        public TargetChooser(){}
+    public Pose2d TargetPose = new Pose2d();
+    private Field2d field2d = new Field2d();
 
     // public static HashMap<Integer, List<Pose2d>> map = new HashMap<>();
-    public static HashMap<Integer, List<Pose2d>> map;// = new ObjectMapper().readValue("SOMETHING", HashMap.class);
+    public static HashMap<Integer, List<Pose2d>> map = new HashMap<>();// = new ObjectMapper().readValue("SOMETHING", HashMap.class);
     static {
-        map = new HashMap<>();
+        // 0.164719 0.41
         map.put(6, Arrays.asList(new Pose2d(13.529, 2.863, Rotation2d.fromDegrees(120.0)),
                 new Pose2d(13.815, 3.027, Rotation2d.fromDegrees(120.0))));
         map.put(7, Arrays.asList(new Pose2d(14.31, 3.885, Rotation2d.fromDegrees(180.0)),
@@ -58,7 +59,10 @@ public class TargetChooser extends SubsystemBase{
         double deltaY = Math.abs(p1.getY() - p2.getY());
         return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     }
-    
+     
+    private Boolean isReef(int aprilTagID) {
+        return (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22);
+    }
 
     public Pose2d identify(int apriltag, Pose2d currPose) {
         List<Pose2d> candidate = map.get(apriltag);
@@ -71,30 +75,50 @@ public class TargetChooser extends SubsystemBase{
         }
     }
 
-    
-    public boolean isFinished(){
-        double aprilTagID = LimelightHelpers.getFiducialID("");
-        if (aprilTagID == -1) {
-                return true;
+    public Command driveToReef(CommandSwerveDrivetrain swerve) {
+        Pose2d robotPose;
+        int aprilTagID = (int)LimelightHelpers.getFiducialID("");
+        Pose2d llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
+        System.out.println("Start");
+        if (isReef(aprilTagID)) {
+            System.out.println(" IsReef confirmed");
+            if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
+                System.out.println("  Using Odom");
+                robotPose = swerve.getState().Pose;
+            } else {
+                System.out.println("  Using LL");
+                robotPose = llPose;
+                swerve.resetPose(llPose);
+            }
+            return swerve.driveToPose(identify(aprilTagID, robotPose));
         }
-        if (!(6 <= aprilTagID && aprilTagID <= 11) && !(17 <= aprilTagID && aprilTagID <= 22)) {
-                return true;
-        }
-        return false;
+        return new Command(){};
     }
 
-    @Override
-    public void periodic(){
-        double aprilTagID = LimelightHelpers.getFiducialID("");
-        if (aprilTagID != -1 || (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22)) {
-                Pose2d Robot_Pose = LimelightHelpers.getBotPose2d_wpiBlue("");
-                TargetPose = identify((int)aprilTagID, Robot_Pose);
-                SmartDashboard.putNumber("X", identify((int)aprilTagID, Robot_Pose).getX());
-                SmartDashboard.putNumber("Y", identify((int)aprilTagID, Robot_Pose).getY());
-                SmartDashboard.putNumber("targetposX", TargetPose.getX());
-                SmartDashboard.putNumber("targetposY", TargetPose.getY());
-        }
-        field2d.setRobotPose(TargetPose);
-        SmartDashboard.putData("target",field2d);
-   }
+
+    // public boolean isFinished(){
+    //     double aprilTagID = LimelightHelpers.getFiducialID("");
+    //     if (aprilTagID == -1) {
+    //             return true;
+    //     }
+    //     if (!(6 <= aprilTagID && aprilTagID <= 11) && !(17 <= aprilTagID && aprilTagID <= 22)) {
+    //             return true;
+    //     }
+    //     return false;
+    // }
+
+//     @Override
+//     public void periodic(){
+//         double aprilTagID = LimelightHelpers.getFiducialID("");
+//         if (aprilTagID != -1 || (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22)) {
+//                 Pose2d Robot_Pose = LimelightHelpers.getBotPose2d_wpiBlue("");
+//                 TargetPose = identify((int)aprilTagID, Robot_Pose);
+//                 SmartDashboard.putNumber("X", identify((int)aprilTagID, Robot_Pose).getX());
+//                 SmartDashboard.putNumber("Y", identify((int)aprilTagID, Robot_Pose).getY());
+//                 SmartDashboard.putNumber("targetposX", TargetPose.getX());
+//                 SmartDashboard.putNumber("targetposY", TargetPose.getY());
+//         }
+//         field2d.setRobotPose(TargetPose);
+//         SmartDashboard.putData("target",field2d);
+//    }
 }

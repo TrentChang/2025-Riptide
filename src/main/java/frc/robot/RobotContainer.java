@@ -6,6 +6,9 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Set;
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -44,8 +47,8 @@ import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.TargetChooser;
 import frc.robot.subsystems.limelight;
+import frc.robot.TargetChooser;
 
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
@@ -60,7 +63,6 @@ public class RobotContainer {
     public final Coral coral = new Coral();
     public final Elevator elevator = new Elevator();
     public final limelight limelight = new limelight();
-
     public final TargetChooser targetChooser = new TargetChooser();
 
     public final RL1 CMD_RL1 = new RL1(arm, coral, elevator);
@@ -71,7 +73,7 @@ public class RobotContainer {
     public final SuckCoral suckCoral = new SuckCoral(coral, arm);
 
     // public final AbsAutoAim CMD_abs = new AbsAutoAim(drivetrain, limelight, targetChooser);
-    public final Aim CMD_Aim = new Aim(drivetrain, limelight, targetChooser);
+    // public final AutoAim CMD_Aim = new AutoAim(drivetrain);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
     public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
@@ -99,6 +101,8 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
 
+    private Supplier<Command> DTP_CMD = () -> targetChooser.driveToReef(drivetrain);
+
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
@@ -110,6 +114,7 @@ public class RobotContainer {
         // NamedCommands.registerCommand("AutoSuckCoral", CMD_AutoSuckCoral);
         NamedCommands.registerCommand("AutoSuckCoral", CMD_SuckCoral);
         NamedCommands.registerCommand("CoralSuck", new InstantCommand(coral::Coral_Suck));
+        NamedCommands.registerCommand("AutoAim", Commands.defer(DTP_CMD, Set.of(drivetrain)));
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("auto", autoChooser);
@@ -188,7 +193,13 @@ public class RobotContainer {
     }
 
     private void TestConfigureBindings() {
-        new JoystickButton(ctrl, 1).whileTrue(CMD_Aim);
+        new JoystickButton(ctrl, 1).whileTrue(
+            Commands.defer(DTP_CMD, Set.of(drivetrain))
+        );
+
+        // new JoystickButton(ctrl, 1).whileTrue(
+
+        // );
     }
 
     private void configureBindings() {
