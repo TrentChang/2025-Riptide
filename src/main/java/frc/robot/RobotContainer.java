@@ -7,7 +7,6 @@ package frc.robot;
 import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -24,7 +23,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+
 import frc.robot.command.Auto_Cmd.AutoAim;
 import frc.robot.command.Auto_Cmd.AutoShootCoral;
 import frc.robot.command.Auto_Cmd.AutoSuckCoral;
@@ -79,17 +78,20 @@ public class RobotContainer {
     public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
 
-    // public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator);
-    
+    // public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain,
+    // elevator);
+
     private SendableChooser<Command> autoChooser;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
+                                                                                      // max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
-    // private final SwerveRequest.FieldCentric drive = CMD_ChassisSpeed.SwerveDrive;
+    // private final SwerveRequest.FieldCentric drive =
+    // CMD_ChassisSpeed.SwerveDrive;
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -103,7 +105,7 @@ public class RobotContainer {
         Driver_ConfigureBindings();
         Assist_ConfigureBindings();
         TestConfigureBindings();
-        
+
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
         // NamedCommands.registerCommand("AutoSuckCoral", CMD_AutoSuckCoral);
@@ -114,73 +116,100 @@ public class RobotContainer {
         SmartDashboard.putData("auto", autoChooser);
     }
 
-    private void Driver_ConfigureBindings(){
-
+    private void Driver_ConfigureBindings() {
         new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(algae::Algae_out, algae));
         new JoystickButton(Driver_Ctrl, 2).whileTrue(new InstantCommand(algae::Algae_Back, algae));
-    
-        new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber)).onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber)).onFalse(new InstantCommand(climber::Stop, climber));
-    
-        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck, algae)).onFalse(new InstantCommand(algae::Stop, algae));
-        new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(algae::shoot, algae)).onFalse(new InstantCommand(algae::Stop, algae));
-    
-        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
-        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
-                        
+
+        new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
+                .onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
+                .onFalse(new InstantCommand(climber::Stop, climber));
+
+        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck, algae))
+                .onFalse(new InstantCommand(algae::Stop, algae));
+        new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(algae::shoot, algae))
+                .onFalse(new InstantCommand(algae::Stop, algae));
+
+        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck, coral))
+                .onFalse(new InstantCommand(coral::Coral_Stop, coral));
+        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot, coral))
+                .onFalse(new InstantCommand(coral::Coral_Stop, coral));
+
         new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue((CMD_RL3));
-        new POVButton(Driver_Ctrl, 270).onTrue((CMD_RL4));   
+        new POVButton(Driver_Ctrl, 270).onTrue((CMD_RL4));
     }
 
-        private void Assist_ConfigureBindings(){
-        new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(coral::Coral_Suck).alongWith(new WaitCommand(0.5)).andThen(CMD_SuckCoral));
+    private void Assist_ConfigureBindings() {
+        new JoystickButton(Assist_Ctrl, 1)
+                .onTrue(new InstantCommand(coral::Coral_Suck).alongWith(new WaitCommand(0.5))
+                .andThen(CMD_SuckCoral));
         // new JoystickButton(Assist_Ctrl, 1).whileTrue(CMD_AutoSuckCoral);
 
-        // new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(climber::Climb, climber));
-        // new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(elevator::test)).onFalse(new InstantCommand(elevator::ELE_Stop));
-        // new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up, climber)).onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(Assist_Ctrl, 3).whileTrue(new InstantCommand(climber::Down, climber)).onFalse(new InstantCommand(climber::Stop, climber));
-        
+        // new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(climber::Climb,
+        // climber));
+        // new JoystickButton(Assist_Ctrl, 1).onTrue(new
+        // InstantCommand(elevator::test)).onFalse(new
+        // InstantCommand(elevator::ELE_Stop));
+        // new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up,
+        // climber)).onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(Assist_Ctrl, 3)
+                .whileTrue(new InstantCommand(climber::Down, climber))
+                .onFalse(new InstantCommand(climber::Stop, climber));
+
         new JoystickButton(Assist_Ctrl, 4).onTrue(CMD_SetZero);
-    
+
         // new JoystickButton(Assist_Ctrl, 1).onTrue(suckCoral);
         new JoystickButton(Assist_Ctrl, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
         new JoystickButton(Assist_Ctrl, 6).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
-        new JoystickButton(Assist_Ctrl, 7).whileTrue(new InstantCommand(coral::L1CoralShoot, coral)).onFalse(new InstantCommand(coral::Coral_Stop, coral));
+        new JoystickButton(Assist_Ctrl, 7)
+                .whileTrue(new InstantCommand(coral::L1CoralShoot, coral))
+                .onFalse(new InstantCommand(coral::Coral_Stop, coral));
         // new JoystickButton(Assist_Ctrl, 1).whileTrue(CMD_SuckCoral);
-    
-        new POVButton(Assist_Ctrl, 0).whileTrue(new InstantCommand(elevator::ELE_Up, elevator)).onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
-        new POVButton(Assist_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down, elevator)).onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
-        new POVButton(Assist_Ctrl, 90).whileTrue(new InstantCommand(arm::Arm_UP, arm)).onFalse(new InstantCommand(arm::Arm_Stop, arm));
-        new POVButton(Assist_Ctrl, 270).whileTrue(new InstantCommand(arm::Arm_DOWN, arm)).onFalse(new InstantCommand(arm::Arm_Stop, arm));
-        // new POVButton(Assist_Ctrl, 0).whileTrue(new InstantCommand(elevator::ELE_Up));
-        // new POVButton(Assist_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down));
+
+        new POVButton(Assist_Ctrl, 0)
+                .whileTrue(new InstantCommand(elevator::ELE_Up, elevator))
+                .onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
+        new POVButton(Assist_Ctrl, 180)
+                .whileTrue(new InstantCommand(elevator::ELE_Down, elevator))
+                .onFalse(new InstantCommand(elevator::ELE_Stop, elevator));
+        new POVButton(Assist_Ctrl, 90)
+                .whileTrue(new InstantCommand(arm::Arm_UP, arm))
+                .onFalse(new InstantCommand(arm::Arm_Stop, arm));
+        new POVButton(Assist_Ctrl, 270)
+                .whileTrue(new InstantCommand(arm::Arm_DOWN, arm))
+                .onFalse(new InstantCommand(arm::Arm_Stop, arm));
+        // new POVButton(Assist_Ctrl, 0).whileTrue(new
+        // InstantCommand(elevator::ELE_Up));
+        // new POVButton(Assist_Ctrl, 180).whileTrue(new
+        // InstantCommand(elevator::ELE_Down));
         // new POVButton(Assist_Ctrl, 90).whileTrue(new InstantCommand(arm::Arm_UP));
         // new POVButton(Assist_Ctrl, 270).True(new InstantCommand(arm::Arm_DOWN));
-        }
+    }
 
-    private void TestConfigureBindings(){
+    private void TestConfigureBindings() {
         new JoystickButton(ctrl, 1).whileTrue(CMD_Aim);
         new JoystickButton(ctrl, 2).whileTrue(CMD_abs);
     }
-            
+
     private void configureBindings() {
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-Driver_Ctrl.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                     .withVelocityY(-Driver_Ctrl.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                     .withRotationalRate(-Driver_Ctrl.getRightX() * MaxAngularRate * 4) // Drive counterclockwise with negative X (left)
-            )
-        );
+                // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(() -> drive.withVelocityX(-Driver_Ctrl.getLeftY() * MaxSpeed) // Drive forward
+                                                                                                      // with negative Y
+                                                                                                      // (forward)
+                        .withVelocityY(-Driver_Ctrl.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                        .withRotationalRate(-Driver_Ctrl.getRightX() * MaxAngularRate * 4) // Drive counterclockwise
+                                                                                           // with negative X (left)
+                ));
 
         // Driver_Ctrl.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // Driver_Ctrl.b().whileTrue(drivetrain.applyRequest(() ->
-        //     point.withModuleDirection(new Rotation2d(-Driver_Ctrl.getLeftY(), -Driver_Ctrl.getLeftX()))
+        // point.withModuleDirection(new Rotation2d(-Driver_Ctrl.getLeftY(),
+        // -Driver_Ctrl.getLeftX()))
         // ));
 
         // // Run SysId routines when holding back/start and X/Y.
@@ -191,12 +220,13 @@ public class RobotContainer {
         // Driver_Ctrl.start().and(Driver_Ctrl.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         // // reset the field-centric heading on left bumper press
-        // Driver_Ctrl.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+        // Driver_Ctrl.leftBumper().onTrue(drivetrain.runOnce(() ->
+        // drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
-    public Command getAutonomousCommand() {    
+    public Command getAutonomousCommand() {
         return autoChooser.getSelected();
     }
 }
