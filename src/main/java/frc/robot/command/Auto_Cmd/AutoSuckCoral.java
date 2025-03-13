@@ -21,8 +21,7 @@ public class AutoSuckCoral extends SequentialCommandGroup{
     this.suckCoral = suckCoral;
     this.swerve = swerve;
 
-    //addRequirements(coral);
-    addRequirements(swerve);
+    addRequirements(swerve, coral);
     addCommands(Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
     addCommands(new InstantCommand(coral::Coral_Suck));
     addCommands(new WaitCommand(0.5));

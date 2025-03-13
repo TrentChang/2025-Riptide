@@ -98,6 +98,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // resetRotation(new Rotation2d(0));
     }
 
+    public Pose2d getPose() {
+        return this.getState().Pose;
+    }
+
     public double getYaw() {
         return this.getState().Pose.getRotation().getDegrees();
     }
@@ -371,8 +375,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(180));
 
     PathConstraints constraints = new PathConstraints(
-          2.0, 
-          1.0,
+          3.0, 
+          1.5,
           Units.degreesToRadians(270), 
           Units.degreesToRadians(180)
     );

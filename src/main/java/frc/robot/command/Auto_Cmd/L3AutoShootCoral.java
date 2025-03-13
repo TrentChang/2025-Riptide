@@ -15,13 +15,13 @@ import frc.robot.subsystems.Elevator;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class AutoShootCoral extends SequentialCommandGroup {
+public class L3AutoShootCoral extends SequentialCommandGroup {
   /** Creates a new AutoShootCoral. */
   private final Coral coral;
   private final Arm arm;
   private final Elevator elevator;
   // private final CommandSwerveDrivetrain commandSwerveDrivetrain;
-  public AutoShootCoral(Coral coral, Arm arm, Elevator elevator) {
+  public L3AutoShootCoral(Coral coral, Arm arm, Elevator elevator) {
     this.coral = coral;
     this.arm = arm;
     this.elevator = elevator;
@@ -29,14 +29,9 @@ public class AutoShootCoral extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(coral, arm, elevator);
-    // addRequirements(coral);
-    // addCommands(new InstantCommand(()-> System.out.println("test")));
-    // addCommands(new InstantCommand(() -> arm.Arm_RL4(), arm));
-    // addCommands(new InstantCommand(() -> arm.Arm_RL1(), arm));
-    // addCommands(new WaitCommand(1.5));
-    // addCommands(new InstantCommand(() -> arm.Arm_Station()));
+    
     addCommands(new InstantCommand(() -> elevator.ELE_RL4(), elevator));
-    addCommands(new InstantCommand(() -> arm.Arm_RL4(), arm));
+    addCommands(new InstantCommand(() -> arm.Arm_RL3(), arm));
     addCommands(new WaitCommand(1));
     addCommands(new InstantCommand(() -> coral.Coral_Shoot(), coral));
     addCommands(new WaitCommand(1));

@@ -31,16 +31,8 @@ public class RL2 extends Command {
     public void execute() {
         elevator.ELE_RL2();
         arm.Arm_RL2();
-        
-        // if(coral.getCoral = true){
-        //     arm.Arm_RL2();
-        //     elevator.ELE_Floor();
-        // }
     }
 
     @Override
-    public void end(boolean interrupted) {
-        elevator.ELE_Stay(ElevatorConstants.L2);
-        arm.Arm_Stay(ArmConstants.Arm_RL2);
-    }
+    public void end(boolean interrupted) {}
 }

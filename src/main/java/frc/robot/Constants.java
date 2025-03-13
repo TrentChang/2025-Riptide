@@ -111,7 +111,7 @@ public final class Constants{
         public static final double Arm_Zero = 0.1;
         public static final double Arm_StartUp = 0.1;
         public static final double Arm_Station = 0.34;
-        public static final double Arm_RL1 = 0.23;
+        public static final double Arm_RL1 = 0.19;
         public static final double Arm_RL2 = 0.24;
         public static final double Arm_RL3 = 0.18;
         public static final double Arm_RL4 = 0.2;

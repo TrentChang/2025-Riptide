@@ -36,8 +36,6 @@ public class Aim extends SequentialCommandGroup {
     this.targetChooser = targetChooser;
     addRequirements(swerve, limelight);
     
-    // addCommands(Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
-    // addCommands(Commands.runOnce(() -> SmartDashboard.putNumber("here", targetChooser.TargetPose.getY())));
     aprilTagID = (int)LimelightHelpers.getFiducialID("");
     llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
     if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22)) {
@@ -48,7 +46,5 @@ public class Aim extends SequentialCommandGroup {
       }
       addCommands(swerve.driveToPose(targetChooser.identify((int)LimelightHelpers.getFiducialID(""), robotPose)));
     }
-    // addCommands(swerve.driveToPose(targetChooser.TargetPose));
-    // addCommands(swerve.driveToPose(new Pose2d(3.684, 2.999, Rotation2d.fromDegrees(60.0))));
   }
 }

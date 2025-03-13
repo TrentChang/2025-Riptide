@@ -22,10 +22,5 @@ public class RL1 extends Command {
     public void execute(){
         elevator.ELE_RL1();
         arm.Arm_RL1();
-
-        // if(coral.CoarlDetected()){
-        //     arm.Arm_Station();
-        //     elevator.ELE_Floor();
-        // }
     }
 }

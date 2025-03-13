@@ -52,7 +52,7 @@ public class Coral extends SubsystemBase{
     }
 
     public void L1CoralShoot(){
-        Coral_Motor.set(0.3);
+        Coral_Motor.set(0.2);
     }
 
     public void Coral_Stop(){
