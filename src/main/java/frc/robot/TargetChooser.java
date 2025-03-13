@@ -75,21 +75,25 @@ public class TargetChooser {
         }
     }
 
-    public Command driveToReef(CommandSwerveDrivetrain swerve) {
+    public Command driveToClosestReef(CommandSwerveDrivetrain swerve) {
         Pose2d robotPose;
         int aprilTagID = (int)LimelightHelpers.getFiducialID("");
         Pose2d llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
         System.out.println("Start");
         if (isReef(aprilTagID)) {
             System.out.println(" IsReef confirmed");
-            if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
-                System.out.println("  Using Odom");
-                robotPose = swerve.getState().Pose;
-            } else {
-                System.out.println("  Using LL");
-                robotPose = llPose;
-                swerve.resetPose(llPose);
-            }
+        // useless if-else condition = =
+
+        //     if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
+        //         System.out.println("  Using Odom");
+        //         robotPose = swerve.getState().Pose;
+        //     } else {
+        //         System.out.println("  Using LL");
+        //         robotPose = llPose;
+        //         swerve.resetPose(llPose);
+        //     }
+            robotPose = llPose;
+            swerve.resetPose(llPose);
             return swerve.driveToPose(identify(aprilTagID, robotPose));
         }
         return new Command(){};

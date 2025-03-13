@@ -95,7 +95,7 @@ public class RobotContainer {
 
     private final CommandXboxController joystick = new CommandXboxController(0);
 
-    private Supplier<Command> DTP_CMD = () -> targetChooser.driveToReef(drivetrain);
+    private Supplier<Command> DTP_CMD = () -> targetChooser.driveToClosestReef(drivetrain);
 
     public RobotContainer() {
         configureBindings();
