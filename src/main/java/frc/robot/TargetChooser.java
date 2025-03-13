@@ -75,7 +75,7 @@ public class TargetChooser {
         }
     }
 
-    public Command driveToReef(CommandSwerveDrivetrain swerve) {
+    public Command driveToClosestReef(CommandSwerveDrivetrain swerve) {
         Pose2d robotPose;
         int aprilTagID = (int)LimelightHelpers.getFiducialID("");
         Pose2d llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
