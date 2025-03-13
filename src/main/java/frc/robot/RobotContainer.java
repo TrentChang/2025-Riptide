@@ -27,9 +27,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 
 import frc.robot.command.Auto_Cmd.AutoAim;
-import frc.robot.command.Auto_Cmd.L4AutoShootCoral;
+import frc.robot.command.Auto_Cmd.AutoShootCoral;
 import frc.robot.command.Auto_Cmd.AutoSuckCoral;
-import frc.robot.command.Auto_Cmd.L3AutoShootCoral;
 import frc.robot.command.Group_Cmd.RL1;
 import frc.robot.command.Group_Cmd.RL2;
 import frc.robot.command.Group_Cmd.RL3;
@@ -37,6 +36,7 @@ import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
+import frc.robot.command.Swerve_CMD.ChassisSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.Arm;
@@ -72,23 +72,21 @@ public class RobotContainer {
     // Auto Command
     public final AutoAim CMD_AutoAim = new AutoAim(drivetrain);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
-    public final L4AutoShootCoral CMD_L4AutoShootCoral = new L4AutoShootCoral(coral, arm, elevator);
-    public final L3AutoShootCoral CMD_L3AutoShootCoral = new L3AutoShootCoral(coral, arm, elevator);
+    public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
     public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
 
     // Swerve Command
-    // public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator);
+    public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator, Driver_Ctrl);
 
     private SendableChooser<Command> autoChooser;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
-                                                                                      // max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     /* Setting up bindings for necessary control of the swerve drive platform */
-    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
+    // private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+    //                                                                   .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+    //                                                                   .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -106,8 +104,12 @@ public class RobotContainer {
         Test_ConfigureBingings();
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
-        NamedCommands.registerCommand("AutoShootCoral", CMD_L4AutoShootCoral);
+        NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
         NamedCommands.registerCommand("AutoSuckCoral", CMD_SuckCoral);
+        NamedCommands.registerCommand("RL4", CMD_RL4);
+        NamedCommands.registerCommand("RL3", CMD_RL3);
+        NamedCommands.registerCommand("RL2", CMD_RL2);
+        NamedCommands.registerCommand("RL1", CMD_RL1);
         NamedCommands.registerCommand("CoralSuck", new InstantCommand(coral::Coral_Suck));
         NamedCommands.registerCommand("AutoAim", Commands.defer(DTP_CMD, Set.of(drivetrain)));
 
@@ -170,14 +172,18 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
+        drivetrain.setDefaultCommand(CMD_ChassisSpeed);
+
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
-        drivetrain.setDefaultCommand(
+        
+        // drivetrain.setDefaultCommand(
                 // Drivetrain will execute this command periodically
-                drivetrain.applyRequest(() -> drive.withVelocityX(-Driver_Ctrl.getLeftY() * MaxSpeed) // Drive forward with negative Y(forward)
-                                                   .withVelocityY(-Driver_Ctrl.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                                                   .withRotationalRate(-Driver_Ctrl.getRightX() * MaxAngularRate * 4) // Drive counterclockwise with negative X (left)
-        ));
+            //     drivetrain.applyRequest(() -> drive.withVelocityX(-Driver_Ctrl.getLeftY() * MaxSpeed) // Drive forward with negative Y(forward)
+            //                                        .withVelocityY(-Driver_Ctrl.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+            //                                        .withRotationalRate(-Driver_Ctrl.getRightX() * MaxAngularRate * 4) // Drive counterclockwise with negative X (left)
+            // ));
+
 
         // Driver_Ctrl.a().whileTrue(drivetrain.applyRequest(() -> brake));
         // Driver_Ctrl.b().whileTrue(drivetrain.applyRequest(() ->
