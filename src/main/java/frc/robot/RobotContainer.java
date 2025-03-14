@@ -89,7 +89,7 @@ public class RobotContainer {
     public final L3AutoShootCoral CMD_L3AutoShootCoarl = new L3AutoShootCoral(coral, arm, elevator);
 
     // Swerve Command
-    public final FieldDrive CMD_FieldDrive = new FieldDrive(drivetrain, elevator, Driver_Ctrl);
+    public final FieldDrive CMD_FieldDrive = new FieldDrive(drivetrain, elevator, Driver_Ctrl, test);
     public final RobotDrive CMD_RobotDrive = new RobotDrive(drivetrain, Driver_Ctrl, CMD_FieldDrive);
 
     private SendableChooser<Command> autoChooser;
@@ -172,7 +172,7 @@ public class RobotContainer {
 
     private void Test_ConfigureBingings(){
         new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
-        new JoystickButton(test, 2).onTrue(CMD_RobotDrive);
+        // new JoystickButton(test, 2).onTrue(CMD_RobotDrive);
         new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
         new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
     }
