@@ -10,23 +10,21 @@ import java.util.List;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.LimelightHelpers;
 
 /** Add your docs here. */
 public class TargetChooser {
        
     public Pose2d TargetPose = new Pose2d();
-    private Field2d field2d = new Field2d();
 
     // public static HashMap<Integer, List<Pose2d>> map = new HashMap<>();
     public static HashMap<Integer, List<Pose2d>> map = new HashMap<>();// = new ObjectMapper().readValue("SOMETHING", HashMap.class);
     static {
         // 0.164338 0.45
+
+        // Red Alliance
         map.put(6, Arrays.asList(new Pose2d(13.55, 2.828, Rotation2d.fromDegrees(120.0)), new Pose2d(13.834, 2.992, Rotation2d.fromDegrees(120.0))));
         map.put(7, Arrays.asList(new Pose2d(14.35, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(14.35, 4.214, Rotation2d.fromDegrees(180.0))));
         map.put(8, Arrays.asList(new Pose2d(13.834, 5.108, Rotation2d.fromDegrees(-120.0)), new Pose2d(13.55, 5.272, Rotation2d.fromDegrees(-120.0))));
@@ -34,6 +32,7 @@ public class TargetChooser {
         map.put(10, Arrays.asList(new Pose2d(11.718, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(11.718, 3.886, Rotation2d.fromDegrees(0.0))));
         map.put(11, Arrays.asList(new Pose2d(12.234, 2.992, Rotation2d.fromDegrees(60.0)), new Pose2d(12.518, 2.828, Rotation2d.fromDegrees(60.0))));
 
+        // Blue Alliance
         map.put(17, Arrays.asList(new Pose2d(3.69, 2.992, Rotation2d.fromDegrees(60.0)), new Pose2d(3.974, 2.828, Rotation2d.fromDegrees(60.0))));
         map.put(22, Arrays.asList(new Pose2d(5.006, 2.828, Rotation2d.fromDegrees(120.0)), new Pose2d(5.29, 2.992, Rotation2d.fromDegrees(120.0))));
         map.put(21, Arrays.asList(new Pose2d(5.806, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(5.806, 4.214, Rotation2d.fromDegrees(180.0))));
@@ -48,7 +47,7 @@ public class TargetChooser {
         return Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     }
      
-    private Boolean isReef(int aprilTagID) {
+    private boolean isReef(int aprilTagID) {
         return (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22);
     }
 
