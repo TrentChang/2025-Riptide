@@ -21,6 +21,18 @@
           "data": {
             "name": "AutoShootCoral"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RRToSuck"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSuckCoral"
+          }
         }
       ]
     }

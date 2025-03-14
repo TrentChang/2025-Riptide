@@ -35,6 +35,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AutoSuckCoral"
@@ -71,6 +77,12 @@
           }
         },
         {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.3
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "AutoSuckCoral"
@@ -91,7 +103,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShootCoral"
+            "name": "L3AutoShootCoarl"
           }
         }
       ]

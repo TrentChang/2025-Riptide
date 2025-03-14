@@ -9,11 +9,11 @@ import static edu.wpi.first.units.Units.*;
 import java.util.Set;
 import java.util.function.Supplier;
 
-import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -29,6 +29,8 @@ import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.command.Auto_Cmd.AutoAim;
 import frc.robot.command.Auto_Cmd.AutoShootCoral;
 import frc.robot.command.Auto_Cmd.AutoSuckCoral;
+import frc.robot.command.Auto_Cmd.L3AutoShootCoral;
+import frc.robot.command.Group_Cmd.Barge;
 import frc.robot.command.Group_Cmd.RL1;
 import frc.robot.command.Group_Cmd.RL2;
 import frc.robot.command.Group_Cmd.RL3;
@@ -50,8 +52,11 @@ import frc.robot.subsystems.limelight;
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
     private final XboxController Assist_Ctrl = new XboxController(2);
-    private final XboxController test = new XboxController(3);
+    // private final XboxController test = new XboxController(3);
 
+    private final Joystick P1 = new Joystick(3); // BIG BUTTON
+    private final Joystick P2 = new Joystick(4); // REEF BUTTON
+    
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Algae algae = new Algae();
     public final Arm arm = new Arm();
@@ -62,6 +67,8 @@ public class RobotContainer {
     public final limelight limelight = new limelight();
     public final TargetChooser targetChooser = new TargetChooser();
 
+    // Group Command
+    public final Barge CMD_Barege = new Barge(arm, coral, elevator);
     public final RL1 CMD_RL1 = new RL1(arm, coral, elevator);
     public final RL2 CMD_RL2 = new RL2(arm, coral, elevator);
     public final RL3 CMD_RL3 = new RL3(arm, coral, elevator);
@@ -69,12 +76,16 @@ public class RobotContainer {
     public final SetZero CMD_SetZero = new SetZero(arm, coral, elevator);
     public final SuckCoral suckCoral = new SuckCoral(coral, arm);
 
+    // Single Command
+    // public final CoralShoot CMD_CoralShoot = new CoralShoot(coral, elevator);
+
     // Auto Command
     public final AutoAim CMD_AutoAim = new AutoAim(drivetrain);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
     public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
+    public final L3AutoShootCoral CMD_L3AutoShootCoarl = new L3AutoShootCoral(coral, arm, elevator);
 
     // Swerve Command
     public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator, Driver_Ctrl);
@@ -102,9 +113,12 @@ public class RobotContainer {
         Driver_ConfigureBindings();
         Assist_ConfigureBindings();
         Test_ConfigureBingings();
+        P1ControlBoard_ConfigureBindings();
+        P2ControlBoard_ConfigureBindings();
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
+        NamedCommands.registerCommand("L3AutoShootCoarl", CMD_L3AutoShootCoarl);
         NamedCommands.registerCommand("AutoSuckCoral", CMD_SuckCoral);
         NamedCommands.registerCommand("RL4", CMD_RL4);
         NamedCommands.registerCommand("RL3", CMD_RL3);
@@ -130,7 +144,7 @@ public class RobotContainer {
                                           .onFalse(new InstantCommand(algae::Stop, algae));
         new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck, coral))
                                           .onFalse(new InstantCommand(coral::Coral_Stop, coral));
-        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot, coral))
+        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot))
                                                        .onFalse(new InstantCommand(coral::Coral_Stop, coral));
 
         new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
@@ -159,16 +173,38 @@ public class RobotContainer {
                                             .onFalse(new InstantCommand(arm::Arm_Stop, arm));
         new POVButton(Assist_Ctrl, 270).whileTrue(new InstantCommand(arm::Arm_DOWN, arm))
                                              .onFalse(new InstantCommand(arm::Arm_Stop, arm));
-        // new POVButton(Assist_Ctrl, 0).whileTrue(new
-        // InstantCommand(elevator::ELE_Up));
-        // new POVButton(Assist_Ctrl, 180).whileTrue(new
-        // InstantCommand(elevator::ELE_Down));
-        // new POVButton(Assist_Ctrl, 90).whileTrue(new InstantCommand(arm::Arm_UP));
-        // new POVButton(Assist_Ctrl, 270).True(new InstantCommand(arm::Arm_DOWN));
     }
 
     private void Test_ConfigureBingings(){
-        new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
+        // new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
+        // new JoystickButton(test, 2).onTrue(CMD_Barege);
+        // new JoystickButton(test, 3).onTrue(new InstantCommand(arm::Arm_Algae));
+        // new JoystickButton(P1, 1).onTrue(CMD_RL4);
+        // new JoystickButton(P1, 2).onTrue(CMD_RL3);
+        // new JoystickButton(P1,3).onTrue(CMD_RL2);
+        // new JoystickButton(P1, 4).onTrue(CMD_RL1);
+        // new JoystickButton(P1, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
+    }
+
+    private void P1ControlBoard_ConfigureBindings(){
+        new JoystickButton(P1, 1).onTrue(CMD_RL4);
+        new JoystickButton(P1, 2).onTrue(CMD_RL3);
+        new JoystickButton(P1, 3).onTrue(CMD_RL2);
+        new JoystickButton(P1, 4).onTrue(CMD_RL1);
+
+        new JoystickButton(P1, 5).onTrue(CMD_RL2);
+        new JoystickButton(P1, 6).onTrue(CMD_RL2);
+    }
+
+    private void P2ControlBoard_ConfigureBindings(){
+        new JoystickButton(P2, 1).onTrue(CMD_RL4);
+        new JoystickButton(P2, 2).onTrue(CMD_RL3);
+        new JoystickButton(P2, 3).onTrue(CMD_RL2);
+        new JoystickButton(P2, 4).onTrue(CMD_RL1);
+
+        new JoystickButton(P2, 5).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
+
+
     }
 
     private void configureBindings() {

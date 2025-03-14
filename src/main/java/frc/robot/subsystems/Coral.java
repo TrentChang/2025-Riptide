@@ -8,16 +8,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CoralConstants;
 
+import frc.robot.subsystems.Elevator;
 
 public class Coral extends SubsystemBase{
     // private final DigitalInput Coral_Detect = new DigitalInput(CoralConstants.Coral_Sensor_ID);
     private final TalonFX Coral_Motor = new TalonFX(CoralConstants.Coral_Motor_ID, "mech");
 
-    private final Elevator elevator = new Elevator();
     public boolean getCoral = false;
     public Coral(){
         Coral_Motor.setNeutralMode(NeutralModeValue.Brake);
-
         Coral_Motor.setInverted(CoralConstants.Coral_Inverted);
     }
 
@@ -43,12 +42,7 @@ public class Coral extends SubsystemBase{
     }
 
     public void Coral_Shoot(){
-        if(elevator.getAbsolutePosition() < -35){
-            Coral_Motor.set(0.3);
-        }
-        else{
-            Coral_Motor.set(0.6);
-        }
+        Coral_Motor.set(0.6);
     }
 
     public void L1CoralShoot(){

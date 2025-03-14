@@ -110,24 +110,26 @@ public final class Constants{
 
         public static final double Arm_Zero = 0.1;
         public static final double Arm_StartUp = 0.1;
-        public static final double Arm_Station = 0.34;
-        public static final double Arm_RL1 = 0.19;
-        public static final double Arm_RL2 = 0.24;
-        public static final double Arm_RL3 = 0.18;
+        public static final double Arm_Station = 0.35;
+        public static final double Arm_Barge = 0.26;
+        public static final double Arm_Algae = 0.27;
+        public static final double Arm_RL1 = 0.17;
+        public static final double Arm_RL2 = 0.19;
+        public static final double Arm_RL3 = 0.19;
         public static final double Arm_RL4 = 0.2;
 
         public static final double MAX_ACCEL = 500;
         public static final double MAX_VELOCITY = 200;
         
         // Arm UP PIDF
-        public static final double UP_Arm_P = 1.6;
-        public static final double UP_Arm_I = 0;
+        public static final double UP_Arm_P = 3.2;
+        public static final double UP_Arm_I = 0.5;
         public static final double UP_Arm_D = 0;
-        public static final double UP_Arm_F = 0;   
+        public static final double UP_Arm_F = -0.01;   
         
         // Arm DOWN PIDF
-        public static final double DOWN_Arm_P = 1.4;
-        public static final double DOWN_Arm_I = 0;
+        public static final double DOWN_Arm_P = 3.3;
+        public static final double DOWN_Arm_I = 0.2;
         public static final double DOWN_Arm_D = 0;
         public static final double DOWN_Arm_F = 0;   
     }
@@ -168,10 +170,10 @@ public final class Constants{
         public static final boolean RightMotor_Inverted = false;
 
         public static final double floor = -0.5;
-        public static final double L1 = -1;
-        public static final double L2 = -15;
-        public static final double L3 = -26;
-        public static final double L4 = -54;
+        public static final double L1 = -0.5;
+        public static final double L2 = -9;
+        public static final double L3 = -28;
+        public static final double L4 = -58;
 
 
         public static final double MAX_ACCEL = 1000;
@@ -191,7 +193,7 @@ public final class Constants{
         public static final int Coral_Sensor_ID = 0;
 
         // Coral Config
-        public static final boolean Coral_Inverted = false;
+        public static final boolean Coral_Inverted = true;
         public static final boolean Arm_Left_Inverted = false;
         public static final boolean Arm_Right_Inverted = false;
 
