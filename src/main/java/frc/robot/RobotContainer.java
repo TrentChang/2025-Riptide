@@ -37,6 +37,7 @@ import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
+import frc.robot.command.ReefAim_Cmd.Reef1;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
 import frc.robot.command.Swerve_CMD.SmartDrive;
 import frc.robot.generated.TunerConstants;
@@ -86,6 +87,9 @@ public class RobotContainer {
     public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
     public final L3AutoShootCoral CMD_L3AutoShootCoarl = new L3AutoShootCoral(coral, arm, elevator);
+
+    // ReefAim Command
+    public final Reef1 CMD_Reef1 = new Reef1(drivetrain);
 
     // Swerve Command
     public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, Driver_Ctrl, test);
@@ -173,6 +177,7 @@ public class RobotContainer {
         // new JoystickButton(test, 2).onTrue(CMD_RobotDrive);
         new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
         new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
+        new JoystickButton(test, 5).onTrue(CMD_Reef1);
     }
 
 
