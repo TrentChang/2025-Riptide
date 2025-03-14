@@ -4,12 +4,10 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
 
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
-import java.util.stream.IntStream;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -29,6 +27,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import static edu.wpi.first.units.Units.*;
+
 import frc.robot.command.Aim_Cmd.AutoReefLevel;
 import frc.robot.command.Aim_Cmd.Reef1;
 import frc.robot.command.Auto_Cmd.AutoAim;
