@@ -42,6 +42,7 @@ public class RobotDrive extends Command {
 
   @Override
   public void initialize() {
+    System.out.println("RobotDrive init");
     drive = new SwerveRequest.RobotCentric()
                              .withDeadband(maxSpeed * 0.1).withRotationalDeadband(maxAngularRate * 0.1)
                              .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
@@ -49,20 +50,21 @@ public class RobotDrive extends Command {
 
   @Override
   public void execute() {
+    if (Math.abs(vR.getAsDouble()) >= 0.2) {
+      // swerve.setControl(new SwerveRequest.Idle());
+      System.out.println("RobotDrive end");
+      swerve.removeDefaultCommand();
+      swerve.setDefaultCommand(fieldDriveCmd);
+    }
     swerve.setControl(drive.withVelocityX(vX.getAsDouble() * maxSpeed) // Drive forward with negative Y(forward)
                            .withVelocityY(vY.getAsDouble() * maxSpeed) // Drive left with negative X (left)
                            .withRotationalRate(vR.getAsDouble() * maxAngularRate * 4) // Drive counterclockwise with negative X (left)
     );
-    if (Math.abs(vR.getAsDouble()) >= 0.2) {
-      end(false);
-    }
+    
   }
 
   @Override
   public void end(boolean interrupted) {
-    swerve.setControl(new SwerveRequest.Idle());
-    swerve.removeDefaultCommand();
-    swerve.setDefaultCommand(fieldDriveCmd);
   }
 
   @Override

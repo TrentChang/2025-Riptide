@@ -53,10 +53,10 @@ import frc.robot.subsystems.limelight;
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
     private final XboxController Assist_Ctrl = new XboxController(2);
-    // private final XboxController test = new XboxController(3);
+    private final XboxController test = new XboxController(3);
 
-    private final Joystick P1 = new Joystick(3); // BIG BUTTON
-    private final Joystick P2 = new Joystick(4); // REEF BUTTON
+    // private final Joystick P1 = new Joystick(3); // BIG BUTTON
+    // private final Joystick P2 = new Joystick(4); // REEF BUTTON
     
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Algae algae = new Algae();
@@ -110,8 +110,6 @@ public class RobotContainer {
         Driver_ConfigureBindings();
         Assist_ConfigureBindings();
         Test_ConfigureBingings();
-        P1ControlBoard_ConfigureBindings();
-        P2ControlBoard_ConfigureBindings();
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
@@ -174,7 +172,11 @@ public class RobotContainer {
 
     private void Test_ConfigureBingings(){
         new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
+        new JoystickButton(test, 2).onTrue(CMD_RobotDrive);
+        new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
     }
+
+
 
     private void configureBindings() {
         drivetrain.setDefaultCommand(CMD_FieldDrive);

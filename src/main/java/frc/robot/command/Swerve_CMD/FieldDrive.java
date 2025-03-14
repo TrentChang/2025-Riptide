@@ -48,6 +48,7 @@ public class FieldDrive extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    System.out.println("FieldDrive init");
     /* Setting up bindings for necessary control of the swerve drive platform */
     drive = new SwerveRequest.FieldCentric()
                              .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
