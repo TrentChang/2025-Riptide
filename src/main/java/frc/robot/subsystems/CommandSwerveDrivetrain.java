@@ -378,7 +378,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(180));
 
     PathConstraints constraints = new PathConstraints(
-          3.0, 
+          2.0, 
           1.5,
           Units.degreesToRadians(270), 
           Units.degreesToRadians(180)
