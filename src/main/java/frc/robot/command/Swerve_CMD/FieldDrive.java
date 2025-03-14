@@ -19,10 +19,9 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ChassisSpeed extends Command {
-  private final CommandSwerveDrivetrain swerve;  
+public class FieldDrive extends Command {
+  private final CommandSwerveDrivetrain swerve;
   private final Elevator elevator;
-  private final PS5Controller Driver_Ctrl;
 
   private SwerveRequest.FieldCentric drive;
 
@@ -34,11 +33,10 @@ public class ChassisSpeed extends Command {
   private DoubleSupplier vX, vY, vR;
 
   /** Creates a new ChassisSpeed. */
-  public ChassisSpeed(CommandSwerveDrivetrain swerve, Elevator elevator, PS5Controller Driver_Ctrl) {
+  public FieldDrive(CommandSwerveDrivetrain swerve, Elevator elevator, PS5Controller Driver_Ctrl) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.elevator = elevator;
-    this.Driver_Ctrl = Driver_Ctrl;
 
     vX = () -> -Driver_Ctrl.getLeftY();
     vY = () -> -Driver_Ctrl.getLeftX();
@@ -60,15 +58,15 @@ public class ChassisSpeed extends Command {
   @Override
   public void execute() {
     // System.out.printf("%.2f %.2f %.2f\n", vX.getAsDouble(), vY.getAsDouble(), vR.getAsDouble());
-    if(elevator.getAbsolutePosition() > -35){
+    if (elevator.getAbsolutePosition() > -35) {
       ChassisSpeed = 1;
     }
-    else{
+    else {
       ChassisSpeed = 0.5;
     }
     swerve.setControl(drive.withVelocityX(vX.getAsDouble() * MaxSpeed * ChassisSpeed) // Drive forward with negative Y(forward)
-                               .withVelocityY(vY.getAsDouble() * MaxSpeed * ChassisSpeed) // Drive left with negative X (left)
-                               .withRotationalRate(vR.getAsDouble() * MaxAngularRate * 4 * ChassisSpeed) // Drive counterclockwise with negative X (left)
+                           .withVelocityY(vY.getAsDouble() * MaxSpeed * ChassisSpeed) // Drive left with negative X (left)
+                           .withRotationalRate(vR.getAsDouble() * MaxAngularRate * 4 * ChassisSpeed) // Drive counterclockwise with negative X (left)
     );
   }
 

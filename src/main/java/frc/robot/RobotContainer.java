@@ -38,7 +38,8 @@ import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
-import frc.robot.command.Swerve_CMD.ChassisSpeed;
+import frc.robot.command.Swerve_CMD.FieldDrive;
+import frc.robot.command.Swerve_CMD.RobotDrive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.Arm;
@@ -88,16 +89,12 @@ public class RobotContainer {
     public final L3AutoShootCoral CMD_L3AutoShootCoarl = new L3AutoShootCoral(coral, arm, elevator);
 
     // Swerve Command
-    public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator, Driver_Ctrl);
+    public final FieldDrive CMD_FieldDrive = new FieldDrive(drivetrain, elevator, Driver_Ctrl);
+    public final RobotDrive CMD_RobotDrive = new RobotDrive(drivetrain, Driver_Ctrl, CMD_FieldDrive);
 
     private SendableChooser<Command> autoChooser;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
-    /* Setting up bindings for necessary control of the swerve drive platform */
-    // private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-    //                                                                   .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-    //                                                                   .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -176,39 +173,11 @@ public class RobotContainer {
     }
 
     private void Test_ConfigureBingings(){
-        // new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
-        // new JoystickButton(test, 2).onTrue(CMD_Barege);
-        // new JoystickButton(test, 3).onTrue(new InstantCommand(arm::Arm_Algae));
-        // new JoystickButton(P1, 1).onTrue(CMD_RL4);
-        // new JoystickButton(P1, 2).onTrue(CMD_RL3);
-        // new JoystickButton(P1,3).onTrue(CMD_RL2);
-        // new JoystickButton(P1, 4).onTrue(CMD_RL1);
-        // new JoystickButton(P1, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
-    }
-
-    private void P1ControlBoard_ConfigureBindings(){
-        new JoystickButton(P1, 1).onTrue(CMD_RL4);
-        new JoystickButton(P1, 2).onTrue(CMD_RL3);
-        new JoystickButton(P1, 3).onTrue(CMD_RL2);
-        new JoystickButton(P1, 4).onTrue(CMD_RL1);
-
-        new JoystickButton(P1, 5).onTrue(CMD_RL2);
-        new JoystickButton(P1, 6).onTrue(CMD_RL2);
-    }
-
-    private void P2ControlBoard_ConfigureBindings(){
-        new JoystickButton(P2, 1).onTrue(CMD_RL4);
-        new JoystickButton(P2, 2).onTrue(CMD_RL3);
-        new JoystickButton(P2, 3).onTrue(CMD_RL2);
-        new JoystickButton(P2, 4).onTrue(CMD_RL1);
-
-        new JoystickButton(P2, 5).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
-
-
+        new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
     }
 
     private void configureBindings() {
-        drivetrain.setDefaultCommand(CMD_ChassisSpeed);
+        drivetrain.setDefaultCommand(CMD_FieldDrive);
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
