@@ -6,6 +6,7 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.IntStream;
@@ -28,20 +29,18 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-
+import frc.robot.command.Aim_Cmd.AutoReefLevel;
+import frc.robot.command.Aim_Cmd.Reef1;
 import frc.robot.command.Auto_Cmd.AutoAim;
 import frc.robot.command.Auto_Cmd.AutoShootCoral;
 import frc.robot.command.Auto_Cmd.AutoSuckCoral;
-import frc.robot.command.Auto_Cmd.L3AutoShootCoral;
 import frc.robot.command.Group_Cmd.Barge;
 import frc.robot.command.Group_Cmd.RL1;
 import frc.robot.command.Group_Cmd.RL2;
 import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
-import frc.robot.command.Group_Cmd.SuckCoral;
-import frc.robot.command.ReefAim_Cmd.AutoEle;
-import frc.robot.command.ReefAim_Cmd.Reef1;
+import frc.robot.command.Group_Cmd.CoralStation;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
 import frc.robot.command.Swerve_CMD.SmartDrive;
 import frc.robot.generated.TunerConstants;
@@ -80,7 +79,7 @@ public class RobotContainer {
     public final RL3 CMD_RL3 = new RL3(arm, coral, elevator);
     public final RL4 CMD_RL4 = new RL4(arm, coral, elevator);
     public final SetZero CMD_SetZero = new SetZero(arm, coral, elevator);
-    public final SuckCoral suckCoral = new SuckCoral(coral, arm);
+    public final CoralStation suckCoral = new CoralStation(coral, arm);
 
     // Single Command
     // public final CoralShoot CMD_CoralShoot = new CoralShoot(coral, elevator);
@@ -89,15 +88,14 @@ public class RobotContainer {
     public final AutoAim CMD_AutoAim = new AutoAim(drivetrain);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
-    public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
+    public final CoralStation CMD_SuckCoral = new CoralStation(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
-    public final L3AutoShootCoral CMD_L3AutoShootCoarl = new L3AutoShootCoral(coral, arm, elevator);
 
     // ReefAim Command
     public final Reef1 CMD_Reef1 = new Reef1(drivetrain);
 
     // Swerve Command
-    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, Driver_Ctrl, test);
+    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, Driver_Ctrl, Driver_Ctrl);
 
     private SendableChooser<Command> autoChooser;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -122,7 +120,6 @@ public class RobotContainer {
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
-        NamedCommands.registerCommand("L3AutoShootCoarl", CMD_L3AutoShootCoarl);
         NamedCommands.registerCommand("AutoSuckCoral", CMD_SuckCoral);
         NamedCommands.registerCommand("RL4", CMD_RL4);
         NamedCommands.registerCommand("RL3", CMD_RL3);
@@ -139,15 +136,15 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(algae::Algae_out, algae));
         new JoystickButton(Driver_Ctrl, 2).whileTrue(new InstantCommand(algae::Algae_Back, algae));
         new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
-                                          .onFalse(new InstantCommand(climber::Stop, climber));
+                                                       .onFalse(new InstantCommand(climber::Stop, climber));
         new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
-                                          .onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck, algae))
-                                          .onFalse(new InstantCommand(algae::Stop, algae));
+                                                       .onFalse(new InstantCommand(climber::Stop, climber));
+        // new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck, algae))
+        //                                                .onFalse(new InstantCommand(algae::Stop, algae));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(algae::shoot, algae))
-                                          .onFalse(new InstantCommand(algae::Stop, algae));
+                                                        .onFalse(new InstantCommand(algae::Stop, algae));
         new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck, coral))
-                                          .onFalse(new InstantCommand(coral::Coral_Stop, coral));
+                                                       .onFalse(new InstantCommand(coral::Coral_Stop, coral));
         new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot))
                                                        .onFalse(new InstantCommand(coral::Coral_Stop, coral));
 
@@ -185,40 +182,40 @@ public class RobotContainer {
         // new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
         // new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
         // new JoystickButton(test, 5).onTrue(CMD_Reef1);
-
-        if (DriverStation.getAlliance().isPresent()) {
-            if (DriverStation.getAlliance().get() == Alliance.Red) {
+        Optional<Alliance> alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+            if (alliance.get() == Alliance.Red) {
                 new JoystickButton(P2, 1).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(0))
-                    .alongWith(new AutoEle(drivetrain, elevator, 7, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 0, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 2).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(1))
-                    .alongWith(new AutoEle(drivetrain, elevator, 7, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 1, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 3).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(0))
-                    .alongWith(new AutoEle(drivetrain, elevator, 8, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 0, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 4).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(1))
-                    .alongWith(new AutoEle(drivetrain, elevator, 8, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 1, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 5).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(0))
-                    .alongWith(new AutoEle(drivetrain, elevator, 9, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 0, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 6).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(1))
-                    .alongWith(new AutoEle(drivetrain, elevator, 9, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 1, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 7).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(0))
-                    .alongWith(new AutoEle(drivetrain, elevator, 10, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 0, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 8).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(1))
-                    .alongWith(new AutoEle(drivetrain, elevator, 10, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 1, () -> {return reefLevel;}))
                 );
                 new JoystickButton(P2, 9).whileTrue(
                     drivetrain.driveToPose(reefMap.get(11).get(0))
@@ -288,8 +285,6 @@ public class RobotContainer {
             }
         }
     }
-
-
 
     private void configureBindings() {
         drivetrain.setDefaultCommand(CMD_SmartDrive);

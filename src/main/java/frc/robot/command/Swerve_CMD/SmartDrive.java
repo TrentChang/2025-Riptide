@@ -47,7 +47,7 @@ public class SmartDrive extends Command {
     vX = () -> -driveCtrl.getLeftY();
     vY = () -> -driveCtrl.getLeftX();
     vR = () -> -driveCtrl.getRightX();
-    btnIsPressed = () -> switchCtrl.getRawButtonPressed(2);  // TODO: confirm the button's ID
+    btnIsPressed = () -> switchCtrl.getRawButtonPressed(5);  // TODO: confirm the button's ID
 
     addRequirements(swerve, elevator);
   }
@@ -77,8 +77,8 @@ public class SmartDrive extends Command {
         isRobotRelative = false;
         return;
       }
-      swerve.setControl(driveR.withVelocityX(vX.getAsDouble() * maxSpeed) // Drive forward with negative Y(forward)
-                              .withVelocityY(vY.getAsDouble() * maxSpeed) // Drive left with negative X (left)
+      swerve.setControl(driveR.withVelocityX(vX.getAsDouble() * maxSpeed * 0.25) // Drive forward with negative Y(forward)
+                              .withVelocityY(vY.getAsDouble() * maxSpeed * 0.25) // Drive left with negative X (left)
       );
     } else {  // Field Relative
       // System.out.printf("%.2f %.2f %.2f\n", vX.getAsDouble(), vY.getAsDouble(), vR.getAsDouble());

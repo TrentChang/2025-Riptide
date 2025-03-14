@@ -11,11 +11,11 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Coral;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class SuckCoral extends Command {
+public class CoralStation extends Command {
   private final Coral coral;
   private final Arm arm;
   /** Creates a new SuckCoral. */
-  public SuckCoral(Coral coral, Arm arm) {
+  public CoralStation(Coral coral, Arm arm) {
     this.coral = coral;
     this.arm = arm;
     addRequirements(coral, arm);

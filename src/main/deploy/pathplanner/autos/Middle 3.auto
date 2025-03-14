@@ -19,12 +19,6 @@
         {
           "type": "named",
           "data": {
-            "name": "RL4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoShootCoral"
           }
         },
@@ -37,12 +31,6 @@
         {
           "type": "named",
           "data": {
-            "name": "CoralSuck"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoSuckCoral"
           }
         },
@@ -56,12 +44,6 @@
           "type": "named",
           "data": {
             "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "RL4"
           }
         },
         {
@@ -91,12 +73,6 @@
         {
           "type": "named",
           "data": {
-            "name": "RL3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoAim"
           }
         },
@@ -104,18 +80,6 @@
           "type": "named",
           "data": {
             "name": "AutoShootCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RLToSuck"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoSuckCoral"
           }
         }
       ]
