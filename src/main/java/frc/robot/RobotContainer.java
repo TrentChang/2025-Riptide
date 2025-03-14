@@ -38,8 +38,7 @@ import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
-import frc.robot.command.Swerve_CMD.FieldDrive;
-import frc.robot.command.Swerve_CMD.RobotDrive;
+import frc.robot.command.Swerve_CMD.SmartDrive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.Arm;
@@ -89,8 +88,7 @@ public class RobotContainer {
     public final L3AutoShootCoral CMD_L3AutoShootCoarl = new L3AutoShootCoral(coral, arm, elevator);
 
     // Swerve Command
-    public final FieldDrive CMD_FieldDrive = new FieldDrive(drivetrain, elevator, Driver_Ctrl, test);
-    public final RobotDrive CMD_RobotDrive = new RobotDrive(drivetrain, Driver_Ctrl, CMD_FieldDrive);
+    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, Driver_Ctrl, test);
 
     private SendableChooser<Command> autoChooser;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -180,7 +178,7 @@ public class RobotContainer {
 
 
     private void configureBindings() {
-        drivetrain.setDefaultCommand(CMD_FieldDrive);
+        drivetrain.setDefaultCommand(CMD_SmartDrive);
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.

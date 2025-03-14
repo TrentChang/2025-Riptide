@@ -21,7 +21,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class FieldDrive extends Command {
+public class SmartDrive extends Command {
   private final CommandSwerveDrivetrain swerve;
   private final Elevator elevator;
 
@@ -39,7 +39,7 @@ public class FieldDrive extends Command {
 
 
   /** Creates a new ChassisSpeed. */
-  public FieldDrive(CommandSwerveDrivetrain swerve, Elevator elevator, PS5Controller driveCtrl, GenericHID switchCtrl) {
+  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, PS5Controller driveCtrl, GenericHID switchCtrl) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.elevator = elevator;
@@ -79,7 +79,6 @@ public class FieldDrive extends Command {
       }
       swerve.setControl(driveR.withVelocityX(vX.getAsDouble() * maxSpeed) // Drive forward with negative Y(forward)
                               .withVelocityY(vY.getAsDouble() * maxSpeed) // Drive left with negative X (left)
-                              .withRotationalRate(vR.getAsDouble() * maxAngularRate * 4) // Drive counterclockwise with negative X (left)
       );
     } else {  // Field Relative
       // System.out.printf("%.2f %.2f %.2f\n", vX.getAsDouble(), vY.getAsDouble(), vR.getAsDouble());
