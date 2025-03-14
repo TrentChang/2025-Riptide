@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -60,7 +61,7 @@ public class RobotContainer {
     private final XboxController test = new XboxController(3);
 
     // private final Joystick P1 = new Joystick(3); // BIG BUTTON
-    // private final Joystick P2 = new Joystick(4); // REEF BUTTON
+    private final Joystick P2 = new Joystick(4); // REEF BUTTON
     
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Algae algae = new Algae();
@@ -179,43 +180,43 @@ public class RobotContainer {
     }
 
     private void Test_ConfigureBingings(){
-        new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
+        // new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
         // new JoystickButton(test, 2).onTrue(CMD_RobotDrive);
-        new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
-        new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
-        new JoystickButton(test, 5).onTrue(CMD_Reef1);
+        // new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
+        // new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
+        // new JoystickButton(test, 5).onTrue(CMD_Reef1);
 
         if (DriverStation.getAlliance().isPresent()) {
             if (DriverStation.getAlliance().get() == Alliance.Red) {
-                new JoystickButton(test, 1).whileTrue(
+                new JoystickButton(P2, 1).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(0))
                     .alongWith(new AutoEle(drivetrain, elevator, 7, 0, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 2).whileTrue(
+                new JoystickButton(P2, 2).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(1))
                     .alongWith(new AutoEle(drivetrain, elevator, 7, 1, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 3).whileTrue(
+                new JoystickButton(P2, 3).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(0))
                     .alongWith(new AutoEle(drivetrain, elevator, 8, 0, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 4).whileTrue(
+                new JoystickButton(P2, 4).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(1))
                     .alongWith(new AutoEle(drivetrain, elevator, 8, 1, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 5).whileTrue(
+                new JoystickButton(P2, 5).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(0))
                     .alongWith(new AutoEle(drivetrain, elevator, 9, 0, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 6).whileTrue(
+                new JoystickButton(P2, 6).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(1))
                     .alongWith(new AutoEle(drivetrain, elevator, 9, 1, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 7).whileTrue(
+                new JoystickButton(P2, 7).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(0))
                     .alongWith(new AutoEle(drivetrain, elevator, 10, 0, () -> {return reefLevel;}))
                 );
-                new JoystickButton(test, 8).whileTrue(
+                new JoystickButton(P2, 8).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(1))
                     .alongWith(new AutoEle(drivetrain, elevator, 10, 1, () -> {return reefLevel;}))
                 );
@@ -236,10 +237,10 @@ public class RobotContainer {
     }
 
     public void updateReefLevel() {
-        IntStream.range(1, 4).forEachOrdered(i -> {
+        for (int i = 1; i <= 4; i++) {
             if (test.getRawButton(i)) {
                 reefLevel = 5 - i;
             }
-        });
+        }
     }
 }

@@ -34,7 +34,7 @@ public class AutoEle extends Command {
 
     targetPose = reefMap.get(aprilTagID).get(reef);
 
-    addRequirements(swerve, elevator);
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -50,7 +50,7 @@ public class AutoEle extends Command {
     double deltaY = Math.abs(currPose.getY() - targetPose.getY());
     double distance = Math.sqrt(Math.pow(deltaX, 2) + Math.pow(deltaY, 2));
     
-    if (distance <= 1) {
+    if (distance <= 0.5) {
       int reefLevel = reefLevelSupplier.get();
       switch (reefLevel) {
         case 1:

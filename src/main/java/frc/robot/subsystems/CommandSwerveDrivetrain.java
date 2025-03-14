@@ -290,26 +290,29 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        LimelightHelpers.tryUpdateVisionMeasurement(this);
+        // LimelightHelpers.tryUpdateVisionMeasurement(this);
 
-        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-            DriverStation.getAlliance().ifPresent(allianceColor -> {
-                setOperatorPerspectiveForward(
-                    allianceColor == Alliance.Red
-                        ? kRedAlliancePerspectiveRotation
-                        : kBlueAlliancePerspectiveRotation
-                );
-                m_hasAppliedOperatorPerspective = true;
-            });
-        }
+        // if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+        //     DriverStation.getAlliance().ifPresent(allianceColor -> {
+        //         setOperatorPerspectiveForward(
+        //             allianceColor == Alliance.Red
+        //                 ? kRedAlliancePerspectiveRotation
+        //                 : kBlueAlliancePerspectiveRotation
+        //         );
+        //         m_hasAppliedOperatorPerspective = true;
+        //     });
+        // }
 
         m_field2d.setRobotPose(this.getState().Pose);
         SmartDashboard.putData("Bot_Pose", m_field2d);
 
-        SmartDashboard.putNumber("Bot_X", this.getState().Pose.getX());
-        SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
-        SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
-        SmartDashboard.putNumber("Pigeon", this.getYaw());
+        // SmartDashboard.putNumber("Bot_X", this.getState().Pose.getX());
+        // SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
+        // SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
+        // SmartDashboard.putNumber("Pigeon", this.getYaw());
+        if (LimelightHelpers.getFiducialID("") != -1) {
+            this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
+        }
     }
 
     private void startSimThread() {
