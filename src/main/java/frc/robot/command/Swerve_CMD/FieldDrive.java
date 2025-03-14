@@ -22,7 +22,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 public class FieldDrive extends Command {
   private final CommandSwerveDrivetrain swerve;
   private final Elevator elevator;
-  private final PS5Controller Driver_Ctrl;
 
   private SwerveRequest.FieldCentric drive;
 
@@ -38,7 +37,6 @@ public class FieldDrive extends Command {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.elevator = elevator;
-    this.Driver_Ctrl = Driver_Ctrl;
 
     vX = () -> -Driver_Ctrl.getLeftY();
     vY = () -> -Driver_Ctrl.getLeftX();
