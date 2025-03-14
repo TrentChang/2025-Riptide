@@ -29,8 +29,8 @@ public class AutoAim extends Command {
   private Command driveToPose;
 
   /** Creates a new AutoAim. */
-  public AutoAim(CommandSwerveDrivetrain swerve) {
-    this.swerve = swerve;
+  public AutoAim(CommandSwerveDrivetrain swerve) { 
+    this.swerve = swerve;  
     addRequirements(swerve);
     // Use addRequirements() here to declare subsystem dependencies.
   }

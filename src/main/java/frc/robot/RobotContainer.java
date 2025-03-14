@@ -174,6 +174,7 @@ public class RobotContainer {
         new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
         new JoystickButton(test, 2).onTrue(CMD_RobotDrive);
         new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
+        new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
     }
 
 
