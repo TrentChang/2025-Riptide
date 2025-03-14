@@ -36,7 +36,8 @@ import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
-import frc.robot.command.Swerve_CMD.ChassisSpeed;
+import frc.robot.command.Swerve_CMD.FieldDrive;
+import frc.robot.command.Swerve_CMD.RobotDrive;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Algae;
 import frc.robot.subsystems.Arm;
@@ -77,16 +78,12 @@ public class RobotContainer {
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
 
     // Swerve Command
-    public final ChassisSpeed CMD_ChassisSpeed = new ChassisSpeed(drivetrain, elevator, Driver_Ctrl);
+    public final FieldDrive CMD_FieldDrive = new FieldDrive(drivetrain, elevator, Driver_Ctrl);
+    public final RobotDrive CMD_RobotDrive = new RobotDrive(drivetrain, Driver_Ctrl, CMD_FieldDrive);
 
     private SendableChooser<Command> autoChooser;
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
-    /* Setting up bindings for necessary control of the swerve drive platform */
-    // private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-    //                                                                   .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-    //                                                                   .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
 
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
@@ -169,10 +166,18 @@ public class RobotContainer {
 
     private void Test_ConfigureBingings(){
         new JoystickButton(test, 1).whileTrue(Commands.defer(DTP_CMD, Set.of(drivetrain)));
+
+        /* TODO: @angelinafan0314, please test this:
+         * you can change the JoystickButton as you want :thumbsup:
+        */
+        new JoystickButton(test, 5).onTrue(new InstantCommand(() -> {
+            drivetrain.removeDefaultCommand();
+            drivetrain.setDefaultCommand(CMD_RobotDrive);
+        }));
     }
 
     private void configureBindings() {
-        drivetrain.setDefaultCommand(CMD_ChassisSpeed);
+        drivetrain.setDefaultCommand(CMD_FieldDrive);
 
         // Note that X is defined as forward according to WPILib convention,
         // and Y is defined as to the left according to WPILib convention.
