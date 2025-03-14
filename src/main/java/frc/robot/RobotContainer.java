@@ -8,12 +8,12 @@ import static edu.wpi.first.units.Units.*;
 
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.IntStream;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -107,6 +107,8 @@ public class RobotContainer {
 
     private Supplier<Command> DTP_CMD = () -> targetChooser.driveToClosestReef(drivetrain);
 
+    private int reefLevel = 0;
+
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
@@ -185,38 +187,18 @@ public class RobotContainer {
     private void configureBindings() {
         drivetrain.setDefaultCommand(CMD_SmartDrive);
 
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
-        
-        // drivetrain.setDefaultCommand(
-                // Drivetrain will execute this command periodically
-            //     drivetrain.applyRequest(() -> drive.withVelocityX(-Driver_Ctrl.getLeftY() * MaxSpeed) // Drive forward with negative Y(forward)
-            //                                        .withVelocityY(-Driver_Ctrl.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-            //                                        .withRotationalRate(-Driver_Ctrl.getRightX() * MaxAngularRate * 4) // Drive counterclockwise with negative X (left)
-            // ));
-
-
-        // Driver_Ctrl.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        // Driver_Ctrl.b().whileTrue(drivetrain.applyRequest(() ->
-        // point.withModuleDirection(new Rotation2d(-Driver_Ctrl.getLeftY(),
-        // -Driver_Ctrl.getLeftX()))
-        // ));
-
-        // // Run SysId routines when holding back/start and X/Y.
-        // // Note that each routine should be run exactly once in a single log.
-        // Driver_Ctrl.back().and(Driver_Ctrl.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // Driver_Ctrl.back().and(Driver_Ctrl.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // Driver_Ctrl.start().and(Driver_Ctrl.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // Driver_Ctrl.start().and(Driver_Ctrl.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
-
-        // // reset the field-centric heading on left bumper press
-        // Driver_Ctrl.leftBumper().onTrue(drivetrain.runOnce(() ->
-        // drivetrain.seedFieldCentric()));
-
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
     public Command getAutonomousCommand() {
         return autoChooser.getSelected();
+    }
+
+    public void updateReefLevel() {
+        IntStream.range(1, 4).forEachOrdered(i -> {
+            if (test.getRawButton(i)) {
+                reefLevel = 5 - i;
+            }
+        });
     }
 }
