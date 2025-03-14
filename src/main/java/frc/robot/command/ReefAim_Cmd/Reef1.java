@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.LimelightHelpers;
-import frc.robot.TargetChooser;
+import static frc.robot.TargetChooser.reefMap;
 import frc.robot.LimelightHelpers.PoseEstimate;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
@@ -69,10 +69,10 @@ public class Reef1 extends Command {
     }
 
     if(RedAlliance){
-        driveToPose = swerve.driveToPose(TargetChooser.map.get(21).get(1));
+        driveToPose = swerve.driveToPose(reefMap.get(21).get(1));
     }
     else if(!RedAlliance){
-        driveToPose = swerve.driveToPose(TargetChooser.map.get(10).get(0));
+        driveToPose = swerve.driveToPose(reefMap.get(10).get(0));
     }
   }
   

@@ -14,8 +14,10 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +39,7 @@ import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
+import frc.robot.command.ReefAim_Cmd.AutoEle;
 import frc.robot.command.ReefAim_Cmd.Reef1;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
 import frc.robot.command.Swerve_CMD.SmartDrive;
@@ -49,6 +52,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.limelight;
+import static frc.robot.TargetChooser.reefMap;
 
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
@@ -179,7 +183,6 @@ public class RobotContainer {
         new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
         new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
         new JoystickButton(test, 5).onTrue(CMD_Reef1);
-        new JoystickButton(test, 6).onTrue(CMD_SuckCoral);
     }
 
 
