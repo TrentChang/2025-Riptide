@@ -29,7 +29,8 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-
+import frc.robot.command.Aim_Cmd.AutoReefLevel;
+import frc.robot.command.Aim_Cmd.Reef1;
 import frc.robot.command.Auto_Cmd.AutoAim;
 import frc.robot.command.Auto_Cmd.AutoShootCoral;
 import frc.robot.command.Auto_Cmd.AutoSuckCoral;
@@ -39,9 +40,7 @@ import frc.robot.command.Group_Cmd.RL2;
 import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
-import frc.robot.command.Group_Cmd.SuckCoral;
-import frc.robot.command.ReefAim_Cmd.AutoReefLevel;
-import frc.robot.command.ReefAim_Cmd.Reef1;
+import frc.robot.command.Group_Cmd.CoralStation;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
 import frc.robot.command.Swerve_CMD.SmartDrive;
 import frc.robot.generated.TunerConstants;
@@ -80,7 +79,7 @@ public class RobotContainer {
     public final RL3 CMD_RL3 = new RL3(arm, coral, elevator);
     public final RL4 CMD_RL4 = new RL4(arm, coral, elevator);
     public final SetZero CMD_SetZero = new SetZero(arm, coral, elevator);
-    public final SuckCoral suckCoral = new SuckCoral(coral, arm);
+    public final CoralStation suckCoral = new CoralStation(coral, arm);
 
     // Single Command
     // public final CoralShoot CMD_CoralShoot = new CoralShoot(coral, elevator);
@@ -89,7 +88,7 @@ public class RobotContainer {
     public final AutoAim CMD_AutoAim = new AutoAim(drivetrain);
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(coral, arm, elevator);
-    public final SuckCoral CMD_SuckCoral = new SuckCoral(coral, arm);
+    public final CoralStation CMD_SuckCoral = new CoralStation(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, suckCoral, drivetrain);
 
     // ReefAim Command

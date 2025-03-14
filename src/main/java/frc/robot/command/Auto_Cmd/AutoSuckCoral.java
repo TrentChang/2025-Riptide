@@ -6,17 +6,17 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.LimelightHelpers;
-import frc.robot.command.Group_Cmd.SuckCoral;
+import frc.robot.command.Group_Cmd.CoralStation;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Coral;
 public class AutoSuckCoral extends SequentialCommandGroup{
       /** Creates a new AutoShootCoral. */
   private final Coral coral;
-  private final SuckCoral suckCoral;
+  private final CoralStation suckCoral;
   private final CommandSwerveDrivetrain swerve;
   // private final CommandSwerveDrivetrain commandSwerveDrivetrain;
-  public AutoSuckCoral(Coral coral, SuckCoral suckCoral, CommandSwerveDrivetrain swerve) {
+  public AutoSuckCoral(Coral coral, CoralStation suckCoral, CommandSwerveDrivetrain swerve) {
     this.coral = coral;
     this.suckCoral = suckCoral;
     this.swerve = swerve;
