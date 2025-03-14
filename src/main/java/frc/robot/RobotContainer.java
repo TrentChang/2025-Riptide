@@ -14,8 +14,10 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +39,7 @@ import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
+import frc.robot.command.ReefAim_Cmd.AutoEle;
 import frc.robot.command.ReefAim_Cmd.Reef1;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
 import frc.robot.command.Swerve_CMD.SmartDrive;
@@ -49,6 +52,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Coral;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.limelight;
+import static frc.robot.TargetChooser.reefMap;
 
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
@@ -180,6 +184,43 @@ public class RobotContainer {
         new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
         new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
         new JoystickButton(test, 5).onTrue(CMD_Reef1);
+
+        if (DriverStation.getAlliance().isPresent()) {
+            if (DriverStation.getAlliance().get() == Alliance.Red) {
+                new JoystickButton(test, 1).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(7).get(0))
+                    .alongWith(new AutoEle(drivetrain, elevator, 7, 0, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 2).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(7).get(1))
+                    .alongWith(new AutoEle(drivetrain, elevator, 7, 1, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 3).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(8).get(0))
+                    .alongWith(new AutoEle(drivetrain, elevator, 8, 0, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 4).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(8).get(1))
+                    .alongWith(new AutoEle(drivetrain, elevator, 8, 1, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 5).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(9).get(0))
+                    .alongWith(new AutoEle(drivetrain, elevator, 9, 0, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 6).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(9).get(1))
+                    .alongWith(new AutoEle(drivetrain, elevator, 9, 1, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 7).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(10).get(0))
+                    .alongWith(new AutoEle(drivetrain, elevator, 10, 0, () -> {return reefLevel;}))
+                );
+                new JoystickButton(test, 8).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(10).get(1))
+                    .alongWith(new AutoEle(drivetrain, elevator, 10, 1, () -> {return reefLevel;}))
+                );
+            }
+        }
     }
 
 
