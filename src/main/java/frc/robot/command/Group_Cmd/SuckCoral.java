@@ -31,8 +31,17 @@ public class SuckCoral extends Command {
   public void execute() {
     coral.Coral_Suck();
     arm.Arm_Station();
-    new WaitCommand(0.5);
-    coral.Coral_Suck();
+    if(coral.CoralVelocity < -50){
+      System.out.println("suck");
+      coral.Coral_Suck();
+      new WaitCommand(0.3);
+      if(coral.getCoral){
+        coral.Coral_Stop();
+      }
+      else{
+        coral.Coral_Suck();
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.

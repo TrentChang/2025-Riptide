@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.LimelightHelpers;
 import frc.robot.TargetChooser;
+import frc.robot.LimelightHelpers.PoseEstimate;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.limelight;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class AutoAim extends Command {
@@ -25,6 +27,7 @@ public class AutoAim extends Command {
 
   private final Field2d Pose = new Field2d();
   private Pose2d robotPose, llPose;
+  // private PoseEstimate llPose;
   private int aprilTagID;
   private Command driveToPose;
 
@@ -41,6 +44,8 @@ public class AutoAim extends Command {
     System.out.println("Init");
 
     aprilTagID = (int)LimelightHelpers.getFiducialID("");
+    // LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0,0, 0, 0, 0);
+    // llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
     llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
     if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22)) {
       if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data

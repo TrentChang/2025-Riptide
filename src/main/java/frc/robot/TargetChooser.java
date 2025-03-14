@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.PoseEstimate;
 
 /** Add your docs here. */
 public class TargetChooser {
@@ -50,6 +51,7 @@ public class TargetChooser {
      
     private Boolean isReef(int aprilTagID) {
         return (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22);
+        // return(-1 != aprilTagID);
     }
 
     public Pose2d identify(int apriltag, Pose2d currPose) {
@@ -66,6 +68,8 @@ public class TargetChooser {
     public Command driveToClosestReef(CommandSwerveDrivetrain swerve) {
         Pose2d robotPose;
         int aprilTagID = (int)LimelightHelpers.getFiducialID("");
+        // LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
+        // PoseEstimate llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
         Pose2d llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
         System.out.println("Start");
         if (isReef(aprilTagID)) {
@@ -87,7 +91,31 @@ public class TargetChooser {
         return new Command(){};
     }
 
+    // public Command driveToReef(CommandSwerveDrivetrain swerve) {
+    //     Pose2d robotPose;
+    //     int aprilTagID = (int)LimelightHelpers.getFiducialID("");
+    //     LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
+    //     PoseEstimate llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
+    //     System.out.println("Start");
+    //     if (isReef(aprilTagID)) {
+    //         System.out.println(" IsReef confirmed");
+    //     // useless if-else condition = =
 
+    //     //     if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
+    //     //         System.out.println("  Using Odom");
+    //     //         robotPose = swerve.getState().Pose;
+    //     //     } else {
+    //     //         System.out.println("  Using LL");
+    //     //         robotPose = llPose;
+    //     //         swerve.resetPose(llPose);
+    //     //     }
+    //         robotPose = llPose.pose;
+    //         swerve.resetPose(llPose.pose);
+    //         return swerve.driveToPose(identify(aprilTagID, robotPose));
+    //     }
+    //     return new Command(){};
+    // }
+      
     // public boolean isFinished(){
     //     double aprilTagID = LimelightHelpers.getFiducialID("");
     //     if (aprilTagID == -1) {

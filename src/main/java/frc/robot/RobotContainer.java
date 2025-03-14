@@ -153,8 +153,7 @@ public class RobotContainer {
     }
 
     private void Assist_ConfigureBindings() {
-        new JoystickButton(Assist_Ctrl, 1).onTrue(new InstantCommand(coral::Coral_Suck).alongWith(new WaitCommand(0.5))
-                                                       .andThen(CMD_SuckCoral));
+        new JoystickButton(Assist_Ctrl, 1).onTrue(CMD_SuckCoral);
         new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up,climber)).onFalse(new InstantCommand(climber::Stop, climber));
         new JoystickButton(Assist_Ctrl, 3).whileTrue(new InstantCommand(climber::Down, climber))
                                                        .onFalse(new InstantCommand(climber::Stop, climber));
@@ -180,6 +179,7 @@ public class RobotContainer {
         new JoystickButton(test, 3).onTrue(new InstantCommand(drivetrain::ResetPigeon));
         new JoystickButton(test, 4).onTrue(new InstantCommand(arm::Arm_Algae));
         new JoystickButton(test, 5).onTrue(CMD_Reef1);
+        new JoystickButton(test, 6).onTrue(CMD_SuckCoral);
     }
 
 

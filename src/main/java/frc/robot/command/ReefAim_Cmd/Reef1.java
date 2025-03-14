@@ -18,6 +18,8 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.LimelightHelpers;
+import frc.robot.TargetChooser;
+import frc.robot.LimelightHelpers.PoseEstimate;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -26,10 +28,10 @@ public class Reef1 extends Command {
   boolean isFinished = false;
 
   private final Field2d Pose = new Field2d();
-  private Pose2d robotPose, llPose;
+  private Pose2d robotPose;
+  private PoseEstimate llPose;
   private int aprilTagID;
   private Command driveToPose;
-  private AllianceStationID  AllianceStation;
   private boolean RedAlliance;
   /** Creates a new Reef1. */
   public Reef1(CommandSwerveDrivetrain swerve) {
@@ -44,40 +46,36 @@ public class Reef1 extends Command {
     System.out.println("Init");
 
     aprilTagID = (int)LimelightHelpers.getFiducialID("");
-    llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
-
-    AllianceStation = DriverStationJNI.getAllianceStation();
+    // LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
+    // llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
+    Pose2d llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
     if(DriverStation.getAlliance().isPresent()){
-      System.out.println("Alliance" + AllianceStation);
-      if(AllianceStation == AllianceStationID.Red1 || AllianceStation == AllianceStationID.Red2 || AllianceStation == AllianceStationID.Red3){
-          RedAlliance = true;
-      }
-      else if(AllianceStation == AllianceStationID.Blue1 || AllianceStation == AllianceStationID.Blue2 || AllianceStation == AllianceStationID.Blue3){
-          RedAlliance = false;
-      }
-    }
-
-    if( -1 != aprilTagID){
-      if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
-        robotPose = swerve.getState().Pose;
-      } else {
-        robotPose = llPose;
-        swerve.resetPose(llPose);
-      }
-
-      if(DriverStation.getAlliance().isPresent()){
-        if(RedAlliance){
-            driveToPose = swerve.driveToPose(new Pose2d(5.806, 3.886, Rotation2d.fromDegrees(180.0)));
+        System.out.println("Alliance");
+        if(DriverStation.getAlliance().get() == Alliance.Red){
+            RedAlliance = true;
         }
-        else if(!RedAlliance){
-            driveToPose = swerve.driveToPose(new Pose2d(11.718, 4.214, Rotation2d.fromDegrees(0.0)));
+        else {
+            RedAlliance = false;
         }
-    } else {
       isFinished = true;
     }
+
+    if (-1 != aprilTagID || llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
+      robotPose = swerve.getState().Pose;
+    } 
+    else {
+      robotPose = llPose;
+      swerve.resetPose(llPose);
+    }
+
+    if(RedAlliance){
+        driveToPose = swerve.driveToPose(TargetChooser.map.get(21).get(1));
+    }
+    else if(!RedAlliance){
+        driveToPose = swerve.driveToPose(TargetChooser.map.get(10).get(0));
     }
   }
-
+  
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -89,11 +87,13 @@ public class Reef1 extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    driveToPose.end(interrupted);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (isFinished || driveToPose.isFinished());
   }
 }

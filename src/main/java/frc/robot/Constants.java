@@ -173,7 +173,7 @@ public final class Constants{
         public static final double L1 = -0.5;
         public static final double L2 = -9;
         public static final double L3 = -28;
-        public static final double L4 = -58;
+        public static final double L4 = -57;
 
 
         public static final double MAX_ACCEL = 1000;
