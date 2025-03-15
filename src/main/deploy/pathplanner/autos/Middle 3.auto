@@ -13,12 +13,6 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoShootCoral"
           }
         },
@@ -31,12 +25,6 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoSuckCoral"
           }
         },
@@ -44,12 +32,6 @@
           "type": "path",
           "data": {
             "pathName": "ToRL"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAim"
           }
         },
         {
@@ -67,12 +49,6 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoSuckCoral"
           }
         },
@@ -80,12 +56,6 @@
           "type": "path",
           "data": {
             "pathName": "ToRL"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAim"
           }
         },
         {

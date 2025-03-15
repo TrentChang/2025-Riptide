@@ -45,7 +45,7 @@ public class TargetChooser {
         reefMap.put(1, Arrays.asList(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54))));
         reefMap.put(2, Arrays.asList(new Pose2d(16.697198, 6.927, Rotation2d.fromDegrees(54))));
         reefMap.put(12, Arrays.asList(new Pose2d(0.851154, 1.115, Rotation2d.fromDegrees(-126))));
-        reefMap.put(13, Arrays.asList(new Pose2d(0.851154, 6.927, Rotation2d.fromDegrees(126))));
+        reefMap.put(13, Arrays.asList(new Pose2d(0.851154, 6.857, Rotation2d.fromDegrees(126))));
     }
 
     private double getDistance(Pose2d p1, Pose2d p2) {
