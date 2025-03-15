@@ -327,7 +327,7 @@ public class RobotContainer {
 
     public void updateReefLevel() {
         for (int i = 1; i <= 4; i++) {
-            if (P2.getRawButton(i) && i != reefLevel) {
+            if (P1.getRawButton(i) && i != reefLevel) {
                 reefLevel = 5 - i;
                 System.out.printf("reefLevel is now %d\n", reefLevel);
             }
