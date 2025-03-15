@@ -31,7 +31,6 @@ public class CoralStation extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("execute");
     coral.Coral_Suck();
     arm.Arm_Station();
     // new WaitCommand(0.5);
@@ -56,6 +55,7 @@ public class CoralStation extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return coral.getCoral;
+    // return coral.getCoral;
+    return false;
   }
 }

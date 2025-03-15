@@ -147,7 +147,7 @@ public class RobotContainer {
                                                        .onFalse(new InstantCommand(climber::Stop, climber));
         // new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
         //                                                .onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(Driver_Ctrl, 4).onTrue(CoralStation);
+        new JoystickButton(Driver_Ctrl, 4).whileTrue(CoralStation);
         // new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(algae::suck, algae))
         //                                                .onFalse(new InstantCommand(algae::Stop, algae));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(algae::shoot, algae))
@@ -159,12 +159,11 @@ public class RobotContainer {
 
         new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
-        new POVButton(Driver_Ctrl, 180).onTrue((CMD_RL3));
-        new POVButton(Driver_Ctrl, 270).onTrue((CMD_RL4));
+        new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
+        new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
     }
 
     private void Assist_ConfigureBindings() {
-        new JoystickButton(Assist_Ctrl, 1).onTrue(CoralStation);
         new JoystickButton(Assist_Ctrl, 2).whileTrue(new InstantCommand(climber::Up,climber))
                                                        .onFalse(new InstantCommand(climber::Stop, climber));
         new JoystickButton(Assist_Ctrl, 3).whileTrue(new InstantCommand(climber::Down, climber))

@@ -310,8 +310,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
         // SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
         // SmartDashboard.putNumber("Pigeon", this.getYaw());
-        if (LimelightHelpers.getFiducialID("") != -1) {
-            this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
+        if( (this.getState().Speeds.vxMetersPerSecond <= 0.2) && (this.getState().Speeds.vyMetersPerSecond <= 0.2)){
+            if (LimelightHelpers.getFiducialID("") != -1) {
+                this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
+            }
         }
     }
 

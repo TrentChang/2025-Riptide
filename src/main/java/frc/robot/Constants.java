@@ -116,7 +116,7 @@ public final class Constants{
         public static final double Arm_RL1 = 0.17;
         public static final double Arm_RL2 = 0.19;
         public static final double Arm_RL3 = 0.19;
-        public static final double Arm_RL4 = 0.2;
+        public static final double Arm_RL4 = 0.18;
 
         public static final double MAX_ACCEL = 500;
         public static final double MAX_VELOCITY = 200;
