@@ -256,14 +256,14 @@ public class RobotContainer {
                     drivetrain.driveToPose(reefMap.get(11).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 1, () -> {return reefLevel;}))
                 );
-                // new JoystickButton(P2, 11).whileTrue(
-                //     drivetrain.driveToPose(reefMap.get(12).get(0))
-                //     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 12, 0, () -> {return reefLevel;}))
-                // );
-                // new JoystickButton(P2, 12).whileTrue(
-                //     drivetrain.driveToPose(reefMap.get(12).get(1))
-                //     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 12, 1, () -> {return reefLevel;}))
-                // );
+                new JoystickButton(P2, 11).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(6).get(0))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 0, () -> {return reefLevel;}))
+                );
+                new JoystickButton(P2, 12).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(6).get(1))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 1, () -> {return reefLevel;}))
+                );
             } else {
                 new JoystickButton(P2, 1).whileTrue(
                     drivetrain.driveToPose(reefMap.get(18).get(0))
@@ -305,6 +305,14 @@ public class RobotContainer {
                     drivetrain.driveToPose(reefMap.get(20).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 1, () -> {return reefLevel;}))
                 );
+                new JoystickButton(P2, 11).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(19).get(0))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 0, () -> {return reefLevel;}))
+                );
+                new JoystickButton(P2, 12).whileTrue(
+                    drivetrain.driveToPose(reefMap.get(19).get(1))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 1, () -> {return reefLevel;}))
+                );
             }
         }
     }
@@ -327,7 +335,7 @@ public class RobotContainer {
 
     public void updateReefLevel() {
         for (int i = 1; i <= 4; i++) {
-            if (P2.getRawButton(i) && i != reefLevel) {
+            if (P1.getRawButton(i)) {
                 reefLevel = 5 - i;
                 System.out.printf("reefLevel is now %d\n", reefLevel);
             }
