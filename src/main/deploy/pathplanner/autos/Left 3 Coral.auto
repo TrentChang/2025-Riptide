@@ -17,9 +17,21 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "RLToSuck"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
           }
         },
         {
@@ -32,6 +44,12 @@
           "type": "path",
           "data": {
             "pathName": "ToRL"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
           }
         },
         {
@@ -49,6 +67,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoSuckCoral"
           }
         },
@@ -61,7 +85,25 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "L3AutoShootCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
           }
         }
       ]

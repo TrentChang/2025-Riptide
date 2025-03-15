@@ -82,6 +82,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     return alliance.get() == DriverStation.Alliance.Red & !DriverStation.isTeleop();
                 }
                 return false;
+
+                
             },
             this); // Subsystem for requirements
         } catch (Exception e) {
