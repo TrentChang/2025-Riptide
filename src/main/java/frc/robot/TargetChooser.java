@@ -26,20 +26,20 @@ public class TargetChooser {
         // 0.164338 0.45
 
         // Red Alliance
-        reefMap.put(6, Arrays.asList(new Pose2d(13.58, 2.776, Rotation2d.fromDegrees(120.0)), new Pose2d(13.864, 2.94, Rotation2d.fromDegrees(120.0))));
-        reefMap.put(7, Arrays.asList(new Pose2d(14.41, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(14.41, 4.214, Rotation2d.fromDegrees(180.0))));
-        reefMap.put(8, Arrays.asList(new Pose2d(13.864, 5.16, Rotation2d.fromDegrees(-120.0)), new Pose2d(13.58, 5.324, Rotation2d.fromDegrees(-120.0))));
-        reefMap.put(9, Arrays.asList(new Pose2d(12.488, 5.324, Rotation2d.fromDegrees(-60.0)), new Pose2d(12.204, 5.16, Rotation2d.fromDegrees(-60.0))));
-        reefMap.put(10, Arrays.asList(new Pose2d(11.658, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(11.658, 3.886, Rotation2d.fromDegrees(0.0))));
-        reefMap.put(11, Arrays.asList(new Pose2d(12.204, 2.94, Rotation2d.fromDegrees(60.0)), new Pose2d(12.488, 2.776, Rotation2d.fromDegrees(60.0))));
+        reefMap.put(6, Arrays.asList(new Pose2d(13.53, 2.863, Rotation2d.fromDegrees(120.0)), new Pose2d(13.814, 3.027, Rotation2d.fromDegrees(120.0))));
+        reefMap.put(7, Arrays.asList(new Pose2d(14.31, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(14.31, 4.214, Rotation2d.fromDegrees(180.0))));
+        reefMap.put(8, Arrays.asList(new Pose2d(13.814, 5.073, Rotation2d.fromDegrees(-120.0)), new Pose2d(13.53, 5.237, Rotation2d.fromDegrees(-120.0))));
+        reefMap.put(9, Arrays.asList(new Pose2d(12.538, 5.237, Rotation2d.fromDegrees(-60.0)), new Pose2d(12.254, 5.073, Rotation2d.fromDegrees(-60.0))));
+        reefMap.put(10, Arrays.asList(new Pose2d(11.758, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(11.758, 3.886, Rotation2d.fromDegrees(0.0))));
+        reefMap.put(11, Arrays.asList(new Pose2d(12.254, 3.027, Rotation2d.fromDegrees(60.0)), new Pose2d(12.538, 2.863, Rotation2d.fromDegrees(60.0))));
 
         // Blue Alliance
-        reefMap.put(17, Arrays.asList(new Pose2d(3.66, 2.94, Rotation2d.fromDegrees(60.0)), new Pose2d(3.944, 2.776, Rotation2d.fromDegrees(60.0))));
-        reefMap.put(22, Arrays.asList(new Pose2d(5.036, 2.776, Rotation2d.fromDegrees(120.0)), new Pose2d(5.32, 2.94, Rotation2d.fromDegrees(120.0))));
-        reefMap.put(21, Arrays.asList(new Pose2d(5.866, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(5.866, 4.214, Rotation2d.fromDegrees(180.0))));
-        reefMap.put(20, Arrays.asList(new Pose2d(5.32, 5.16, Rotation2d.fromDegrees(-120.0)), new Pose2d(5.036, 5.324, Rotation2d.fromDegrees(-120.0))));
-        reefMap.put(19, Arrays.asList(new Pose2d(3.944, 5.324, Rotation2d.fromDegrees(-60.0)), new Pose2d(3.66, 5.16, Rotation2d.fromDegrees(-60.0))));
-        reefMap.put(18, Arrays.asList(new Pose2d(3.114, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(3.114, 3.886, Rotation2d.fromDegrees(0.0))));
+        reefMap.put(17, Arrays.asList(new Pose2d(3.71, 3.027, Rotation2d.fromDegrees(60.0)), new Pose2d(3.994, 2.863, Rotation2d.fromDegrees(60.0))));
+        reefMap.put(22, Arrays.asList(new Pose2d(4.986, 2.863, Rotation2d.fromDegrees(120.0)), new Pose2d(5.27, 3.027, Rotation2d.fromDegrees(120.0))));
+        reefMap.put(21, Arrays.asList(new Pose2d(5.766, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(5.766, 4.214, Rotation2d.fromDegrees(180.0))));
+        reefMap.put(20, Arrays.asList(new Pose2d(5.27, 5.073, Rotation2d.fromDegrees(-120.0)), new Pose2d(4.986, 5.237, Rotation2d.fromDegrees(-120.0))));
+        reefMap.put(19, Arrays.asList(new Pose2d(3.994, 5.237, Rotation2d.fromDegrees(-60.0)), new Pose2d(3.71, 5.073, Rotation2d.fromDegrees(-60.0))));
+        reefMap.put(18, Arrays.asList(new Pose2d(3.214, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(3.214, 3.886, Rotation2d.fromDegrees(0.0))));
 
         // Coral Station
         reefMap.put(1, Arrays.asList(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54))));

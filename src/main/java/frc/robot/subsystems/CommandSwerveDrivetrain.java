@@ -71,7 +71,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             () -> this.getState().Speeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
             new PPHolonomicDriveController(new PIDConstants(5.8, 5, 0.05, 20),
-                                            new PIDConstants(4, 0, 0, 0)),
+                                           new PIDConstants(4, 0.05, 0, 10)),
             RobotConfig.fromGUISettings(),
             // Boolean supplier that controls when the path will be mirrored for the red alliance
             // This will flip the path being followed to the red side of the field during auto only.
@@ -83,7 +83,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 }
                 return false;
 
-                
+
             },
             this); // Subsystem for requirements
         } catch (Exception e) {
@@ -312,8 +312,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
         // SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
         // SmartDashboard.putNumber("Pigeon", this.getYaw());
+
         if( (this.getState().Speeds.vxMetersPerSecond <= 0.2) && (this.getState().Speeds.vyMetersPerSecond <= 0.2)){
             if (LimelightHelpers.getFiducialID("") != -1) {
+                // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
                 this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
             }
         }
@@ -382,8 +384,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(180));
 
     PathConstraints constraints = new PathConstraints(
-          2.0, 
-          1.5,
+          3.0, 
+          2.0,
           Units.degreesToRadians(270), 
           Units.degreesToRadians(180)
     );
