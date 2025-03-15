@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -115,6 +116,7 @@ public class RobotContainer {
     private Supplier<Command> DTP_CMD = () -> targetChooser.driveToClosestReef(drivetrain);
 
     private int reefLevel = 0;
+    private Supplier<Integer> reefLevelSupplier = () -> {return reefLevel;};
 
     public RobotContainer() {
         configureBindings();
@@ -157,7 +159,26 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot))
                                                        .onFalse(new InstantCommand(coral::Coral_Stop, coral));
 
-        new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
+        new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(() -> {
+            switch (reefLevelSupplier.get()) {
+                case 1:
+                  arm.Arm_RL1();  
+                  elevator.ELE_RL1();
+                  break;
+                case 2:
+                  arm.Arm_RL2();
+                  elevator.ELE_RL2();
+                  break;
+                case 3:
+                  arm.Arm_RL3();
+                  elevator.ELE_RL3();
+                  break;
+                case 4:
+                  arm.Arm_RL4();
+                  elevator.ELE_RL4();
+                  break;
+              }
+        }, elevator));
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
         new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
@@ -214,105 +235,111 @@ public class RobotContainer {
     private void P2_ConfigureBindings(){
        Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
+            System.out.printf("Alliance is now %s\n", alliance.get().name());
             if (alliance.get() == Alliance.Red) {
                 new JoystickButton(P2, 1).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 0, reefLevelSupplier))
+                    .alongWith(new PrintCommand("=========="))
                 );
                 new JoystickButton(P2, 2).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 3).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 4).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 5).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 6).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 7).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 8).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 9).whileTrue(
                     drivetrain.driveToPose(reefMap.get(11).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 10).whileTrue(
                     drivetrain.driveToPose(reefMap.get(11).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 11).whileTrue(
                     drivetrain.driveToPose(reefMap.get(6).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 12).whileTrue(
                     drivetrain.driveToPose(reefMap.get(6).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 1, reefLevelSupplier))
                 );
             } else {
                 new JoystickButton(P2, 1).whileTrue(
                     drivetrain.driveToPose(reefMap.get(18).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 18, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 18, 0, reefLevelSupplier))
+                    .alongWith(new PrintCommand("=========="))
                 );
                 new JoystickButton(P2, 2).whileTrue(
                     drivetrain.driveToPose(reefMap.get(18).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 18, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 18, 1, reefLevelSupplier))
+                    .alongWith(new PrintCommand("=========="))
                 );
                 new JoystickButton(P2, 3).whileTrue(
                     drivetrain.driveToPose(reefMap.get(17).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 17, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 17, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 4).whileTrue(
                     drivetrain.driveToPose(reefMap.get(17).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 17, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 17, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 5).whileTrue(
                     drivetrain.driveToPose(reefMap.get(22).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 22, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 22, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 6).whileTrue(
                     drivetrain.driveToPose(reefMap.get(22).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 22, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 22, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 7).whileTrue(
                     drivetrain.driveToPose(reefMap.get(21).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 21, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 21, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 8).whileTrue(
                     drivetrain.driveToPose(reefMap.get(21).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 21, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 21, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 9).whileTrue(
                     drivetrain.driveToPose(reefMap.get(20).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 10).whileTrue(
                     drivetrain.driveToPose(reefMap.get(20).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 1, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 11).whileTrue(
                     drivetrain.driveToPose(reefMap.get(19).get(0))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 0, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 0, reefLevelSupplier))
                 );
                 new JoystickButton(P2, 12).whileTrue(
                     drivetrain.driveToPose(reefMap.get(19).get(1))
-                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 1, () -> {return reefLevel;}))
+                    .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 1, reefLevelSupplier))
                 );
             }
+        } else {
+            System.out.println("WARNING: Alliance NOT DETECTED!");
         }
     }
 
