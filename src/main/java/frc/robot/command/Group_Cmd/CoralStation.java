@@ -14,7 +14,9 @@ import frc.robot.subsystems.Coral;
 public class CoralStation extends Command {
   private final Coral coral;
   private final Arm arm;
-  /** Creates a new SuckCoral. */
+  /** Creates a new SuckCoral. 
+   *  @param aprilTagID The AprilTag ID of the target reef.
+  */
   public CoralStation(Coral coral, Arm arm) {
     this.coral = coral;
     this.arm = arm;
@@ -29,21 +31,22 @@ public class CoralStation extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("execute");
     coral.Coral_Suck();
     arm.Arm_Station();
-    if(coral.CoralVelocity < -50){
-      System.out.println("suck");
-      coral.Coral_Suck();
-      new WaitCommand(0.3);
-      if(coral.getCoral){
-        coral.Coral_Stop();
-      }
-      else{
-        coral.Coral_Suck();
-      }
-    }
+    // new WaitCommand(0.5);
+    // if(coral.CoralVelocity < -40){
+    //   System.out.println("suck");
+    //   coral.Coral_Suck();
+    //   new WaitCommand(0.3);
+    //   if(coral.getCoral){
+    //     coral.Coral_Stop();
+    //   }
+    //   else{
+    //     coral.Coral_Suck();
+    //   }
+  // }
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {

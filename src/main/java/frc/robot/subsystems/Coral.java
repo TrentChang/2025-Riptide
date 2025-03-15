@@ -15,7 +15,7 @@ public class Coral extends SubsystemBase{
     private final TalonFX Coral_Motor = new TalonFX(CoralConstants.Coral_Motor_ID, "mech");
 
     public boolean getCoral = false;
-    public double CoralVelocity;
+    public double CoralCurrent, CoralVelocity;
     public Coral(){
         Coral_Motor.setNeutralMode(NeutralModeValue.Brake);
         Coral_Motor.setInverted(CoralConstants.Coral_Inverted);
@@ -56,14 +56,15 @@ public class Coral extends SubsystemBase{
 
     @Override
     public void periodic(){
-        // SmartDashboard.putBoolean("Algae_Detected", CoarlDetected());
         CoralVelocity = Coral_Motor.getRotorVelocity().getValueAsDouble();
-        if(Coral_Motor.getSupplyCurrent().getValueAsDouble() > 8){
+        CoralCurrent = Coral_Motor.getSupplyCurrent().getValueAsDouble();
+        if(CoralCurrent > 40){
             getCoral = true;
         }
         else{
             getCoral = false;
         }
         SmartDashboard.putBoolean("Get_Coral", getCoral);
+        SmartDashboard.putNumber("CoralSpeed", CoralVelocity);
     }
 }

@@ -7,37 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartToRR"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShootCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RRToSuck"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoSuckCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "ToRL"
+            "pathName": "StartToRL"
           }
         },
         {
@@ -61,6 +31,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoSuckCoral"
           }
         },
@@ -80,6 +56,42 @@
           "type": "named",
           "data": {
             "name": "AutoShootCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToSuck"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoSuckCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ToRL"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L3AutoShootCoral"
           }
         }
       ]

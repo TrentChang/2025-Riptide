@@ -1694,7 +1694,7 @@ public class LimelightHelpers {
         }
         if(!doRejectUpdate){
             swerve.setVisionMeasurementStdDevs(VecBuilder.fill(0.003, 0.003, 9999999));
-            swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
+            swerve.addVisionMeasurement(megatag.pose, megatag.timestampSeconds);
         }
     }
 

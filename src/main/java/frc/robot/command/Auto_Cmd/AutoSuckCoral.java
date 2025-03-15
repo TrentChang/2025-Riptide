@@ -12,19 +12,19 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Coral;
 public class AutoSuckCoral extends SequentialCommandGroup{
       /** Creates a new AutoShootCoral. */
+  private final Arm arm;
   private final Coral coral;
-  private final CoralStation suckCoral;
-  private final CommandSwerveDrivetrain swerve;
-  // private final CommandSwerveDrivetrain commandSwerveDrivetrain;
-  public AutoSuckCoral(Coral coral, CoralStation suckCoral, CommandSwerveDrivetrain swerve) {
-    this.coral = coral;
-    this.suckCoral = suckCoral;
-    this.swerve = swerve;
 
-    addRequirements(swerve, coral);
-    addCommands(Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
+  // private final CommandSwerveDrivetrain commandSwerveDrivetrain;
+  public AutoSuckCoral(Coral coral,Arm arm) {
+    this.arm = arm;
+    this.coral = coral;
+    addRequirements(arm, coral);
+    // addCommands(Commands.runOnce(() -> swerve.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")), swerve));
+    addCommands(new InstantCommand(arm::Arm_Station));
     addCommands(new InstantCommand(coral::Coral_Suck));
-    addCommands(new WaitCommand(0.5));
-    addCommands(suckCoral);
+    addCommands(new WaitCommand(1));
+    addCommands(new InstantCommand(arm::Arm_StartUp));
+    addCommands(new InstantCommand(coral::Coral_Stop));
 }
 }

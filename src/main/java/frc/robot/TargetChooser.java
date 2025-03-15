@@ -41,10 +41,11 @@ public class TargetChooser {
         reefMap.put(19, Arrays.asList(new Pose2d(3.944, 5.324, Rotation2d.fromDegrees(-60.0)), new Pose2d(3.66, 5.16, Rotation2d.fromDegrees(-60.0))));
         reefMap.put(18, Arrays.asList(new Pose2d(3.114, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(3.114, 3.886, Rotation2d.fromDegrees(0.0))));
 
-        reefMap.put(1, Arrays.asList(new Pose2d(16.697198, 0.65532, Rotation2d.fromDegrees(-54))));
-        reefMap.put(2, Arrays.asList(new Pose2d(16.697198, 7.39648, Rotation2d.fromDegrees(54))));
-        reefMap.put(12, Arrays.asList(new Pose2d(0.851154, 0.65532, Rotation2d.fromDegrees(-126))));
-        reefMap.put(13, Arrays.asList(new Pose2d(16.697198, 7.39648, Rotation2d.fromDegrees(126))));
+        // Coral Station
+        reefMap.put(1, Arrays.asList(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54))));
+        reefMap.put(2, Arrays.asList(new Pose2d(16.697198, 6.927, Rotation2d.fromDegrees(54))));
+        reefMap.put(12, Arrays.asList(new Pose2d(0.851154, 1.115, Rotation2d.fromDegrees(-126))));
+        reefMap.put(13, Arrays.asList(new Pose2d(0.851154, 6.927, Rotation2d.fromDegrees(126))));
     }
 
     private double getDistance(Pose2d p1, Pose2d p2) {
@@ -54,8 +55,7 @@ public class TargetChooser {
     }
      
     private boolean isReef(int aprilTagID) {
-        return (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22);
-        // return(-1 != aprilTagID);
+        return (6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13);
     }
 
     public Pose2d identify(int apriltag, Pose2d currPose) {

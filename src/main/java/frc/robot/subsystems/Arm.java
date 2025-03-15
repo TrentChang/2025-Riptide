@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.DuplicateFormatFlagsException;
+
 import com.ctre.phoenix6.configs.ClosedLoopGeneralConfigs;
 import com.ctre.phoenix6.configs.FeedbackConfigs;
 import com.ctre.phoenix6.configs.MotionMagicConfigs;
@@ -17,8 +19,9 @@ import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase{
     private final TalonFX Arm_Motor = new TalonFX(ArmConstants.Arm_ID, "mech");
-
     private final CANcoder Arm_Encoder = new CANcoder(ArmConstants.Arm_Encoder_ID, "mech");
+
+    private double ArmPos;
     
     public Arm(){
         var Arm_Motor_Config = Arm_Motor.getConfigurator();
@@ -53,7 +56,8 @@ public class Arm extends SubsystemBase{
     }
 
     public double getArmPos(){
-        return Arm_Encoder.getAbsolutePosition().getValueAsDouble();
+        ArmPos = Arm_Encoder.getAbsolutePosition().getValueAsDouble();
+        return ArmPos;
     }
 
     // Arm 
@@ -107,10 +111,6 @@ public class Arm extends SubsystemBase{
 
     public void Arm_Stop(){
         Arm_Motor.set(0);
-    }
-
-    public void Arm_Stay(double POS){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(POS));
     }
 
     @Override

@@ -292,16 +292,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          */
         // LimelightHelpers.tryUpdateVisionMeasurement(this);
 
-        // if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-        //     DriverStation.getAlliance().ifPresent(allianceColor -> {
-        //         setOperatorPerspectiveForward(
-        //             allianceColor == Alliance.Red
-        //                 ? kRedAlliancePerspectiveRotation
-        //                 : kBlueAlliancePerspectiveRotation
-        //         );
-        //         m_hasAppliedOperatorPerspective = true;
-        //     });
-        // }
+        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+            DriverStation.getAlliance().ifPresent(allianceColor -> {
+                setOperatorPerspectiveForward(
+                    allianceColor == Alliance.Red
+                        ? kRedAlliancePerspectiveRotation
+                        : kBlueAlliancePerspectiveRotation
+                );
+                m_hasAppliedOperatorPerspective = true;
+            });
+        }
 
         m_field2d.setRobotPose(this.getState().Pose);
         SmartDashboard.putData("Bot_Pose", m_field2d);

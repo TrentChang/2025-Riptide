@@ -110,7 +110,7 @@ public final class Constants{
 
         public static final double Arm_Zero = 0.1;
         public static final double Arm_StartUp = 0.1;
-        public static final double Arm_Station = 0.3;
+        public static final double Arm_Station = 0.36;
         public static final double Arm_Barge = 0.26;
         public static final double Arm_Algae = 0.27;
         public static final double Arm_RL1 = 0.17;
@@ -171,7 +171,7 @@ public final class Constants{
 
         public static final double floor = -0.5;
         public static final double L1 = -0.5;
-        public static final double L2 = -9;
+        public static final double L2 = -9.16;
         public static final double L3 = -28;
         public static final double L4 = -57;
 
