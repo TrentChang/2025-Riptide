@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import static edu.wpi.first.units.Units.*;
 
+import frc.robot.command.Aim_Cmd.AimCoralStation;
 import frc.robot.command.Aim_Cmd.AutoReefLevel;
 import frc.robot.command.Aim_Cmd.Reef1;
 import frc.robot.command.Auto_Cmd.AutoAim;
@@ -44,6 +45,7 @@ import frc.robot.command.Group_Cmd.RL4;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.SuckCoral;
 import frc.robot.command.Group_Cmd.CoralStation;
+import frc.robot.command.Single_Cmd.CoralShoot;
 import frc.robot.command.Single_Cmd.SetClimberAsHead;
 import frc.robot.command.Swerve_CMD.SmartDrive;
 import frc.robot.generated.TunerConstants;
@@ -75,6 +77,9 @@ public class RobotContainer {
     public final limelight limelight = new limelight();
     public final TargetChooser targetChooser = new TargetChooser();
 
+    // Aim Command
+    public final AimCoralStation CMD_AimCoralStation = new AimCoralStation(arm, drivetrain, coral, limelight);
+
     // Group Command
     public final Barge CMD_Barege = new Barge(arm, coral, elevator);
     public final RL1 CMD_RL1 = new RL1(arm, coral, elevator);
@@ -86,7 +91,7 @@ public class RobotContainer {
     public final SuckCoral suckCoral = new SuckCoral(arm, coral);
 
     // Single Command
-    // public final CoralShoot CMD_CoralShoot = new CoralShoot(coral, elevator);
+    public final CoralShoot CMD_CoralShoot = new CoralShoot(arm, coral, elevator);
 
     // Auto Command
     public final AutoAim CMD_AutoAim = new AutoAim(drivetrain);
@@ -96,7 +101,7 @@ public class RobotContainer {
     public final CoralStation CMD_CoralStation = new CoralStation(coral, arm);
     public final AutoSuckCoral CMD_AutoSuckCoral = new AutoSuckCoral(coral, arm);
 
-    // ReefAim Command
+    // ReeAim Command
     public final Reef1 CMD_Reef1 = new Reef1(drivetrain);
 
     // Swerve Command
@@ -129,6 +134,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
         NamedCommands.registerCommand("L3AutoShootCoral", CMD_L3AutoShootCoral);
         NamedCommands.registerCommand("AutoSuckCoral", CMD_AutoSuckCoral);
+        NamedCommands.registerCommand("AutoCoralStation", CMD_AimCoralStation);
         NamedCommands.registerCommand("RL4", CMD_RL4);
         NamedCommands.registerCommand("RL3", CMD_RL3);
         NamedCommands.registerCommand("RL2", CMD_RL2);
@@ -156,7 +162,7 @@ public class RobotContainer {
                                                         .onFalse(new InstantCommand(algae::Stop, algae));
         new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(coral::Coral_Suck, coral))
                                                        .onFalse(new InstantCommand(coral::Coral_Stop, coral));
-        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(coral::Coral_Shoot))
+        new JoystickButton(Driver_Ctrl, 8).whileTrue(CMD_CoralShoot)
                                                        .onFalse(new InstantCommand(coral::Coral_Stop, coral));
 
         new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(() -> {
@@ -229,7 +235,9 @@ public class RobotContainer {
                 );
             }
         }
+        new JoystickButton(P1, 8).whileTrue(CMD_AimCoralStation);
         new JoystickButton(P1, 9).whileTrue(CMD_Barege);
+        new JoystickButton(P1, 10).whileTrue(CMD_AutoAim);
     }
     
     private void P2_ConfigureBindings(){

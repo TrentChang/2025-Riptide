@@ -1648,14 +1648,14 @@ public class LimelightHelpers {
         return results;
     }
 
-    // public static void getOrientation(SwerveCDrive swerve){
+    // public static void getOrientation(CommandSwerveDrivetrain swerve){
     //     boolean doRejectUpdate = false;
-    //     SetRobotOrientation("", swerve.getYaw().getDegrees(), 0, 0, 0, 0, 0);
-    //     SetRobotOrientation("limelight-two", swerve.getYaw().getDegrees(), 0, 0, 0, 0, 0);
+    //     SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
+    //     SetRobotOrientation("limelight-two", swerve.getYaw(), 0, 0, 0, 0, 0);
     //     PoseEstimate megatag = getBotPoseEstimate_wpiBlue_MegaTag2("");
     //     PoseEstimate megatag2 = getBotPoseEstimate_wpiBlue_MegaTag2("limelight-two");
 
-    //     if(Math.abs((swerve.getGyro().getYawAngularVelocity().magnitude())) > 720 ){
+    //     if(Math.abs((swerve.getAngularVelocity())) > 720 ){
     //         doRejectUpdate = true;
     //     }
     //     if(megatag == null || megatag.tagCount == 0 || megatag2 == null || megatag2.tagCount == 0){

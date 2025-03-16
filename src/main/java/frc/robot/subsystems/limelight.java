@@ -32,7 +32,7 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     public boolean getTag(){
         TagID = (int) LimelightHelpers.getFiducialID("");
-        // TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
+        TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
 
         // if(TagID == -1 && TagID2 == -1){
         //     return tag = false;
