@@ -4,6 +4,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -49,12 +50,25 @@ import frc.robot.LimelightHelpers.PoseEstimate;
         }
     }
 
-    public Pose3d getRobotPose(){
-        if(getTag()){
-            return LimelightHelpers.getBotPose3d_wpiBlue("");
+    public Pose2d getRobotPose(){
+        TagID = (int) LimelightHelpers.getFiducialID("");
+        // TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
+        Pose2d pose1 = LimelightHelpers.getBotPose2d_wpiBlue("");
+        // Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        if(TagID != -1){
+            return LimelightHelpers.getBotPose2d_wpiBlue("");
         }
+        // else if(TagID2 != -1){
+        //     return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        // }
+        // else if(TagID != -1 && TagID2 != -1){
+        //     return new Pose2d((pose1.getX() + pose2.getX()) / 2,
+        //                       (pose1.getY() + pose2.getY()) / 2,
+        //                        pose1.getRotation().plus(pose2.getRotation()).div(2)
+        //                      );
+        // }
         else{
-            return new Pose3d();
+            return new Pose2d();
         }
     }
 
@@ -95,18 +109,20 @@ import frc.robot.LimelightHelpers.PoseEstimate;
     public void periodic(){
             getTag();
             getRobotPose();
-            getRobotPose_two();
-            robotToTarget();
-            deltaRobotHeadingDeg();
+            // getRobotPose_two();
+            // robotToTarget();
+            // deltaRobotHeadingDeg();
             // getLLPose();
 
         // LL_Pose.setRobotPose(avgPose);
-        LL_Pose.setRobotPose(getRobotPose().toPose2d());
+        LL_Pose.setRobotPose(getRobotPose());
         SmartDashboard.putData("LL_Pose", LL_Pose);
-        SmartDashboard.putNumber("LX", LimelightHelpers.getTX("limelight-two"));
-        SmartDashboard.putNumber("LY", LimelightHelpers.getTY("limelight-two"));
-        SmartDashboard.putNumber("LR", getRobotPose_two().getRotation().getAngle());
-        // SmartDashboard.putNumber("RY", LimelightHelpers.getTargetPose3d_CameraSpace("").getRotation().getY() * 57.3);
+
         SmartDashboard.putBoolean("getTag", tag);
+        // SmartDashboard.putNumber("LX", LimelightHelpers.getTX("limelight-two"));
+        // SmartDashboard.putNumber("LY", LimelightHelpers.getTY("limelight-two"));
+        // SmartDashboard.putNumber("LR", getRobotPose_two().getRotation().getAngle());
+        // SmartDashboard.putNumber("RY", LimelightHelpers.getTargetPose3d_CameraSpace("").getRotation().getY() * 57.3);
+        SmartDashboard.putNumber("Offset", LimelightHelpers.getTargetPose3d_RobotSpace("").getY());
    }
 }

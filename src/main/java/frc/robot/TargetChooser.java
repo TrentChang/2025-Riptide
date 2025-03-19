@@ -23,8 +23,9 @@ public class TargetChooser {
     // public static HashMap<Integer, List<Pose2d>> map = new HashMap<>();
     public static HashMap<Integer, List<Pose2d>> reefMap = new HashMap<>();// = new ObjectMapper().readValue("SOMETHING", HashMap.class);
     static {
-        // 0.164338 0.45
+        // X 0.164338 
 
+        // Reef
         // Red Alliance
         reefMap.put(6, Arrays.asList(new Pose2d(13.53, 2.863, Rotation2d.fromDegrees(120.0)), new Pose2d(13.814, 3.027, Rotation2d.fromDegrees(120.0))));
         reefMap.put(7, Arrays.asList(new Pose2d(14.31, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(14.31, 4.214, Rotation2d.fromDegrees(180.0))));
@@ -42,8 +43,11 @@ public class TargetChooser {
         reefMap.put(18, Arrays.asList(new Pose2d(3.214, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(3.214, 3.886, Rotation2d.fromDegrees(0.0))));
 
         // Coral Station
+        // Red Alliance
         reefMap.put(1, Arrays.asList(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54))));
         reefMap.put(2, Arrays.asList(new Pose2d(16.697198, 6.927, Rotation2d.fromDegrees(54))));
+        
+        //BLue Alliance
         reefMap.put(12, Arrays.asList(new Pose2d(0.851154, 1.200, Rotation2d.fromDegrees(-126))));
         reefMap.put(13, Arrays.asList(new Pose2d(0.851154, 6.800, Rotation2d.fromDegrees(126))));
     }

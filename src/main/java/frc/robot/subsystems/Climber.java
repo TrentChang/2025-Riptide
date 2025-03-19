@@ -14,7 +14,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
 
-// Motor * 2
+/**
+ * Kraken X60 Motor * 1
+ */
+
 public class Climber extends SubsystemBase{
     private final TalonFX Climber_Motor = new TalonFX(ClimberConstants.Climb_Motor, "mech");
 

@@ -8,19 +8,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Coral;
+import frc.robot.subsystems.Claw;
+import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CoralStation extends Command {
-  private final Coral coral;
+  private final Elevator elevator;
+  private final Claw coral;
   private final Arm arm;
   /** Creates a new SuckCoral. 
    *  @param aprilTagID The AprilTag ID of the target reef.
   */
-  public CoralStation(Coral coral, Arm arm) {
+  public CoralStation(Elevator elevator, Claw coral, Arm arm) {
+    this.elevator = elevator;
     this.coral = coral;
     this.arm = arm;
-    addRequirements(coral, arm);
+    addRequirements(elevator, coral, arm);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -31,7 +34,8 @@ public class CoralStation extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    coral.Coral_Suck();
+    elevator.ELE_Floor();
+    // coral.Coral_Suck();
     arm.Arm_Station();
     // new WaitCommand(0.5);
     // if(coral.CoralVelocity < -40){
@@ -49,7 +53,7 @@ public class CoralStation extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    coral.Coral_Stop();
+    // coral.Coral_Stop();
   }
 
   // Returns true when the command should end.

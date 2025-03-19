@@ -17,6 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
+/** 
+* Falcon 500 Motor * 1
+*/
+
 public class Arm extends SubsystemBase{
     private final TalonFX Arm_Motor = new TalonFX(ArmConstants.Arm_ID, "mech");
     private final CANcoder Arm_Encoder = new CANcoder(ArmConstants.Arm_Encoder_ID, "mech");
@@ -60,7 +64,7 @@ public class Arm extends SubsystemBase{
         return ArmPos;
     }
 
-    // Arm 
+    // Arm Position
     public void Arm_Zero(){
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Zero).withSlot(0));
     }
@@ -97,17 +101,26 @@ public class Arm extends SubsystemBase{
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL4).withSlot(0));
     }
 
+
     public void Arm_DOWN(){
-        // double pos = Arm_Encoder.getPosition().getValueAsDouble();
-        // Arm_Motor.setControl(new MotionMagicDutyCycle(pos-0.05));
-        Arm_Motor.set(-0.2);
+       Arm_Motor.set(-0.2);
     }
 
     public void Arm_UP(){
-        // double pos = Arm_Encoder.getPosition().getValueAsDouble();
-        // Arm_Motor.setControl(new MotionMagicDutyCycle(pos+0.05));
         Arm_Motor.set(0.2);
     }
+
+    /*
+    public void Arm_DOWN(){
+        double pos = Arm_Encoder.getPosition().getValueAsDouble();
+        Arm_Motor.setControl(new MotionMagicDutyCycle(pos-0.05));
+    }
+
+    public void Arm_UP(){
+        double pos = Arm_Encoder.getPosition().getValueAsDouble();
+        Arm_Motor.setControl(new MotionMagicDutyCycle(pos+0.05));
+    }
+    */
 
     public void Arm_Stop(){
         Arm_Motor.set(0);

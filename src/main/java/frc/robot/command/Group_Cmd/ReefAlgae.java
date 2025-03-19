@@ -5,16 +5,19 @@
 package frc.robot.command.Group_Cmd;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Algae;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class SuckAlgae extends Command {
-  /** Creates a new SuckAlgae. */
-  private final Algae algae;
-  public SuckAlgae(Algae algae) {
-    this.algae = algae;
-    addRequirements(algae);
+public class ReefAlgae extends Command {
+  private final Arm arm;
+  private final Elevator elevator;
+  /** Creates a new ReefAlgae. */
+  public ReefAlgae(Arm arm, Elevator elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
+    this.arm = arm;
+    this.elevator = elevator;
+    addRequirements(arm, elevator);
   }
 
   // Called when the command is initially scheduled.
@@ -24,8 +27,8 @@ public class SuckAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    algae.Algae_out();
-    algae.suck();
+    elevator.ELE_Algae();
+    arm.Arm_Algae();
   }
 
   // Called once the command ends or is interrupted.

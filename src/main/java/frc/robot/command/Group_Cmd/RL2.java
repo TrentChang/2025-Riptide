@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Coral;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 
 public class RL2 extends Command {
@@ -17,10 +17,10 @@ public class RL2 extends Command {
     //     addCommands(Commands.runOnce( () -> arm.Arm_RL2(), arm));
     // }
     private final Arm arm;
-    private final Coral coral;    
+    private final Claw coral;    
     private final Elevator elevator;
 
-    public RL2 (Arm arm, Coral coral, Elevator elevator){
+    public RL2 (Arm arm, Claw coral, Elevator elevator){
         this.arm = arm;
         this.coral = coral;
         this.elevator = elevator;

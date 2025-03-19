@@ -70,7 +70,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             this::resetPose,  // Consumer for seeding pose against auto
             () -> this.getState().Speeds,
             (speeds)->this.setControl(autoRequest.withSpeeds(speeds)), // Consumer of ChassisSpeeds to drive the robot
-            new PPHolonomicDriveController(new PIDConstants(5.8, 5, 0.05, 20),
+            new PPHolonomicDriveController(new PIDConstants(5.8, 0, 0.05, 0),
                                            new PIDConstants(4, 0.05, 0, 10)),
             RobotConfig.fromGUISettings(),
             // Boolean supplier that controls when the path will be mirrored for the red alliance
@@ -313,13 +313,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
         // SmartDashboard.putNumber("Pigeon", this.getYaw());
 
-        if( (this.getState().Speeds.vxMetersPerSecond <= 0.2) && (this.getState().Speeds.vyMetersPerSecond <= 0.2)){
-            if (LimelightHelpers.getFiducialID("") != -1) {
-                // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
-                // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
-                this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
-            }
-        }
+        // if( (this.getState().Speeds.vxMetersPerSecond <= 0.2) && (this.getState().Speeds.vyMetersPerSecond <= 0.2)){
+        //     if (LimelightHelpers.getFiducialID("") != -1) {
+        //         // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
+        //         // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
+        //         this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
+        //     }
+        // }
     }
 
     private void startSimThread() {

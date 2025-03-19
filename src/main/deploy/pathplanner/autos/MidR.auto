@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "StartToRL"
+            "pathName": "midTo21R"
           }
         },
         {
@@ -25,19 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "back off"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RLToSuck"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "RightStation"
+            "pathName": "21RToCSR_"
           }
         },
         {
@@ -49,13 +37,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "ToRL"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.1
+            "pathName": "19RToCSR_"
           }
         },
         {
@@ -71,9 +53,21 @@
           }
         },
         {
+          "type": "path",
+          "data": {
+            "pathName": "19RToCSR"
+          }
+        },
+        {
           "type": "named",
           "data": {
-            "name": null
+            "name": "AutoSuckCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CSRTo19M"
           }
         }
       ]

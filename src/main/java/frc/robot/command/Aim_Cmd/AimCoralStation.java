@@ -6,12 +6,16 @@ package frc.robot.command.Aim_Cmd;
 
 import static frc.robot.TargetChooser.reefMap;
 
+import java.util.Optional;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -23,37 +27,60 @@ import frc.robot.LimelightHelpers;
 import frc.robot.TargetChooser;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Coral;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.limelight;
 
 public class AimCoralStation extends SequentialCommandGroup {
   private final Arm arm;
   private final CommandSwerveDrivetrain swerve;
-  private final Coral coral;
+  private final Claw claw;
   private final limelight limelight;
-  private Pose2d robotPose, llPose;
+  
+  private Pose2d robotPose, llPose, targetPose;
   private final int aprilTagID;
-  //private final Field2d m_Field2d;
 
-  public AimCoralStation(Arm arm, CommandSwerveDrivetrain swerve, Coral coral, limelight limelight) {
+  public AimCoralStation(Arm arm, CommandSwerveDrivetrain swerve, Claw claw, limelight limelight) {
     this.arm = arm;
     this.swerve = swerve;
-    this.coral = coral;
+    this.claw = claw;
     this.limelight = limelight;
-    addRequirements(arm, swerve, coral, limelight);
+    addRequirements(arm, swerve, claw, limelight);
     
-    aprilTagID = (int)LimelightHelpers.getFiducialID("");
-    LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
-    llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose;
+    aprilTagID = (int)LimelightHelpers.getFiducialID("limelight-two");
+    LimelightHelpers.SetRobotOrientation("limelight-two", swerve.getYaw(), 0, 0, 0, 0, 0);
+    llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-two").pose;
     if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
       if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
         robotPose = swerve.getState().Pose;
       } else {
         robotPose = llPose;
       }
-      addCommands(new InstantCommand(() -> coral.Coral_Suck(), coral));
+    
+    double llPose_X = llPose.getX();
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+
+    if(alliance.isPresent()){
+      if(alliance.get() == Alliance.Red){
+        if(Math.abs(llPose_X - reefMap.get(1).get(0).getX()) < Math.abs(llPose_X - reefMap.get(2).get(0).getX())){
+          targetPose = reefMap.get(1).get(0);
+        }
+        else{
+          targetPose = reefMap.get(2).get(0);        }
+      }
+      else if(alliance.get() == Alliance.Blue){
+        if(Math.abs(llPose_X - reefMap.get(12).get(0).getX()) < Math.abs(llPose_X - reefMap.get(13).get(0).getX())){
+          targetPose = reefMap.get(12).get(0);        }
+        else{
+          targetPose = reefMap.get(13).get(0);        }
+      }
+    else{
+      System.out.println("WARNING: Alliance NOT DETECTED!");
+    }
+    }
+    
+      addCommands(new InstantCommand(() -> claw.Claw_Suck(), claw));
       addCommands(new InstantCommand(() -> arm.Arm_Station(), arm));
-      addCommands(swerve.driveToPose(reefMap.get(13).get(0)));
+      addCommands(swerve.driveToPose(targetPose));
     }
   }
 }

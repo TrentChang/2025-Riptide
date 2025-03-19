@@ -70,32 +70,32 @@ public final class Constants{
 //   }
 
   // Subsystems Constants.
-    public static class AlgaeConstants{
-        // Algae ID
-        public static final int Algae_Ctrl_ID = 21;
-        public static final int Algae_Roller_ID = 22;
+    public static class IntakeConstants{
+        // Intake ID
+        public static final int Intake_Ctrl_ID = 21;
+        public static final int Intake_Roller_ID = 22;
 
-        // Algae Config
-        public static final boolean Algae_ctrl_Inverted = true;
-        public static final boolean Algae_Roller_Inverted = false;
+        // Intake Config
+        public static final boolean Intake_ctrl_Inverted = true;
+        public static final boolean Intake_Roller_Inverted = false;
 
-        public static final double Algae_Zero = 0;
-        public static final double Algae_Out = -2.3;
-        public static final double Algae_In = 0;
+        public static final double Intake_Zero = 0;
+        public static final double Intake_Out = -2.3;
+        public static final double Intake_In = 0;
 
         public static final double MAX_ACCEL = 500;
         public static final double MAX_VELOCITY = 200;
         
-        // Algae PIDF
-        public static final double Algae_Out_P = 0.4;
-        public static final double Algae_Out_I = 0;
-        public static final double Algae_Out_D = 0;
-        public static final double Algae_Out_F = 0;      
+        // Intake PIDF
+        public static final double Intake_Out_P = 0.4;
+        public static final double Intake_Out_I = 0;
+        public static final double Intake_Out_D = 0;
+        public static final double Intake_Out_F = 0;      
         
-        public static final double Algae_Back_P = 10;
-        public static final double Algae_Back_I = 0;
-        public static final double Algae_Back_D = 0;
-        public static final double Algae_Back_F = 0;        
+        public static final double Intake_Back_P = 10;
+        public static final double Intake_Back_I = 0;
+        public static final double Intake_Back_D = 0;
+        public static final double Intake_Back_F = 0;        
         
     }
 
@@ -174,7 +174,7 @@ public final class Constants{
         public static final double L2 = -9.16;
         public static final double L3 = -28;
         public static final double L4 = -57;
-
+        public static final double Algae = -10;
 
         public static final double MAX_ACCEL = 1000;
         public static final double MAX_VELOCITY = 400;
@@ -186,14 +186,14 @@ public final class Constants{
         public static final double F = 0;
     }
 
-    public static class CoralConstants{
-        // Coral ID
-        public static final int Coral_Motor_ID = 61;
+    public static class ClawConstants{
+        // Claw ID
+        public static final int Claw_Motor_ID = 61;
 
-        public static final int Coral_Sensor_ID = 0;
+        public static final int Claw_Sensor_ID = 0;
 
-        // Coral Config
-        public static final boolean Coral_Inverted = true;
+        // Claw Config
+        public static final boolean Claw_Inverted = true;
         public static final boolean Arm_Left_Inverted = false;
         public static final boolean Arm_Right_Inverted = false;
 
@@ -201,8 +201,8 @@ public final class Constants{
         public static final double MAX_VELOCITY = 200;
 
         // Intake
-        public static final double Coral_Open = 0;
-        public static final double Coral_Close = 0;
+        public static final double Claw_Open = 0;
+        public static final double Claw_Close = 0;
         // Arm
         public static final double Arm_Station = 0;
         public static final double Arm_Reef = 0;

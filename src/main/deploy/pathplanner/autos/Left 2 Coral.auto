@@ -13,7 +13,25 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoRL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoShootCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "back off"
           }
         },
         {

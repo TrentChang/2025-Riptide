@@ -13,7 +13,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorConstants;
 
-// Motor *2, 
+/**
+ * Kraken X60 Motor * 2
+ */
+
 public class Elevator extends SubsystemBase{
 
     private final TalonFX Left_Motor = new TalonFX(ElevatorConstants.LeftMotor_ID, "mech");
@@ -63,11 +66,6 @@ public class Elevator extends SubsystemBase{
         RightMotorConfig.apply(PIDConfig);
     }
 
-    public void test(){
-        Left_Motor.set(-0.4);
-        Right_Motor.set(-0.4);
-    }
-
     public double getAbsolutePosition(){
         return Left_Motor.getPosition().getValueAsDouble();
     }
@@ -95,6 +93,11 @@ public class Elevator extends SubsystemBase{
     public void ELE_RL4(){
         Left_Motor.setControl(new MotionMagicDutyCycle(ElevatorConstants.L4));
         Right_Motor.setControl(new MotionMagicDutyCycle(ElevatorConstants.L4));
+    }
+
+    public void ELE_Algae(){
+        Left_Motor.setControl(new MotionMagicDutyCycle(ElevatorConstants.Algae));
+        Right_Motor.setControl(new MotionMagicDutyCycle(ElevatorConstants.Algae));
     }
 
     public void ELE_Up(){

@@ -6,24 +6,24 @@ package frc.robot.command.Single_Cmd;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Coral;
+import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CoralShoot extends Command {
   private final Arm arm;
-  private final Coral coral;
+  private final Claw claw;
   private final Elevator elevator;
 
   private double ShootSpeed;
   private double Elevator_Height;
   private double Arm_Angle;
   /** Creates a new CoralShoot. */
-  public CoralShoot(Arm arm, Coral coral, Elevator elevator) {
+  public CoralShoot(Arm arm, Claw claw, Elevator elevator) {
     this.arm = arm;
-    this.coral = coral;
+    this.claw = claw;
     this.elevator = elevator;
-    addRequirements(coral, elevator);
+    addRequirements(claw, elevator);
   //   // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -45,7 +45,7 @@ public class CoralShoot extends Command {
     else {
       ShootSpeed = 0.2;
     }
-    coral.Coral_Shoot();
+    claw.Claw_Shoot();
   }
 
   // // Called once the command ends or is interrupted.

@@ -1648,38 +1648,38 @@ public class LimelightHelpers {
         return results;
     }
 
-    // public static void getOrientation(CommandSwerveDrivetrain swerve){
-    //     boolean doRejectUpdate = false;
-    //     SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
-    //     SetRobotOrientation("limelight-two", swerve.getYaw(), 0, 0, 0, 0, 0);
-    //     PoseEstimate megatag = getBotPoseEstimate_wpiBlue_MegaTag2("");
-    //     PoseEstimate megatag2 = getBotPoseEstimate_wpiBlue_MegaTag2("limelight-two");
+    public static void getOrientation(CommandSwerveDrivetrain swerve){
+        boolean doRejectUpdate = false;
+        SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
+        SetRobotOrientation("limelight-two", swerve.getYaw(), 0, 0, 0, 0, 0);
+        PoseEstimate megatag = getBotPoseEstimate_wpiBlue_MegaTag2("");
+        PoseEstimate megatag2 = getBotPoseEstimate_wpiBlue_MegaTag2("limelight-two");
 
-    //     if(Math.abs((swerve.getAngularVelocity())) > 720 ){
-    //         doRejectUpdate = true;
-    //     }
-    //     if(megatag == null || megatag.tagCount == 0 || megatag2 == null || megatag2.tagCount == 0){
-    //         doRejectUpdate = true;
-    //     }
-    //     if(!doRejectUpdate){
-    //         swerve.setVisionMeasurementStdDevs(VecBuilder.fill(0.005, 0.003, 9999999));
-    //         swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
-    //         swerve.addVisionMeasurement(megatag2.pose, Utils.fpgaToCurrentTime(megatag2.timestampSeconds));
-    //     }
+        if(Math.abs((swerve.getAngularVelocity())) > 720 ){
+            doRejectUpdate = true;
+        }
+        if(megatag == null || megatag.tagCount == 0 || megatag2 == null || megatag2.tagCount == 0){
+            doRejectUpdate = true;
+        }
+        if(!doRejectUpdate){
+            swerve.setVisionMeasurementStdDevs(VecBuilder.fill(0.005, 0.003, 9999999));
+            swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
+            swerve.addVisionMeasurement(megatag2.pose, Utils.fpgaToCurrentTime(megatag2.timestampSeconds));
+        }
         
-    //     if(megatag == null && megatag2 != null){
-    //         swerve.addVisionMeasurement(megatag2.pose, Utils.fpgaToCurrentTime(megatag2.timestampSeconds));
-    //     }
-    //     else if(megatag != null && megatag2 != null){
-    //         swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
-    //     }
-    //     else if (megatag != null && megatag2 != null){
-    //         swerve.addVisionMeasurement(new Pose2d(new Translation2d((megatag.pose.getX() + megatag2.pose.getX()) / 2,
-    //                                                                  (megatag.pose.getY() + megatag2.pose.getY()) / 2),
-    //                                                new Rotation2d(megatag.pose.getRotation().getDegrees() + megatag2.pose.getRotation().getDegrees())),
-    //                                     Utils.fpgaToCurrentTime(megatag.timestampSeconds));
-    //     }
-    // }
+        if(megatag == null && megatag2 != null){
+            swerve.addVisionMeasurement(megatag2.pose, Utils.fpgaToCurrentTime(megatag2.timestampSeconds));
+        }
+        else if(megatag != null && megatag2 != null){
+            swerve.addVisionMeasurement(megatag.pose, Utils.fpgaToCurrentTime(megatag.timestampSeconds));
+        }
+        else if (megatag != null && megatag2 != null){
+            swerve.addVisionMeasurement(new Pose2d(new Translation2d((megatag.pose.getX() + megatag2.pose.getX()) / 2,
+                                                                     (megatag.pose.getY() + megatag2.pose.getY()) / 2),
+                                                   new Rotation2d(megatag.pose.getRotation().getDegrees() + megatag2.pose.getRotation().getDegrees())),
+                                        Utils.fpgaToCurrentTime(megatag.timestampSeconds));
+        }
+    }
 
       public static void tryUpdateVisionMeasurement(CommandSwerveDrivetrain swerve){
         boolean doRejectUpdate = false;

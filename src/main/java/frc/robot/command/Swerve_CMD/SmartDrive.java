@@ -28,7 +28,7 @@ public class SmartDrive extends Command {
   private SwerveRequest.FieldCentric driveF;
   private SwerveRequest.RobotCentric driveR;
 
-  private double rate;
+  private double rate, dX, dY, dR;
   private boolean isRobotRelative;
 
   private double maxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -47,7 +47,7 @@ public class SmartDrive extends Command {
     vX = () -> -driveCtrl.getLeftY();
     vY = () -> -driveCtrl.getLeftX();
     vR = () -> -driveCtrl.getRightX();
-    btnIsPressed = () -> switchCtrl.getRawButtonPressed(5);  // TODO: confirm the button's ID
+    btnIsPressed = () -> switchCtrl.getRawButtonPressed(4);  // TODO: confirm the button's ID
 
     addRequirements(swerve, elevator);
   }
@@ -63,6 +63,21 @@ public class SmartDrive extends Command {
     driveR = new SwerveRequest.RobotCentric()
                               .withDeadband(maxSpeed * 0.1).withRotationalDeadband(maxAngularRate * 0.1)
                               .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+  }
+
+  private double limitSpeed(double rawInput) {
+    /*  0 ~ 0.1 --> 0 
+     *  0.1 ~ 0.4 --> 0.2
+    */
+    if (Math.abs(rawInput) <= 0.1) {
+      return 0;
+    } else if (-0.4 >= rawInput || rawInput >= 0.4) {
+      return rawInput;
+    } else if (rawInput < 0) {
+      return -0.2;
+    } else {
+      return 0.2;
+    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -88,9 +103,10 @@ public class SmartDrive extends Command {
       else {
         rate = 0.5;
       }
-      swerve.setControl(driveF.withVelocityX(vX.getAsDouble() * maxSpeed * rate) // Drive forward with negative Y(forward)
-                            .withVelocityY(vY.getAsDouble() * maxSpeed * rate) // Drive left with negative X (left)
-                            .withRotationalRate(vR.getAsDouble() * maxAngularRate * 4 * rate) // Drive counterclockwise with negative X (left)
+      
+      swerve.setControl(driveF.withVelocityX(limitSpeed(vX.getAsDouble()) * maxSpeed * rate) // Drive forward with negative Y(forward)
+                            .withVelocityY(limitSpeed(vY.getAsDouble()) * maxSpeed * rate) // Drive left with negative X (left)
+                            .withRotationalRate(limitSpeed(vR.getAsDouble()) * maxAngularRate * 4 * rate) // Drive counterclockwise with negative X (left)
       );
     }
   }
