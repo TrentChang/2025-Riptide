@@ -35,85 +35,60 @@ import frc.robot.LimelightHelpers.PoseEstimate;
         TagID = (int) LimelightHelpers.getFiducialID("");
         TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
 
-        // if(TagID == -1 && TagID2 == -1){
-        //     return tag = false;
-        // }
-        // else if(TagID != -1 || TagID2 != -1){
-        //     return tag = true;
-        // }
-        // return false;
-        if(TagID != -1){
-            return tag = true;
-        }
-        else{
+        if(TagID == -1 && TagID2 == -1){
             return tag = false;
         }
+        else if(TagID != -1 || TagID2 != -1){
+            return tag = true;
+        }
+        return false;
+        // if(TagID != -1){
+        //     return tag = true;
+        // }
+        // else{
+        //     return tag = false;
+        // }
     }
 
     public Pose2d getRobotPose(){
         TagID = (int) LimelightHelpers.getFiducialID("");
-        // TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
+        TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
         Pose2d pose1 = LimelightHelpers.getBotPose2d_wpiBlue("");
-        // Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
         if(TagID != -1){
             return LimelightHelpers.getBotPose2d_wpiBlue("");
         }
-        // else if(TagID2 != -1){
-        //     return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
-        // }
-        // else if(TagID != -1 && TagID2 != -1){
-        //     return new Pose2d((pose1.getX() + pose2.getX()) / 2,
-        //                       (pose1.getY() + pose2.getY()) / 2,
-        //                        pose1.getRotation().plus(pose2.getRotation()).div(2)
-        //                      );
-        // }
+        else if(TagID2 != -1){
+            return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        }
+        else if(TagID != -1 && TagID2 != -1){
+            return new Pose2d((pose1.getX() + pose2.getX()) / 2,
+                              (pose1.getY() + pose2.getY()) / 2,
+                               pose1.getRotation().plus(pose2.getRotation()).div(2)
+                             );
+        }
         else{
             return new Pose2d();
         }
     }
 
-    public Pose3d getRobotPose_two(){
-        return LimelightHelpers.getBotPose3d_wpiBlue("limelight-two");
-    }
-
-    public Pose3d robotToTarget(){
-        return LimelightHelpers.getBotPose3d_TargetSpace("");
-    }
-
-    public double deltaRobotHeadingDeg(){
-        return LimelightHelpers.getBotPose2d("").getRotation().getDegrees();
-    }    
-
-    // public Pose2d getLLPose(){
-    //     PoseEstimate megatag = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
-    //     PoseEstimate megatag2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-two");
-
-    //     if(megatag.tagCount < 1 && megatag2.tagCount < 1){
-    //         return avgPose = getRobotPose_two().toPose2d();
-    //     }
-    //     else if(megatag2.tagCount < 1 && megatag.tagCount < 1){
-    //         return avgPose = getRobotPose().toPose2d();
-    //     }
-    //     else if (megatag.tagCount < 1 && megatag2.tagCount < 1){
-    //         return avgPose = new Pose2d( (getRobotPose().toPose2d().getX() + getRobotPose_two().toPose2d().getX()) / 2,
-    //                                      (getRobotPose().toPose2d().getY() + getRobotPose_two().toPose2d().getY()) / 2,
-    //                                       getRobotPose().toPose2d().getRotation().plus(getRobotPose_two().toPose2d().getRotation()).div(2)
-    //                                    );
-    //     }
-    //     else{
-    //         return new Pose2d();
-    //     }
+    // public Pose3d getRobotPose_two(){
+    //     return LimelightHelpers.getBotPose3d_wpiBlue("limelight-two");
     // }
+
+    // public Pose3d robotToTarget(){
+    //     return LimelightHelpers.getBotPose3d_TargetSpace("");
+    // }
+
+    // public double deltaRobotHeadingDeg(){
+    //     return LimelightHelpers.getBotPose2d("").getRotation().getDegrees();
+    // }    
 
     @Override
     public void periodic(){
-            getTag();
-            getRobotPose();
-            // getRobotPose_two();
-            // robotToTarget();
-            // deltaRobotHeadingDeg();
-            // getLLPose();
-
+        getTag();
+        getRobotPose();
+        
         // LL_Pose.setRobotPose(avgPose);
         LL_Pose.setRobotPose(getRobotPose());
         SmartDashboard.putData("LL_Pose", LL_Pose);

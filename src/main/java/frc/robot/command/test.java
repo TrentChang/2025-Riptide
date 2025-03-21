@@ -25,13 +25,13 @@ public class test extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> System.out.println("Go")));
     addCommands(new InstantCommand(() -> swerve.resetPose(new Pose2d(0, 0, Rotation2d.fromDegrees(0))), swerve));
     addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(0))));
-    addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(90))));
-    addCommands(swerve.driveToPose(new Pose2d(1, 1, Rotation2d.fromDegrees(90))));
-    addCommands(swerve.driveToPose(new Pose2d(1, 1, Rotation2d.fromDegrees(180))));
-    addCommands(swerve.driveToPose(new Pose2d(0, 1, Rotation2d.fromDegrees(180))));
-    addCommands(swerve.driveToPose(new Pose2d(0, 1, Rotation2d.fromDegrees(-90))));
-    addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(-90))));
-    addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(0))));
-    addCommands(swerve.driveToPose(new Pose2d(0.1, 0.1, Rotation2d.fromDegrees(0))));
+    // addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(90))));
+    // addCommands(swerve.driveToPose(new Pose2d(1, 1, Rotation2d.fromDegrees(90))));
+    // addCommands(swerve.driveToPose(new Pose2d(1, 1, Rotation2d.fromDegrees(180))));
+    // addCommands(swerve.driveToPose(new Pose2d(0, 1, Rotation2d.fromDegrees(180))));
+    // addCommands(swerve.driveToPose(new Pose2d(0, 1, Rotation2d.fromDegrees(-90))));
+    // addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(-90))));
+    // addCommands(swerve.driveToPose(new Pose2d(1, 0, Rotation2d.fromDegrees(0))));
+    // addCommands(swerve.driveToPose(new Pose2d(0.1, 0.1, Rotation2d.fromDegrees(0))));
   }
 }

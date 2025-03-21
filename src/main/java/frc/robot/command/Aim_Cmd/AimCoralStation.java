@@ -46,38 +46,43 @@ public class AimCoralStation extends SequentialCommandGroup {
     this.limelight = limelight;
     addRequirements(arm, swerve, claw, limelight);
     
-    // aprilTagID = (int)LimelightHelpers.getFiducialID("");
-    // LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);
-    // llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose;
-    // if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
-    //   if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data
-    //     robotPose = swerve.getState().Pose;
-    //   } else {
-    //     robotPose = llPose;
-    //   }
+    aprilTagID = (int)LimelightHelpers.getFiducialID("limelight-two");
+    llPose = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+    if(llPose != null){
+      // if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
+      if ((1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
+        if (llPose.getX() != 0 && llPose.getY() != 0) {  // invalid Pose2d data
+          robotPose = llPose;
+
+        } else {
+          robotPose = swerve.getState().Pose;
+        }
+      }
     
     // double llPose_X = llPose.getX();
     // Optional<Alliance> alliance = DriverStation.getAlliance();
 
-    // if(alliance.isPresent()){
-    //   if(alliance.get() == Alliance.Red){
-    //     if(Math.abs(llPose_X - reefMap.get(1).get(0).getX()) < Math.abs(llPose_X - reefMap.get(2).get(0).getX())){
-    //       targetPose = reefMap.get(1).get(0);
-    //     }
-    //     else{
-    //       targetPose = reefMap.get(2).get(0);        }
-    //   }
-    //   else if(alliance.get() == Alliance.Blue){
-    //     if(Math.abs(llPose_X - reefMap.get(12).get(0).getX()) < Math.abs(llPose_X - reefMap.get(13).get(0).getX())){
-    //       targetPose = reefMap.get(12).get(0);        }
-    //     else{
-    //       targetPose = reefMap.get(13).get(0);        }
-    //   }
-    // else{
-    //   System.out.println("WARNING: Alliance NOT DETECTED!");
-    // }
-    // }
-    
+    if(alliance.isPresent()){
+      if(alliance.get() == Alliance.Red){
+        if(Math.abs(llPose_X - reefMap.get(1).get(0).getX()) < Math.abs(llPose_X - reefMap.get(2).get(0).getX())){
+          targetPose = reefMap.get(1).get(0);
+        }
+        else{
+          targetPose = reefMap.get(2).get(0);        
+        }
+      }
+      else if(alliance.get() == Alliance.Blue){
+        if(Math.abs(llPose_X - reefMap.get(12).get(0).getX()) < Math.abs(llPose_X - reefMap.get(13).get(0).getX())){
+          targetPose = reefMap.get(12).get(0);        
+        }
+        else{
+          targetPose = reefMap.get(13).get(0);        
+        }
+      }
+    else{
+      System.out.println("WARNING: Alliance NOT DETECTED!");
+    }
+  }
       addCommands(new InstantCommand(() -> claw.Claw_Suck(), claw));
       addCommands(new InstantCommand(() -> arm.Arm_Station(), arm));
       // addCommands(swerve.driveToPose(targetPose));
