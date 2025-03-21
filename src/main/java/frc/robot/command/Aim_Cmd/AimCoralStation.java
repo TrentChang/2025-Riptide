@@ -36,8 +36,8 @@ public class AimCoralStation extends SequentialCommandGroup {
   private final Claw claw;
   private final limelight limelight;
   
-  // private Pose2d robotPose, llPose, targetPose;
-  // private final int aprilTagID;
+  private Pose2d robotPose, llPose, targetPose;
+  private final int aprilTagID;
 
   public AimCoralStation(Arm arm, CommandSwerveDrivetrain swerve, Claw claw, limelight limelight) {
     this.arm = arm;
@@ -59,8 +59,8 @@ public class AimCoralStation extends SequentialCommandGroup {
         }
       }
     
-    // double llPose_X = llPose.getX();
-    // Optional<Alliance> alliance = DriverStation.getAlliance();
+    double llPose_X = llPose.getX();
+    Optional<Alliance> alliance = DriverStation.getAlliance();
 
     if(alliance.isPresent()){
       if(alliance.get() == Alliance.Red){
@@ -88,4 +88,5 @@ public class AimCoralStation extends SequentialCommandGroup {
       // addCommands(swerve.driveToPose(targetPose));
       addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54)))));
     }
+}
 }

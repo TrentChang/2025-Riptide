@@ -198,7 +198,7 @@ public class RobotContainer {
     }
 
     private void BIG_BUTTON_ConfigureBingings(){
-        /*
+        
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (alliance.get() == Alliance.Red) {
