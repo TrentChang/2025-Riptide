@@ -155,13 +155,15 @@ public class RobotContainer {
     private void Driver_ConfigureBindings() {
         new JoystickButton(Driver_Ctrl, 2).onTrue(CMD_SetZero);
 
-        new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(intake::Intake_out, intake));
-        new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(intake::Intake_Back, intake));
+        // new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(intake::Intake_out, intake));
+        // new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(intake::Intake_Back, intake));
+
         // new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
         //                                                .onFalse(new InstantCommand(climber::Stop, climber));
         // new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
         //                                                .onFalse(new InstantCommand(climber::Stop, climber));
-        // new JoystickButton(Driver_Ctrl, 4).whileTrue(CoralStation);
+        new JoystickButton(Driver_Ctrl, 3).whileTrue(CoralStation);
+
         new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
@@ -197,6 +199,7 @@ public class RobotContainer {
     }
 
     private void BIG_BUTTON_ConfigureBingings(){
+        /*
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (alliance.get() == Alliance.Red) {
@@ -223,8 +226,11 @@ public class RobotContainer {
         else{
             System.out.println("WARNING: Alliance NOT DETECTED!");
         }
+        */
+        new JoystickButton(BIG_BUTTON, 5).onTrue(new CoralStation(elevator, claw, arm));
+        new JoystickButton(BIG_BUTTON, 6).onTrue(new CoralStation(elevator, claw, arm));
         // new JoystickButton(BIG_BUTTON, 7).onTrue();
-        new JoystickButton(BIG_BUTTON, 8).whileTrue(CMD_AimCoralStation);
+        // new JoystickButton(BIG_BUTTON, 8).whileTrue(CMD_AimCoralStation);
         new JoystickButton(BIG_BUTTON, 9).whileTrue(CMD_Barege);
         new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_ReefAlgae);
     }

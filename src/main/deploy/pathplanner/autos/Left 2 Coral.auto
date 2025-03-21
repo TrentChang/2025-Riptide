@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ResetPose"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "StartToRL"

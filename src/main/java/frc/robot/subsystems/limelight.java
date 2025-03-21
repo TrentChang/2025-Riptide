@@ -28,7 +28,7 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     public limelight(){
         LL_Pose = new Field2d();
-        aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+        aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
     }
 
     public boolean getTag(){

@@ -13,6 +13,12 @@
         {
           "type": "named",
           "data": {
+            "name": "AutoRL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "AutoAim"
           }
         },
@@ -25,13 +31,43 @@
         {
           "type": "path",
           "data": {
-            "pathName": "21RToCSR_"
+            "pathName": "Back"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoCoralStation"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutoSuckCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CSRTo19R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoRL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShootCoral"
           }
         },
         {
@@ -49,25 +85,7 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoShootCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "19RToCSR"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoSuckCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CSRTo19M"
           }
         }
       ]

@@ -46,7 +46,7 @@ public class SmartDrive extends Command {
 
     vX = () -> -driveCtrl.getLeftY();
     vY = () -> -driveCtrl.getLeftX();
-    vR = () -> -driveCtrl.getRightX();
+    vR = () -> -driveCtrl.getR2Axis();
     btnIsPressed = () -> switchCtrl.getRawButtonPressed(4);  // TODO: confirm the button's ID
 
     addRequirements(swerve, elevator);
