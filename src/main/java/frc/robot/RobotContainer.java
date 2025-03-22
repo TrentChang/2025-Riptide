@@ -82,7 +82,7 @@ public class RobotContainer {
 
     // Aim Command
     public final AimCoralStation CMD_AimCoralStation = new AimCoralStation(arm, drivetrain, claw, limelight);
-    public final AutoAlignment CMD_AutoAlignment = new AutoAlignment(drivetrain);
+    // public final AutoAlignment CMD_AutoAlignment = new AutoAlignment(drivetrain);
 
     // Auto Command
     public final AutoAim CMD_AutoAim = new AutoAim(drivetrain);
@@ -147,7 +147,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("CoralSuck", new InstantCommand(claw::Claw_Suck));
         NamedCommands.registerCommand("AutoAim", Commands.defer(DTP_CMD, Set.of(drivetrain)));
         NamedCommands.registerCommand("ResetPose", new InstantCommand(() -> drivetrain.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""))));
-        NamedCommands.registerCommand("AutoAlignment", CMD_AutoAlignment);
+        // NamedCommands.registerCommand("AutoAlignment", CMD_AutoAlignment);
 
         autoChooser = AutoBuilder.buildAutoChooser();
         SmartDashboard.putData("auto", autoChooser);

@@ -52,21 +52,21 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     public Pose2d getRobotPose(){
         TagID = (int) LimelightHelpers.getFiducialID("");
-        TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
+        // TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
         Pose2d pose1 = LimelightHelpers.getBotPose2d_wpiBlue("");
-        Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        // Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
         if(TagID != -1){
             return LimelightHelpers.getBotPose2d_wpiBlue("");
         }
-        else if(TagID2 != -1){
-            return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
-        }
-        else if(TagID != -1 && TagID2 != -1){
-            return new Pose2d((pose1.getX() + pose2.getX()) / 2,
-                              (pose1.getY() + pose2.getY()) / 2,
-                               pose1.getRotation().plus(pose2.getRotation()).div(2)
-                             );
-        }
+        // else if(TagID2 != -1){
+        //     return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        // }
+        // else if(TagID != -1 && TagID2 != -1){
+        //     return new Pose2d((pose1.getX() + pose2.getX()) / 2,
+        //                       (pose1.getY() + pose2.getY()) / 2,
+        //                        pose1.getRotation().plus(pose2.getRotation()).div(2)
+        //                      );
+        // }
         else{
             return new Pose2d();
         }
@@ -98,6 +98,6 @@ import frc.robot.LimelightHelpers.PoseEstimate;
         // SmartDashboard.putNumber("LY", LimelightHelpers.getTY("limelight-two"));
         // SmartDashboard.putNumber("LR", getRobotPose_two().getRotation().getAngle());
         // SmartDashboard.putNumber("RY", LimelightHelpers.getTargetPose3d_CameraSpace("").getRotation().getY() * 57.3);
-        SmartDashboard.putNumber("Offset", LimelightHelpers.getTargetPose3d_RobotSpace("").getY());
+        // SmartDashboard.putNumber("Offset", LimelightHelpers.getTargetPose3d_RobotSpace("").getY());
    }
 }

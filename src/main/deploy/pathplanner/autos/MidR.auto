@@ -13,13 +13,13 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoRL4"
+            "name": "AutoAim"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoAim"
+            "name": "AutoRL4"
           }
         },
         {
@@ -31,7 +31,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Back"
+            "pathName": "21LBack"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "21RToCSR_"
           }
         },
         {
@@ -55,13 +61,13 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoRL4"
+            "name": "AutoAim"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoAim"
+            "name": "AutoRL4"
           }
         },
         {
@@ -79,13 +85,31 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoAim"
+            "name": "AutoCoralStation"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutoSuckCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "CSRTo19R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoAim"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoRL3"
           }
         }
       ]

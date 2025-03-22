@@ -5,21 +5,9 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "AutoAlignment"
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "StartTo22L"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoRL4"
           }
         },
         {
@@ -29,9 +17,9 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "AutoShootCoral"
+            "pathName": "22LBack"
           }
         },
         {
