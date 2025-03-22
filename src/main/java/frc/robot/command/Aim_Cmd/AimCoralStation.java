@@ -80,7 +80,9 @@ public class AimCoralStation extends SequentialCommandGroup {
       // addCommands(swerve.driveToPose(targetPose));
       
       // addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(16.697198, 6.927, Rotation2d.fromDegrees(54)))));
-      addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(0.851154, 6.800, Rotation2d.fromDegrees(126)))));
+      // addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(0.851154, 6.800, Rotation2d.fromDegrees(126))))); // Blue R 13
+      addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(0.851154, 1.200, Rotation2d.fromDegrees(-126))))); // Blue R 12
+
     }
     }
 }

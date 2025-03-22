@@ -156,8 +156,8 @@ public class RobotContainer {
     }
 
     private void Driver_ConfigureBindings() {
-        new JoystickButton(Driver_Ctrl, 1).whileTrue(CMD_AimCoralStation);
-        // new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(intake::Intake_out, intake));
+        // new JoystickButton(Driver_Ctrl, 1).whileTrue(CMD_AimCoralStation);
+        new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(intake::Intake_out, intake));
         new JoystickButton(Driver_Ctrl, 2).whileTrue(new InstantCommand(intake::Intake_Back, intake));
         new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
                                                        .onFalse(new InstantCommand(climber::Stop, climber));
