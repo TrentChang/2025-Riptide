@@ -49,9 +49,9 @@ public class AimCoralStation extends SequentialCommandGroup {
     aprilTagID = (int)LimelightHelpers.getFiducialID("limelight-two");
     llPose = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
     if(llPose != null){
-      // if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
-      if ((1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
-        if (llPose.getX() != 0 && llPose.getY() != 0) {  // invalid Pose2d data
+      if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
+      // if ((1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13)) {
+        if (llPose.getX() != 0 && llPose.getY() != 0) {  // valid Pose2d data
           robotPose = llPose;
 
         } else {
@@ -85,8 +85,10 @@ public class AimCoralStation extends SequentialCommandGroup {
   }
       addCommands(new InstantCommand(() -> claw.Claw_Suck(), claw));
       addCommands(new InstantCommand(() -> arm.Arm_Station(), arm));
-      // addCommands(swerve.driveToPose(targetPose));
-      addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54)))));
+      if(targetPose != null){
+      addCommands(swerve.driveToPose(targetPose));
+      }
+      // addCommands(new InstantCommand(() -> swerve.driveToPose(new Pose2d(16.697198, 1.115, Rotation2d.fromDegrees(-54)))));
     }
 }
 }

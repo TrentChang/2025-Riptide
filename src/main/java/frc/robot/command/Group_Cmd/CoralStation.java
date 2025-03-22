@@ -14,16 +14,16 @@ import frc.robot.subsystems.Elevator;
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class CoralStation extends Command {
   private final Elevator elevator;
-  private final Claw coral;
+  private final Claw claw;
   private final Arm arm;
   /** Creates a new SuckCoral. 
    *  @param aprilTagID The AprilTag ID of the target reef.
   */
-  public CoralStation(Elevator elevator, Claw coral, Arm arm) {
+  public CoralStation(Elevator elevator, Claw claw, Arm arm) {
     this.elevator = elevator;
-    this.coral = coral;
+    this.claw = claw;
     this.arm = arm;
-    addRequirements(elevator, coral, arm);
+    addRequirements(elevator, claw, arm);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -35,20 +35,8 @@ public class CoralStation extends Command {
   @Override
   public void execute() {
     elevator.ELE_Floor();
-    // coral.Coral_Suck();
+    claw.Claw_Suck();
     arm.Arm_Station();
-    // new WaitCommand(0.5);
-    // if(coral.CoralVelocity < -40){
-    //   System.out.println("suck");
-    //   coral.Coral_Suck();
-    //   new WaitCommand(0.3);
-    //   if(coral.getCoral){
-    //     coral.Coral_Stop();
-    //   }
-    //   else{
-    //     coral.Coral_Suck();
-    //   }
-  // }
   }
   // Called once the command ends or is interrupted.
   @Override
