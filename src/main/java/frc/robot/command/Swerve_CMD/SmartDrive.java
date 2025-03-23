@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 
@@ -24,6 +25,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 public class SmartDrive extends Command {
   private final CommandSwerveDrivetrain swerve;
   private final Elevator elevator;
+  private final Climber climber;
 
   private SwerveRequest.FieldCentric driveF;
   private SwerveRequest.RobotCentric driveR;
@@ -39,10 +41,11 @@ public class SmartDrive extends Command {
 
 
   /** Creates a new ChassisSpeed. */
-  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, PS5Controller driveCtrl, GenericHID switchCtrl) {
+  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, Climber climber, PS5Controller driveCtrl, GenericHID switchCtrl) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.elevator = elevator;
+    this.climber =climber;
 
     vX = () -> -driveCtrl.getLeftY();
     vY = () -> -driveCtrl.getLeftX();
@@ -74,12 +77,15 @@ public class SmartDrive extends Command {
     } else if (-0.4 >= rawInput || rawInput >= 0.4) {
       return rawInput;
     } else if (rawInput < 0) {
-      return -0.2;
+      return -0.1;
     } else {
-      return 0.2;
+      return 0.1;
     }
   }
 
+  // private double ClimbingSpeed(double rawInput){
+  //   if(climber.getAbsolutePosition() )
+  // }
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
@@ -97,13 +103,13 @@ public class SmartDrive extends Command {
       );
     } else {  // Field Relative
       // System.out.printf("%.2f %.2f %.2f\n", vX.getAsDouble(), vY.getAsDouble(), vR.getAsDouble());
-      if (elevator.getAbsolutePosition() > -35) {
-        rate = 1;
-      }
-      else {
-        rate = 0.5;
-      }
-      
+        if (elevator.getAbsolutePosition() > -35) {
+          rate = 1;
+        }
+        else {
+          rate = 0.5;
+        }
+        
       swerve.setControl(driveF.withVelocityX(limitSpeed(vX.getAsDouble()) * maxSpeed * rate) // Drive forward with negative Y(forward)
                             .withVelocityY(limitSpeed(vY.getAsDouble()) * maxSpeed * rate) // Drive left with negative X (left)
                             .withRotationalRate(limitSpeed(vR.getAsDouble()) * maxAngularRate * 4 * rate) // Drive counterclockwise with negative X (left)

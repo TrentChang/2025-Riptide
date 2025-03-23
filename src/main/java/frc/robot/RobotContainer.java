@@ -27,6 +27,8 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import static edu.wpi.first.units.Units.*;
 
 import frc.robot.command.test;
@@ -73,7 +75,7 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Intake intake = new Intake();
     public final Arm arm = new Arm();
-    public final Candle candle = new Candle();
+    // public final Candle candle = new Candle();
     public final Climber climber = new Climber();
     public final Claw claw = new Claw();
     public final Elevator elevator = new Elevator();
@@ -109,7 +111,7 @@ public class RobotContainer {
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
 
     // Swerve Command
-    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, Driver_Ctrl, Driver_Ctrl);
+    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, climber, Driver_Ctrl, Driver_Ctrl);
 
     public final test CMD_test = new test(drivetrain);
 
@@ -158,19 +160,31 @@ public class RobotContainer {
     private void Driver_ConfigureBindings() {
         // new JoystickButton(Driver_Ctrl, 1).whileTrue(CMD_AimCoralStation);
         new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(intake::Intake_out, intake));
-        new JoystickButton(Driver_Ctrl, 2).whileTrue(new InstantCommand(intake::Intake_Back, intake));
-        new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
-                                                       .onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
-                                                       .onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(Driver_Ctrl, 2).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
+                                                       .alongWith(new CoralStation(elevator, claw, arm)));
+        // new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
+        //                                                .onFalse(new InstantCommand(climber::Stop, climber));
+        // new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
+        //                                                .onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_Barege);
+        new JoystickButton(Driver_Ctrl, 4).onTrue(CMD_ReefAlgae);
     
-        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
+        // new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
+        //                                                .onFalse(new InstantCommand(intake::Stop, intake));
+        // new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
+        //                                                 .onFalse(new InstantCommand(intake::Stop, intake));
+        // new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
+        //                                                .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+        // new JoystickButton(Driver_Ctrl, 8).whileTrue(CMD_CoralShoot)
+        //                                                .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+
+        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
-        new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
-                                                        .onFalse(new InstantCommand(intake::Stop, intake));
-        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
+        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(intake::shoot, intake))
+                                                       .onFalse(new InstantCommand(intake::Stop, intake));
+        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        new JoystickButton(Driver_Ctrl, 8).whileTrue(CMD_CoralShoot)
+        new JoystickButton(Driver_Ctrl, 6).whileTrue(CMD_CoralShoot)
                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
  
         new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(() -> {
@@ -196,46 +210,47 @@ public class RobotContainer {
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
         new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
+        // new POVButton(Driver_Ctrl, 270).whileTrue(new InstantCommand(elevator::ELE_Up)).onFalse(new InstantCommand(elevator::ELE_Stop));
+        // new POVButton(Driver_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down)).onFalse(new InstantCommand(elevator::ELE_Stop));
     }
 
     private void BIG_BUTTON_ConfigureBingings(){
         
         Optional<Alliance> alliance = DriverStation.getAlliance();
-        if (alliance.isPresent()) {
-            if (alliance.get() == Alliance.Red) {
-                new JoystickButton(BIG_BUTTON, 5).whileTrue(
-                    drivetrain.driveToPose(reefMap.get(2).get(0))
-                    .alongWith(new CoralStation(elevator, claw, arm))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
-                );
-                new JoystickButton(BIG_BUTTON, 6).whileTrue(
-                    drivetrain.driveToPose(reefMap.get(1).get(0))
-                    .alongWith(new CoralStation(elevator, claw, arm))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
-                );
-            }
-            else{
-                new JoystickButton(BIG_BUTTON, 5).whileTrue(
-                    drivetrain.driveToPose(reefMap.get(12).get(0))
-                    .alongWith(new CoralStation(elevator, claw, arm))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
-                );
-                new JoystickButton(BIG_BUTTON, 6).whileTrue(
-                    drivetrain.driveToPose(reefMap.get(13).get(0))
-                    .alongWith(new CoralStation(elevator, claw, arm))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
-                );
-            }
-        }
-        else{
-            System.out.println("WARNING: Alliance NOT DETECTED!");
-        }
-        // new JoystickButton(BIG_BUTTON, 7).
+        // if (alliance.isPresent()) {
+        //     if (alliance.get() == Alliance.Red) {
+        //         new JoystickButton(BIG_BUTTON, 5).whileTrue(
+        //             drivetrain.driveToPose(reefMap.get(2).get(0))
+        //             .alongWith(new CoralStation(elevator, claw, arm))
+        //         );
+        //         new JoystickButton(BIG_BUTTON, 6).whileTrue(
+        //             drivetrain.driveToPose(reefMap.get(1).get(0))
+        //             .alongWith(new CoralStation(elevator, claw, arm))
+        //         );
+        //     }
+        //     else{
+        //         new JoystickButton(BIG_BUTTON, 5).whileTrue(
+        //             drivetrain.driveToPose(reefMap.get(12).get(0))
+        //             .alongWith(new CoralStation(elevator, claw, arm))
+        //         );
+        //         new JoystickButton(BIG_BUTTON, 6).whileTrue(
+        //             drivetrain.driveToPose(reefMap.get(13).get(0))
+        //             .alongWith(new CoralStation(elevator, claw, arm))
+        //         );
+        //     }
+        // }
+        // else{
+        //     System.out.println("WARNING: Alliance NOT DETECTED!");
+        // }
+        new JoystickButton(BIG_BUTTON, 5).onTrue(new InstantCommand(claw::L1ClawShoot, claw));
+        new JoystickButton(BIG_BUTTON, 7).whileTrue(new InstantCommand(claw::AlgaeClawShoot)).onFalse(new InstantCommand(claw::Claw_Stop));
         new JoystickButton(BIG_BUTTON, 8).whileTrue(CMD_SetClimberAsHead);
-        new JoystickButton(BIG_BUTTON, 9).whileTrue(CMD_Barege);
-        new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_ReefAlgae);
-
-        new JoystickButton(BIG_BUTTON, 7).onTrue(CMD_test);
+        new JoystickButton(BIG_BUTTON, 9).whileTrue(new InstantCommand(climber::Up, climber))
+                                                       .onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(BIG_BUTTON, 10).whileTrue(new InstantCommand(climber::Down, climber))
+                                                       .onFalse(new InstantCommand(climber::Stop, climber));
+        // new JoystickButton(BIG_BUTTON, 9).whileTrue(CMD_Barege);
+        // new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_ReefAlgae);
     }
     
     private void REEF_BUTTON_ConfigureBindings(){
@@ -247,125 +262,101 @@ public class RobotContainer {
                     drivetrain.driveToPose(reefMap.get(7).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 0, reefLevelSupplier))
                     .alongWith(new PrintCommand("=========="))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 2).whileTrue(
                     drivetrain.driveToPose(reefMap.get(7).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 7, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 3).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 4).whileTrue(
                     drivetrain.driveToPose(reefMap.get(8).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 8, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 5).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 6).whileTrue(
                     drivetrain.driveToPose(reefMap.get(9).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 9, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 7).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 8).whileTrue(
                     drivetrain.driveToPose(reefMap.get(10).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 10, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 9).whileTrue(
                     drivetrain.driveToPose(reefMap.get(11).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 10).whileTrue(
                     drivetrain.driveToPose(reefMap.get(11).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 11, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 11).whileTrue(
                     drivetrain.driveToPose(reefMap.get(6).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 12).whileTrue(
                     drivetrain.driveToPose(reefMap.get(6).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 6, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
             } else {
                 new JoystickButton(REEF_BUTTON, 1).whileTrue(
                     drivetrain.driveToPose(reefMap.get(18).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 18, 0, reefLevelSupplier))
                     .alongWith(new PrintCommand("=========="))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 2).whileTrue(
                     drivetrain.driveToPose(reefMap.get(18).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 18, 1, reefLevelSupplier))
                     .alongWith(new PrintCommand("=========="))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 3).whileTrue(
                     drivetrain.driveToPose(reefMap.get(17).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 17, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 4).whileTrue(
                     drivetrain.driveToPose(reefMap.get(17).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 17, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 5).whileTrue(
                     drivetrain.driveToPose(reefMap.get(22).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 22, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 6).whileTrue(
                     drivetrain.driveToPose(reefMap.get(22).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 22, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 7).whileTrue(
                     drivetrain.driveToPose(reefMap.get(21).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 21, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 8).whileTrue(
                     drivetrain.driveToPose(reefMap.get(21).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 21, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 9).whileTrue(
                     drivetrain.driveToPose(reefMap.get(20).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 10).whileTrue(
                     drivetrain.driveToPose(reefMap.get(20).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 20, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 11).whileTrue(
                     drivetrain.driveToPose(reefMap.get(19).get(0))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 0, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
                 new JoystickButton(REEF_BUTTON, 12).whileTrue(
                     drivetrain.driveToPose(reefMap.get(19).get(1))
                     .alongWith(new AutoReefLevel(drivetrain, arm, elevator, 19, 1, reefLevelSupplier))
-                    .alongWith(new InstantCommand(candle::IsAutoAim, candle))
                 );
             }
         } else {
@@ -375,7 +366,6 @@ public class RobotContainer {
 
     private void configureBindings() {
         drivetrain.setDefaultCommand(CMD_SmartDrive);
-        candle.setDefaultCommand(new InstantCommand(candle::Normal, candle));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 

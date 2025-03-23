@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "midTo21L"
+            "pathName": "StartTo20L"
           }
         },
         {
@@ -19,25 +19,19 @@
         {
           "type": "named",
           "data": {
-            "name": "AutoRL4"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "AutoShootCoral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "21LBack"
+            "pathName": "20LToCSL"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "21RToCSR_"
+            "pathName": "20LTCSL"
           }
         },
         {
@@ -55,61 +49,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CSRTo19R"
+            "pathName": "CSLTo19R"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoRL4"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "AutoShootCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "19RToCSR_"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoCoralStation"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoSuckCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "CSRTo19R"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoAim"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoRL3"
           }
         }
       ]

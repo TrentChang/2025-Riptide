@@ -1663,8 +1663,8 @@ public class LimelightHelpers {
         }
         if(!doRejectUpdate){
             swerve.setVisionMeasurementStdDevs(VecBuilder.fill(0.005, 0.003, 9999999));
-            swerve.addVisionMeasurement(megatag.pose, megatag.timestampSeconds);
-            swerve.addVisionMeasurement(megatag2.pose, megatag2.timestampSeconds);
+            // swerve.addVisionMeasurement(megatag.pose, megatag.timestampSeconds);
+            // swerve.addVisionMeasurement(megatag2.pose, megatag2.timestampSeconds);
         }
         
         if(megatag == null && megatag2 != null){
@@ -1680,7 +1680,7 @@ public class LimelightHelpers {
                                         megatag.timestampSeconds);
         }
     }
-
+    
       public static void tryUpdateVisionMeasurement(CommandSwerveDrivetrain swerve){
         boolean doRejectUpdate = false;
         SetRobotOrientation("", swerve.getYaw(), 0, 0, 0, 0, 0);

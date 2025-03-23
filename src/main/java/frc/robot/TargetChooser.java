@@ -24,7 +24,11 @@ public class TargetChooser {
     public static HashMap<Integer, List<Pose2d>> reefMap = new HashMap<>();// = new ObjectMapper().readValue("SOMETHING", HashMap.class);
     static {
         // X 0.164338 
+        // 0.19 0.445
+        // 0.14
+        // 0.16
 
+        /*
         // Reef
         // Red Alliance
         reefMap.put(6, Arrays.asList(new Pose2d(13.53, 2.863, Rotation2d.fromDegrees(120.0)), new Pose2d(13.814, 3.027, Rotation2d.fromDegrees(120.0))));
@@ -41,6 +45,7 @@ public class TargetChooser {
         reefMap.put(20, Arrays.asList(new Pose2d(5.27, 5.073, Rotation2d.fromDegrees(-120.0)), new Pose2d(4.986, 5.237, Rotation2d.fromDegrees(-120.0))));
         reefMap.put(19, Arrays.asList(new Pose2d(3.994, 5.237, Rotation2d.fromDegrees(-60.0)), new Pose2d(3.71, 5.073, Rotation2d.fromDegrees(-60.0))));
         reefMap.put(18, Arrays.asList(new Pose2d(3.214, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(3.214, 3.886, Rotation2d.fromDegrees(0.0))));
+        */ 
 
         // Coral Station
         // Red Alliance
@@ -50,6 +55,22 @@ public class TargetChooser {
         //BLue Alliance
         reefMap.put(12, Arrays.asList(new Pose2d(0.851154, 1.200, Rotation2d.fromDegrees(-126))));
         reefMap.put(13, Arrays.asList(new Pose2d(0.851154, 6.800, Rotation2d.fromDegrees(126))));
+
+        // Red Alliance
+        reefMap.put(6, Arrays.asList(new Pose2d(13.55, 2.828, Rotation2d.fromDegrees(120.0)), new Pose2d(13.834, 2.992, Rotation2d.fromDegrees(120.0))));
+        reefMap.put(7, Arrays.asList(new Pose2d(14.35, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(14.35, 4.214, Rotation2d.fromDegrees(180.0))));
+        reefMap.put(8, Arrays.asList(new Pose2d(13.834, 5.108, Rotation2d.fromDegrees(-120.0)), new Pose2d(13.55, 5.272, Rotation2d.fromDegrees(-120.0))));
+        reefMap.put(9, Arrays.asList(new Pose2d(12.518, 5.272, Rotation2d.fromDegrees(-60.0)), new Pose2d(12.234, 5.108, Rotation2d.fromDegrees(-60.0))));
+        reefMap.put(10, Arrays.asList(new Pose2d(11.718, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(11.718, 3.886, Rotation2d.fromDegrees(0.0))));
+        reefMap.put(11, Arrays.asList(new Pose2d(12.234, 2.992, Rotation2d.fromDegrees(60.0)), new Pose2d(12.518, 2.828, Rotation2d.fromDegrees(60.0))));
+
+        // Blue Alliance
+        reefMap.put(17, Arrays.asList(new Pose2d(3.69, 2.992, Rotation2d.fromDegrees(60.0)), new Pose2d(3.974, 2.828, Rotation2d.fromDegrees(60.0))));
+        reefMap.put(22, Arrays.asList(new Pose2d(5.006, 2.828, Rotation2d.fromDegrees(120.0)), new Pose2d(5.29, 2.992, Rotation2d.fromDegrees(120.0))));
+        reefMap.put(21, Arrays.asList(new Pose2d(5.806, 3.886, Rotation2d.fromDegrees(180.0)), new Pose2d(5.806, 4.214, Rotation2d.fromDegrees(180.0))));        
+        reefMap.put(20, Arrays.asList(new Pose2d(5.29, 5.108, Rotation2d.fromDegrees(-120.0)), new Pose2d(5.006, 5.272, Rotation2d.fromDegrees(-120.0))));       
+        reefMap.put(19, Arrays.asList(new Pose2d(3.974, 5.272, Rotation2d.fromDegrees(-60.0)), new Pose2d(3.69, 5.108, Rotation2d.fromDegrees(-60.0))));
+        reefMap.put(18, Arrays.asList(new Pose2d(3.174, 4.214, Rotation2d.fromDegrees(0.0)), new Pose2d(3.174, 3.886, Rotation2d.fromDegrees(0.0))));
     }
 
     private double getDistance(Pose2d p1, Pose2d p2) {

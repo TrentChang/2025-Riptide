@@ -143,12 +143,12 @@ public final class Constants{
         // Climber Config
         public static final boolean LeftMotor_Inverted = false;
         public static final boolean RightMotor_Inverted = false;
-        public static final double Climb_Angle = -182;
-        public static final double Climb_Zero = 0;
+        public static final double Climb_Angle = -30;
+        public static final double Climb_Zero = 178;
         public static final double Climb_StartUp = -24;
 
         // Climber PIDF
-        public static final double P = 0.1;
+        public static final double P = 1;
         public static final double I = 0;
         public static final double D = 0;
         public static final double F = 0;
