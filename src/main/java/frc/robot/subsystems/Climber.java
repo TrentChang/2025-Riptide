@@ -68,10 +68,14 @@ public class Climber extends SubsystemBase{
 
     public void Up(){
         Climber_Motor.set(0.5);
+        // double pos = Climber_Motor.getPosition().getValueAsDouble();
+        // Climber_Motor.setControl(new MotionMagicDutyCycle(pos - 0.1));
     }
 
     public void Down(){
         Climber_Motor.set(-0.5);
+        // double pos = Climber_Motor.getPosition().getValueAsDouble();
+        // Climber_Motor.setControl(new MotionMagicDutyCycle(pos + 0.1));
     }
 
     public void Stop(){

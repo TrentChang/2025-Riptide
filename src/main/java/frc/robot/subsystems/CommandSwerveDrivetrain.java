@@ -292,7 +292,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * Otherwise, only check and apply the operator perspective if the DS is disabled.
          * This ensures driving behavior doesn't change until an explicit disable event occurs during testing.
          */
-        LimelightHelpers.tryUpdateVisionMeasurement(this);
+        // LimelightHelpers.tryUpdateVisionMeasurement(this);
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
             DriverStation.getAlliance().ifPresent(allianceColor -> {
@@ -312,14 +312,21 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
         // SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
         // SmartDashboard.putNumber("Pigeon", this.getYaw());
+        double distance = Math.sqrt(Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("").getX(), 2) + Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("").getY(), 2));
 
-        // if( (this.getState().Speeds.vxMetersPerSecond <= 0.2) && (this.getState().Speeds.vyMetersPerSecond <= 0.2)){
-        //     if (LimelightHelpers.getFiducialID("") != -1) {
-        //         // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
-        //         // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
-        //         this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue(""));
-        //     }
-        // }
+        if(!DriverStation.isAutonomous()){
+            if( (this.getState().Speeds.vxMetersPerSecond <= 0.3) && (this.getState().Speeds.vyMetersPerSecond <= 0.3)){
+                if (LimelightHelpers.getFiducialID("") != -1 && distance < 1) {
+                    // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
+                    // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
+                    this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")); 
+                    System.out.println("Updating");
+                }
+            }
+        }
+        else {
+            System.out.println("Not Updating");
+        }
     }
 
     private void startSimThread() {

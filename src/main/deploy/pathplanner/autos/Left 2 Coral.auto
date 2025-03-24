@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "ResetPose"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "StartTo22L"
@@ -37,7 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "22LToCSR"
+            "pathName": "22LBack"
           }
         },
         {

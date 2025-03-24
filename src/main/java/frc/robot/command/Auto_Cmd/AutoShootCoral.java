@@ -30,6 +30,10 @@ public class AutoShootCoral extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(claw, arm, elevator);
     
+    addCommands(new InstantCommand(() -> elevator.ELE_RL4(), elevator));
+    addCommands(new InstantCommand(() -> arm.Arm_RL4(), arm));
+    addCommands(new InstantCommand(() -> claw.Claw_Suck(), claw));
+    addCommands(new WaitCommand(2));
     addCommands(new InstantCommand(() -> claw.Claw_Shoot(), claw));
     addCommands(new WaitCommand(0.5));
     addCommands(new InstantCommand(() -> claw.Claw_Stop(), claw));

@@ -28,7 +28,7 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     public limelight(){
         LL_Pose = new Field2d();
-        aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025Reefscape);
+        aprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
     }
 
     public boolean getTag(){
@@ -52,21 +52,21 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     public Pose2d getRobotPose(){
         TagID = (int) LimelightHelpers.getFiducialID("");
-        TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
+        // TagID2 = (int) LimelightHelpers.getFiducialID("limelight-two");
         Pose2d pose1 = LimelightHelpers.getBotPose2d_wpiBlue("");
-        Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        // Pose2d pose2 = LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
         if(TagID != -1){
             return LimelightHelpers.getBotPose2d_wpiBlue("");
         }
-        else if(TagID2 != -1){
-            return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
-        }
-        else if(TagID != -1 && TagID2 != -1){
-            return new Pose2d((pose1.getX() + pose2.getX()) / 2,
-                              (pose1.getY() + pose2.getY()) / 2,
-                               pose1.getRotation().plus(pose2.getRotation()).div(2)
-                             );
-        }
+        // else if(TagID2 != -1){
+        //     return LimelightHelpers.getBotPose2d_wpiBlue("limelight-two");
+        // }
+        // else if(TagID != -1 && TagID2 != -1){
+        //     return new Pose2d((pose1.getX() + pose2.getX()) / 2,
+        //                       (pose1.getY() + pose2.getY()) / 2,
+        //                        pose1.getRotation().plus(pose2.getRotation()).div(2)
+        //                      );
+        // }
         else{
             return new Pose2d();
         }

@@ -111,7 +111,7 @@ public final class Constants{
         public static final double Arm_Zero = 0.1;
         public static final double Arm_StartUp = 0.1;
         public static final double Arm_Station = 0.34;
-        public static final double Arm_Barge = 0.26;
+        public static final double Arm_Barge = 0.30;
         public static final double Arm_Algae = 0.27;
         public static final double Arm_RL1 = 0.17;
         public static final double Arm_RL2 = 0.19;
@@ -143,12 +143,12 @@ public final class Constants{
         // Climber Config
         public static final boolean LeftMotor_Inverted = false;
         public static final boolean RightMotor_Inverted = false;
-        public static final double Climb_Angle = -182;
-        public static final double Climb_Zero = 0;
+        public static final double Climb_Angle = -30;
+        public static final double Climb_Zero = 178;
         public static final double Climb_StartUp = -24;
 
         // Climber PIDF
-        public static final double P = 0.1;
+        public static final double P = 1;
         public static final double I = 0;
         public static final double D = 0;
         public static final double F = 0;

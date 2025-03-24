@@ -17,9 +17,9 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "22LBack"
+            "name": "AutoShootCoral"
           }
         },
         {
@@ -43,13 +43,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CSLTo17L"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoRL4"
+            "pathName": "To17R"
           }
         },
         {
@@ -62,54 +56,6 @@
           "type": "named",
           "data": {
             "name": "AutoShootCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "17LToCSR"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoCoralStation"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoSuckCoral"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "To17R"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": null
           }
         }
       ]

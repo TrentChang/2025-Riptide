@@ -26,8 +26,12 @@ public class Claw extends SubsystemBase{
         Claw_Motor.set(-0.5);
     }
 
+    public void L1ClawShoot(){
+        Claw_Motor.set(0.5);
+    }
+
     public void Claw_Shoot(){
-        Claw_Motor.set(0.6);
+        Claw_Motor.set(0.7);
     }
 
     public void AlgaeClawShoot(){
