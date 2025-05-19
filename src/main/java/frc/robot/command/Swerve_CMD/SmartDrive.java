@@ -47,8 +47,8 @@ public class SmartDrive extends Command {
     this.elevator = elevator;
     this.climber =climber;
 
-    vX = () -> -driveCtrl.getLeftY();
-    vY = () -> -driveCtrl.getLeftX();
+    vX = () -> driveCtrl.getLeftY();
+    vY = () -> driveCtrl.getLeftX();
     vR = () -> -driveCtrl.getRightX();
     btnIsPressed = () -> switchCtrl.getRawButtonPressed(10);  // TODO: confirm the button's ID
 

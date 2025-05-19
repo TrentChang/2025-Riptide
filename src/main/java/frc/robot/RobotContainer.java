@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.PS5Controller;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -66,8 +67,7 @@ import static frc.robot.TargetChooser.reefMap;
 
 public class RobotContainer {
     private final PS5Controller Driver_Ctrl = new PS5Controller(1);
-    private final XboxController Assist_Ctrl = new XboxController(2);
-    private final XboxController test = new XboxController(5);
+    private final PS5Controller Driver_Ctrl2 = new PS5Controller(2);
 
     private final Joystick BIG_BUTTON = new Joystick(3); // BIG BUTTON
     private final Joystick REEF_BUTTON = new Joystick(4); // REEF BUTTON
@@ -134,8 +134,9 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
+        Driver2_ConfigureBinding();
         // Assist_ConfigureBindings();
-        BIG_BUTTON_ConfigureBingings();
+        BIG_BUTTON_ConfigureBingdings();
         REEF_BUTTON_ConfigureBindings();
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
@@ -187,26 +188,27 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 6).whileTrue(CMD_CoralShoot)
                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
  
-        new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(() -> {
-            switch (reefLevelSupplier.get()) {
-                case 1:
-                  arm.Arm_RL1();  
-                  elevator.ELE_RL1();
-                  break;
-                case 2:
-                  arm.Arm_RL2();
-                  elevator.ELE_RL2();
-                  break;
-                case 3:
-                  arm.Arm_RL3();
-                  elevator.ELE_RL3();
-                  break;
-                case 4:
-                  arm.Arm_RL4();
-                  elevator.ELE_RL4();
-                  break;
-              }
-        }, elevator));
+        // new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(() -> {
+        //     switch (reefLevelSupplier.get()) {
+        //         case 1:
+        //           arm.Arm_RL1();  
+        //           elevator.ELE_RL1();
+        //           break;
+        //         case 2:
+        //           arm.Arm_RL2();
+        //           elevator.ELE_RL2();
+        //           break;
+        //         case 3:
+        //           arm.Arm_RL3();
+        //           elevator.ELE_RL3();
+        //           break;
+        //         case 4:
+        //           arm.Arm_RL4();
+        //           elevator.ELE_RL4();
+        //           break;
+        //       }
+        // }, elevator));
+        new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
         new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
@@ -214,7 +216,31 @@ public class RobotContainer {
         // new POVButton(Driver_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down)).onFalse(new InstantCommand(elevator::ELE_Stop));
     }
 
-    private void BIG_BUTTON_ConfigureBingings(){
+    private void Driver2_ConfigureBinding(){
+        new JoystickButton(Driver_Ctrl2, 1).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
+                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+        new JoystickButton(Driver_Ctrl2, 2).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+                                                       .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+
+        new JoystickButton(Driver_Ctrl2, 3).whileTrue(new InstantCommand(arm::Arm_Station, arm))
+                                                        .whileTrue(new InstantCommand(claw::Claw_Suck, claw ))
+                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+
+        new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm))
+                                                        .onTrue(new InstantCommand(claw::Claw_Stop, claw))
+                                                        .onTrue(new InstantCommand(elevator::ELE_Floor, elevator));
+
+        new JoystickButton(Driver_Ctrl2, 5).whileTrue(drivetrain.driveToPose(reefMap.get(21).get(0)));
+        new JoystickButton(Driver_Ctrl2, 6).whileTrue(drivetrain.driveToPose(reefMap.get(21).get(1)));
+
+
+        new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
+        new POVButton(Driver_Ctrl2, 90).onTrue(CMD_RL2);
+        new POVButton(Driver_Ctrl2, 180).onTrue(CMD_RL3);
+        new POVButton(Driver_Ctrl2, 270).onTrue(CMD_RL4);
+    }
+
+    private void BIG_BUTTON_ConfigureBingdings(){
         
         Optional<Alliance> alliance = DriverStation.getAlliance();
         // if (alliance.isPresent()) {
