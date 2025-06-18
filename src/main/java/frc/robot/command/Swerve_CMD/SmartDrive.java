@@ -6,6 +6,7 @@ package frc.robot.command.Swerve_CMD;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.PS5Controller;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
@@ -41,15 +42,15 @@ public class SmartDrive extends Command {
 
 
   /** Creates a new ChassisSpeed. */
-  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, Climber climber, PS5Controller driveCtrl, GenericHID switchCtrl) {
+  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, Climber climber, XboxController driveCtrl, GenericHID switchCtrl) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.elevator = elevator;
     this.climber =climber;
 
-    vX = () -> driveCtrl.getLeftY();
-    vY = () -> driveCtrl.getLeftX();
-    vR = () -> -driveCtrl.getRightX();
+    vX = () -> driveCtrl.getRawAxis(5);
+    vY = () -> driveCtrl.getRawAxis(4);
+    vR = () -> -driveCtrl.getRawAxis(0);
     btnIsPressed = () -> switchCtrl.getRawButtonPressed(10);  // TODO: confirm the button's ID
 
     addRequirements(swerve, elevator);

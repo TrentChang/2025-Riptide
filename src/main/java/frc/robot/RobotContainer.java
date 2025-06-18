@@ -10,6 +10,7 @@ import java.util.Set;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -66,8 +67,8 @@ import frc.robot.subsystems.limelight;
 import static frc.robot.TargetChooser.reefMap;
 
 public class RobotContainer {
-    private final PS5Controller Driver_Ctrl = new PS5Controller(1);
-    private final PS5Controller Driver_Ctrl2 = new PS5Controller(2);
+    private final XboxController Driver_Ctrl = new XboxController(1);
+    private final XboxController Driver_Ctrl2 = new XboxController(0);
 
     private final Joystick BIG_BUTTON = new Joystick(3); // BIG BUTTON
     private final Joystick REEF_BUTTON = new Joystick(4); // REEF BUTTON
@@ -76,7 +77,7 @@ public class RobotContainer {
     public final Intake intake = new Intake();
     public final Arm arm = new Arm();
     // public final Candle candle = new Candle();
-    public final Climber climber = new Climber();
+    public final Climber climber = new Climber();   
     public final Claw claw = new Claw();
     public final Elevator elevator = new Elevator();
     public final limelight limelight = new limelight();
@@ -111,7 +112,7 @@ public class RobotContainer {
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
 
     // Swerve Command
-    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, climber, Driver_Ctrl, Driver_Ctrl);
+    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, climber, Driver_Ctrl2, Driver_Ctrl);
 
     public final test CMD_test = new test(drivetrain);
 
@@ -222,7 +223,8 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl2, 2).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
 
-        new JoystickButton(Driver_Ctrl2, 3).whileTrue(new InstantCommand(arm::Arm_Station, arm))
+        new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(arm::Arm_Station, arm))
+                                                        .onTrue(new InstantCommand(elevator::ELE_Floor, elevator))
                                                         .whileTrue(new InstantCommand(claw::Claw_Suck, claw ))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
 
@@ -230,8 +232,11 @@ public class RobotContainer {
                                                         .onTrue(new InstantCommand(claw::Claw_Stop, claw))
                                                         .onTrue(new InstantCommand(elevator::ELE_Floor, elevator));
 
-        new JoystickButton(Driver_Ctrl2, 5).whileTrue(drivetrain.driveToPose(reefMap.get(21).get(0)));
-        new JoystickButton(Driver_Ctrl2, 6).whileTrue(drivetrain.driveToPose(reefMap.get(21).get(1)));
+        new JoystickButton(Driver_Ctrl2, 5).whileTrue(new InstantCommand(intake::suck, intake))
+                                                        .onFalse(new InstantCommand(intake::Stop, intake));
+
+        new JoystickButton(Driver_Ctrl2, 6).whileTrue(new InstantCommand(intake::shoot, intake))
+                                                         .onFalse(new InstantCommand(intake::Stop, intake));
 
 
         new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
