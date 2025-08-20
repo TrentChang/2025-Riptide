@@ -112,7 +112,7 @@ public class RobotContainer {
     public final SetClimberAsHead CMD_SetClimberAsHead = new SetClimberAsHead(drivetrain);
 
     // Swerve Command
-    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, climber, Driver_Ctrl2, Driver_Ctrl);
+    public final SmartDrive CMD_SmartDrive = new SmartDrive(drivetrain, elevator, Driver_Ctrl, Driver_Ctrl2);
 
     public final test CMD_test = new test(drivetrain);
 
@@ -160,61 +160,25 @@ public class RobotContainer {
     }
 
     private void Driver_ConfigureBindings() {
-        // new JoystickButton(Driver_Ctrl, 1).whileTrue(CMD_AimCoralStation);
-        new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(intake::Intake_out, intake));
+        //Default pigeon
+        new JoystickButton(Driver_Ctrl,9).onTrue(new InstantCommand(drivetrain::resetPose, drivetrain));
+        //DS auto_target
         new JoystickButton(Driver_Ctrl, 2).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
                                                        .alongWith(new CoralStation(elevator, claw, arm)));
-        // new JoystickButton(Driver_Ctrl, 3).whileTrue(new InstantCommand(climber::Up, climber))
-        //                                                .onFalse(new InstantCommand(climber::Stop, climber));
-        // new JoystickButton(Driver_Ctrl, 4).whileTrue(new InstantCommand(climber::Down, climber))
-        //                                                .onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_Barege);
-        new JoystickButton(Driver_Ctrl, 4).onTrue(CMD_ReefAlgae);
-    
-        // new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
-        //                                                .onFalse(new InstantCommand(intake::Stop, intake));
-        // new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
-        //                                                 .onFalse(new InstantCommand(intake::Stop, intake));
-        // new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
-        //                                                .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        // new JoystickButton(Driver_Ctrl, 8).whileTrue(CMD_CoralShoot)
-        //                                                .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-
+        //coral                                           .onFalse(new InstantCommand(climber::Stop, climber));
+        new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstandCommand(claw::Claw_Suck, claw))
+                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+        new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstandCommand(claw::Claw_shoot, claw))
+                                                        .onFalse(new InstandCommand(claw::Claw_Stop, claw))
+        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstandCommand(arm::Arm_Station, arm));
+        new JoystickButton(Driver_Ctrl, 4).onTrue(new InstandCommand(arm::Arm_Zero, arm))
+        //algae
         new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
-        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
-                                                       .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        new JoystickButton(Driver_Ctrl, 6).whileTrue(CMD_CoralShoot)
-                                                       .onFalse(new InstantCommand(claw::Claw_Stop, claw));
- 
-        // new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(() -> {
-        //     switch (reefLevelSupplier.get()) {
-        //         case 1:
-        //           arm.Arm_RL1();  
-        //           elevator.ELE_RL1();
-        //           break;
-        //         case 2:
-        //           arm.Arm_RL2();
-        //           elevator.ELE_RL2();
-        //           break;
-        //         case 3:
-        //           arm.Arm_RL3();
-        //           elevator.ELE_RL3();
-        //           break;
-        //         case 4:
-        //           arm.Arm_RL4();
-        //           elevator.ELE_RL4();
-        //           break;
-        //       }
-        // }, elevator));
-        new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
-        new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
-        new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
-        new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
-        // new POVButton(Driver_Ctrl, 270).whileTrue(new InstantCommand(elevator::ELE_Up)).onFalse(new InstantCommand(elevator::ELE_Stop));
-        // new POVButton(Driver_Ctrl, 180).whileTrue(new InstantCommand(elevator::ELE_Down)).onFalse(new InstantCommand(elevator::ELE_Stop));
+        new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(intake::Intake_Out, intake));
+        new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(intake::Intake_Back, intake));
     }
 
     private void Driver2_ConfigureBinding(){
