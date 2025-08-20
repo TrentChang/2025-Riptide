@@ -161,23 +161,23 @@ public class RobotContainer {
 
     private void Driver_ConfigureBindings() {
         //Default pigeon
-        new JoystickButton(Driver_Ctrl,9).onTrue(new InstantCommand(drivetrain::resetPose, drivetrain));
+        new JoystickButton(Driver_Ctrl,9).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
         //DS auto_target
         new JoystickButton(Driver_Ctrl, 2).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
                                                        .alongWith(new CoralStation(elevator, claw, arm)));
         //coral                                           .onFalse(new InstantCommand(climber::Stop, climber));
-        new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstandCommand(claw::Claw_Suck, claw))
+        new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstandCommand(claw::Claw_shoot, claw))
-                                                        .onFalse(new InstandCommand(claw::Claw_Stop, claw))
-        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstandCommand(arm::Arm_Station, arm));
-        new JoystickButton(Driver_Ctrl, 4).onTrue(new InstandCommand(arm::Arm_Zero, arm))
+        new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(arm::Arm_Station, arm));
+        new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm));
         //algae
         new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
-        new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(intake::Intake_Out, intake));
+        new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(intake::Intake_out, intake));
         new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(intake::Intake_Back, intake));
     }
 

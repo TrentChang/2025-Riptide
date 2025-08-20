@@ -26,7 +26,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 public class SmartDrive extends Command {
   private final CommandSwerveDrivetrain swerve;
   private final Elevator elevator;
-  private final Climber climber;
+  //private final Climber climber;
 
   private SwerveRequest.FieldCentric driveF;
   private SwerveRequest.RobotCentric driveR;
@@ -42,16 +42,16 @@ public class SmartDrive extends Command {
 
 
   /** Creates a new ChassisSpeed. */
-  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, Climber climber, XboxController driveCtrl, GenericHID switchCtrl) {
+  public SmartDrive(CommandSwerveDrivetrain swerve, Elevator elevator, XboxController driveCtrl, GenericHID switchCtrl) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.elevator = elevator;
-    this.climber =climber;
+    //this.climber =climber;
 
-    vX = () -> driveCtrl.getRawAxis(5);
-    vY = () -> driveCtrl.getRawAxis(4);
-    vR = () -> -driveCtrl.getRawAxis(0);
-    btnIsPressed = () -> switchCtrl.getRawButtonPressed(10);  // TODO: confirm the button's ID
+    vX = () -> driveCtrl.getLeftY();
+    vY = () -> driveCtrl.getLeftX();
+    vR = () -> -driveCtrl.getRightX(); //TODO:check the pos again
+    btnIsPressed = () -> switchCtrl.getRawButtonPressed(10);
 
     addRequirements(swerve, elevator);
   }
