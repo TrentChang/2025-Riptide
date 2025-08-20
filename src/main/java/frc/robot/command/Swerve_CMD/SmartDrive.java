@@ -62,10 +62,10 @@ public class SmartDrive extends Command {
     System.out.println("FieldDrive init");
     /* Setting up bindings for necessary control of the swerve drive platform */
     driveF = new SwerveRequest.FieldCentric()
-                              .withDeadband(maxSpeed * 0.1).withRotationalDeadband(maxAngularRate * 0.1) // Add a 10% deadband
+                              .withDeadband(maxSpeed * 0.05).withRotationalDeadband(maxAngularRate * 0.05) // Add a 10% deadband
                               .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive motors
     driveR = new SwerveRequest.RobotCentric()
-                              .withDeadband(maxSpeed * 0.1).withRotationalDeadband(maxAngularRate * 0.1)
+                              .withDeadband(maxSpeed * 0.05).withRotationalDeadband(maxAngularRate * 0.05)
                               .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
   }
 

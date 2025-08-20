@@ -130,7 +130,6 @@ public class Elevator extends SubsystemBase{
         //     Left_Motor.set(0);
         //     Right_Motor.set(0);
         // }
-
         getAbsolutePosition();
         SmartDashboard.putNumber("Eleva_pos_L", getAbsolutePosition());
 

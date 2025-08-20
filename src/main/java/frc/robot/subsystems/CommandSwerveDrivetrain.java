@@ -100,6 +100,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // resetRotation(new Rotation2d(0));
     }
 
+    public void setPose(Pose2d pose) {
+        super.resetPose(pose);
+    }
+
     public Pose2d getPose() {
         return this.getState().Pose;
     }
@@ -312,15 +316,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("Bot_Y", this.getState().Pose.getY());
         // SmartDashboard.putNumber("Bot_R", this.getState().Pose.getRotation().getDegrees());
         // SmartDashboard.putNumber("Pigeon", this.getYaw());
-        double distance = Math.sqrt(Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("").getX(), 2) + Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("").getY(), 2));
+        double distance = Math.sqrt(Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("limelight-two").getX(), 2) + Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("limelight-two").getY(), 2));
 
         if(!DriverStation.isAutonomous()){
             if( (this.getState().Speeds.vxMetersPerSecond <= 0.3) && (this.getState().Speeds.vyMetersPerSecond <= 0.3)){
-                if (LimelightHelpers.getFiducialID("") != -1 && distance < 1) {
+                if (LimelightHelpers.getFiducialID("limelight-two") != -1 && distance < 1) {
                     // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
                     // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
-                    this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("")); 
-                    System.out.println("Updating");
+                    this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("limelight-two")); 
                 }
             }
         }

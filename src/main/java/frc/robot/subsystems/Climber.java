@@ -27,7 +27,7 @@ public class Climber extends SubsystemBase{
         Climber_Motor.setNeutralMode(NeutralModeValue.Brake);
 
         Climber_Motor.setInverted(ClimberConstants.LeftMotor_Inverted);
-
+        
         // set feedback sensor as integrated sensor
         Climber_Motor_Config.apply(new FeedbackConfigs()
                 .withFeedbackSensorSource(FeedbackSensorSourceValue.RotorSensor));
@@ -81,6 +81,7 @@ public class Climber extends SubsystemBase{
     public void Stop(){
         Climber_Motor.set(0);
     }
+
     @Override 
     public void periodic(){
         getAbsolutePosition();
