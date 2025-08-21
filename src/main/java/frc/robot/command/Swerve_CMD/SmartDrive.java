@@ -50,7 +50,7 @@ public class SmartDrive extends Command {
 
     vX = () -> driveCtrl.getLeftY();
     vY = () -> driveCtrl.getLeftX();
-    vR = () -> -driveCtrl.getRightX(); //TODO:check the pos again
+    vR = () -> -driveCtrl.getRightX();
     btnIsPressed = () -> switchCtrl.getRawButtonPressed(10);
 
     addRequirements(swerve, elevator);

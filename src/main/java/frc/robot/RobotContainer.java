@@ -59,7 +59,7 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Candle;
-import frc.robot.subsystems.Climber;
+//import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
@@ -67,8 +67,8 @@ import frc.robot.subsystems.limelight;
 import static frc.robot.TargetChooser.reefMap;
 
 public class RobotContainer {
-    private final XboxController Driver_Ctrl = new XboxController(1);
-    private final XboxController Driver_Ctrl2 = new XboxController(0);
+    private final XboxController Driver_Ctrl = new XboxController(0);
+    private final XboxController Driver_Ctrl2 = new XboxController(1);
 
     private final Joystick BIG_BUTTON = new Joystick(3); // BIG BUTTON
     private final Joystick REEF_BUTTON = new Joystick(4); // REEF BUTTON
@@ -77,7 +77,7 @@ public class RobotContainer {
     public final Intake intake = new Intake();
     public final Arm arm = new Arm();
     // public final Candle candle = new Candle();
-    public final Climber climber = new Climber();   
+    //public final Climber climber = new Climber();   
     public final Claw claw = new Claw();
     public final Elevator elevator = new Elevator();
     public final limelight limelight = new limelight();
@@ -98,7 +98,7 @@ public class RobotContainer {
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(claw, arm, elevator);
 
     // Group Command
-    public final Barge CMD_Barege = new Barge(arm, claw, elevator);
+    public final Barge CMD_Barege = new Barge(arm, claw, elevator); 
     public final ReefAlgae CMD_ReefAlgae = new ReefAlgae(arm, elevator);
     public final RL1 CMD_RL1 = new RL1(arm, claw, elevator);
     public final RL2 CMD_RL2 = new RL2(arm, claw, elevator);
@@ -161,9 +161,9 @@ public class RobotContainer {
 
     private void Driver_ConfigureBindings() {
         //Default pigeon
-        new JoystickButton(Driver_Ctrl,9).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
+        new JoystickButton(Driver_Ctrl,7).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
         //DS auto_target
-        new JoystickButton(Driver_Ctrl, 2).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
+        new JoystickButton(Driver_Ctrl, 1).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
                                                        .alongWith(new CoralStation(elevator, claw, arm)));
         //coral                                           .onFalse(new InstantCommand(climber::Stop, climber));
         new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
@@ -173,12 +173,14 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(arm::Arm_Station, arm));
         new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm));
         //algae
-        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(intake::suck, intake))
+        new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
-        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(intake::shoot, intake))
+        new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(intake::Intake_out, intake));
         new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(intake::Intake_Back, intake));
+        //elevator default
+        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
     }
 
     private void Driver2_ConfigureBinding(){
@@ -210,7 +212,10 @@ public class RobotContainer {
     }
 
     private void BIG_BUTTON_ConfigureBingdings(){
-        
+        new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
+        new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
+        new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3);
+        new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
         Optional<Alliance> alliance = DriverStation.getAlliance();
         // if (alliance.isPresent()) {
         //     if (alliance.get() == Alliance.Red) {
@@ -240,10 +245,10 @@ public class RobotContainer {
         new JoystickButton(BIG_BUTTON, 5).onTrue(new InstantCommand(claw::L1ClawShoot, claw));
         new JoystickButton(BIG_BUTTON, 7).whileTrue(new InstantCommand(claw::AlgaeClawShoot)).onFalse(new InstantCommand(claw::Claw_Stop));
         new JoystickButton(BIG_BUTTON, 8).whileTrue(CMD_SetClimberAsHead);
-        new JoystickButton(BIG_BUTTON, 9).whileTrue(new InstantCommand(climber::Up, climber))
-                                                       .onFalse(new InstantCommand(climber::Stop, climber));
-        new JoystickButton(BIG_BUTTON, 10).whileTrue(new InstantCommand(climber::Down, climber))
-                                                       .onFalse(new InstantCommand(climber::Stop, climber));
+        // new JoystickButton(BIG_BUTTON, 9).whileTrue(new InstantCommand(climber::Up, climber))
+        //                                                .onFalse(new InstantCommand(climber::Stop, climber));
+        // new JoystickButton(BIG_BUTTON, 10).whileTrue(new InstantCommand(climber::Down, climber))
+        //                                                .onFalse(new InstantCommand(climber::Stop, climber));
         // new JoystickButton(BIG_BUTTON, 9).whileTrue(CMD_Barege);
         // new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_ReefAlgae);
     }

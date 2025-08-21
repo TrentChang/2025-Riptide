@@ -389,7 +389,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
    */
   public Command driveToPose(Pose2d pose)
   {
-  // Create the constraints to use while pathfinding
+  // Create the constraints to use while pathfinding        
     // PathConstraints constraints = new PathConstraints(
     //     swerveDrive.getMaximumChassisVelocity(), 2.0,
     //     swerveDrive.getMaximumChassisAngularVelocity(), Units.degreesToRadians(180));
