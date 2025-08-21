@@ -182,7 +182,7 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(intake::Intake_out, intake));
-        new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(intake::Intake_Back, intake));
+        new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(intake::Intake_Zero, intake));
         //elevator default
         new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
     }
