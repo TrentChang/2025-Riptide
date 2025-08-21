@@ -66,7 +66,7 @@ public class AutoReefLevel extends Command {
         case 3:
           arm.Arm_RL3();
           elevator.ELE_RL3();
-          break;
+          break;  
         case 4:
           arm.Arm_RL4();
           elevator.ELE_RL4();

@@ -108,7 +108,7 @@ public final class Constants{
         // Arm Config 
         public static final boolean Arm_Inverted = false;
 
-        public static final double Arm_Zero = 0.1;
+        public static final double Arm_Zero = 0.05;
         public static final double Arm_StartUp = 0.1;
         public static final double Arm_Station = 0.34;
         public static final double Arm_Barge = 0.30;

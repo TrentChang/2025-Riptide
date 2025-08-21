@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
@@ -76,13 +77,15 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     public final Intake intake = new Intake();
     public final Arm arm = new Arm();
-    // public final Candle candle = new Candle();
+    //public final Candle candle = new Candle();
     //public final Climber climber = new Climber();   
     public final Claw claw = new Claw();
     public final Elevator elevator = new Elevator();
     public final limelight limelight = new limelight();
     public final TargetChooser targetChooser = new TargetChooser();
 
+    //autoTarget station down Command
+    public final ParallelCommandGroup stationAimStop = new ParallelCommandGroup(new InstantCommand(claw::Claw_Stop, claw), new InstantCommand(arm::Arm_Zero, arm));
     // Aim Command
     public final AimCoralStation CMD_AimCoralStation = new AimCoralStation(arm, drivetrain, claw, limelight);
     // public final AutoAlignment CMD_AutoAlignment = new AutoAlignment(drivetrain);
@@ -135,7 +138,7 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
-        Driver2_ConfigureBinding();
+        //Driver2_ConfigureBinding();
         // Assist_ConfigureBindings();
         BIG_BUTTON_ConfigureBingdings();
         REEF_BUTTON_ConfigureBindings();
@@ -165,7 +168,8 @@ public class RobotContainer {
         //DS auto_target
         new JoystickButton(Driver_Ctrl, 1).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
                                                        .alongWith(new CoralStation(elevator, claw, arm)));
-        //coral                                           .onFalse(new InstantCommand(climber::Stop, climber));
+        //                                              .onFalse(new InstantCommand(climber::Stop, climber));
+        //coral
         new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
         new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
@@ -183,68 +187,67 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
     }
 
-    private void Driver2_ConfigureBinding(){
-        new JoystickButton(Driver_Ctrl2, 1).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
-                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        new JoystickButton(Driver_Ctrl2, 2).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
-                                                       .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+    // private void Driver2_ConfigureBinding(){
+    //     new JoystickButton(Driver_Ctrl2, 1).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
+    //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+    //     new JoystickButton(Driver_Ctrl2, 2).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+    //                                                    .onFalse(new InstantCommand(claw::Claw_Stop, claw));
 
-        new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(arm::Arm_Station, arm))
-                                                        .onTrue(new InstantCommand(elevator::ELE_Floor, elevator))
-                                                        .whileTrue(new InstantCommand(claw::Claw_Suck, claw ))
-                                                        .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+    //     new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(arm::Arm_Station, arm))
+    //                                                     .onTrue(new InstantCommand(elevator::ELE_Floor, elevator))
+    //                                                     .whileTrue(new InstantCommand(claw::Claw_Suck, claw ))
+    //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
 
-        new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm))
-                                                        .onTrue(new InstantCommand(claw::Claw_Stop, claw))
-                                                        .onTrue(new InstantCommand(elevator::ELE_Floor, elevator));
+    //     new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm))
+    //                                                     .onTrue(new InstantCommand(claw::Claw_Stop, claw))
+    //                                                     .onTrue(new InstantCommand(elevator::ELE_Floor, elevator));
 
-        new JoystickButton(Driver_Ctrl2, 5).whileTrue(new InstantCommand(intake::suck, intake))
-                                                        .onFalse(new InstantCommand(intake::Stop, intake));
+    //     new JoystickButton(Driver_Ctrl2, 5).whileTrue(new InstantCommand(intake::suck, intake))
+    //                                                     .onFalse(new InstantCommand(intake::Stop, intake));
 
-        new JoystickButton(Driver_Ctrl2, 6).whileTrue(new InstantCommand(intake::shoot, intake))
-                                                         .onFalse(new InstantCommand(intake::Stop, intake));
+    //     new JoystickButton(Driver_Ctrl2, 6).whileTrue(new InstantCommand(intake::shoot, intake))
+    //                                                      .onFalse(new InstantCommand(intake::Stop, intake));
 
 
-        new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
-        new POVButton(Driver_Ctrl2, 90).onTrue(CMD_RL2);
-        new POVButton(Driver_Ctrl2, 180).onTrue(CMD_RL3);
-        new POVButton(Driver_Ctrl2, 270).onTrue(CMD_RL4);
-    }
+    //     new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
+    //     new POVButton(Driver_Ctrl2, 90).onTrue(CMD_RL2);
+    //     new POVButton(Driver_Ctrl2, 180).onTrue(CMD_RL3);
+    //     new POVButton(Driver_Ctrl2, 270).onTrue(CMD_RL4);
+    // }
 
     private void BIG_BUTTON_ConfigureBingdings(){
-        new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
-        new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
-        new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3);
-        new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
+        //elevator default
+        new JoystickButton(BIG_BUTTON, 8).onTrue(CMD_RL1);
+        //coral station autotarget
         Optional<Alliance> alliance = DriverStation.getAlliance();
-        // if (alliance.isPresent()) {
-        //     if (alliance.get() == Alliance.Red) {
-        //         new JoystickButton(BIG_BUTTON, 5).whileTrue(
-        //             drivetrain.driveToPose(reefMap.get(2).get(0))
-        //             .alongWith(new CoralStation(elevator, claw, arm))
-        //         );
-        //         new JoystickButton(BIG_BUTTON, 6).whileTrue(
-        //             drivetrain.driveToPose(reefMap.get(1).get(0))
-        //             .alongWith(new CoralStation(elevator, claw, arm))
-        //         );
-        //     }
-        //     else{
-        //         new JoystickButton(BIG_BUTTON, 5).whileTrue(
-        //             drivetrain.driveToPose(reefMap.get(12).get(0))
-        //             .alongWith(new CoralStation(elevator, claw, arm))
-        //         );
-        //         new JoystickButton(BIG_BUTTON, 6).whileTrue(
-        //             drivetrain.driveToPose(reefMap.get(13).get(0))
-        //             .alongWith(new CoralStation(elevator, claw, arm))
-        //         );
-        //     }
-        // }
-        // else{
-        //     System.out.println("WARNING: Alliance NOT DETECTED!");
-        // }
-        new JoystickButton(BIG_BUTTON, 5).onTrue(new InstantCommand(claw::L1ClawShoot, claw));
-        new JoystickButton(BIG_BUTTON, 7).whileTrue(new InstantCommand(claw::AlgaeClawShoot)).onFalse(new InstantCommand(claw::Claw_Stop));
-        new JoystickButton(BIG_BUTTON, 8).whileTrue(CMD_SetClimberAsHead);
+        if (alliance.isPresent()) {
+            if (alliance.get() == Alliance.Red) {
+                //red right drivetrain.driveToPose(reefMap.get(2).get(0)
+                new JoystickButton(BIG_BUTTON, 5).whileTrue(new CoralStation(elevator, claw, arm))
+                                                                .onFalse(stationAimStop);
+                //red left
+                new JoystickButton(BIG_BUTTON, 6).whileTrue(drivetrain.driveToPose(reefMap.get(1).get(0))
+                                                                .alongWith(new CoralStation(elevator, claw, arm)))
+                                                                .onFalse(stationAimStop);
+            }
+            else{
+                //blue right
+                new JoystickButton(BIG_BUTTON, 5).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
+                                                                .alongWith(new CoralStation(elevator, claw, arm)))
+                                                                .onFalse(stationAimStop);
+                //blue left
+                new JoystickButton(BIG_BUTTON, 6).whileTrue(drivetrain.driveToPose(reefMap.get(13).get(0))
+                                                                .alongWith(new CoralStation(elevator, claw, arm)))
+                                                                .onFalse(stationAimStop);
+            }
+        }
+        else{
+            System.out.println("WARNING: Alliance NOT DETECTED!");
+        }
+
+        // new JoystickButton(BIG_BUTTON, 5).onTrue(new InstantCommand(claw::L1ClawShoot, claw));
+        // new JoystickButton(BIG_BUTTON, 7).whileTrue(new InstantCommand(claw::AlgaeClawShoot)).onFalse(new InstantCommand(claw::Claw_Stop));
+        // new JoystickButton(BIG_BUTTON, 8).whileTrue(CMD_SetClimberAsHead);
         // new JoystickButton(BIG_BUTTON, 9).whileTrue(new InstantCommand(climber::Up, climber))
         //                                                .onFalse(new InstantCommand(climber::Stop, climber));
         // new JoystickButton(BIG_BUTTON, 10).whileTrue(new InstantCommand(climber::Down, climber))
