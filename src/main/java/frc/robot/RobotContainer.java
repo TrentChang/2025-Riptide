@@ -166,11 +166,9 @@ public class RobotContainer {
 
     private void Driver_ConfigureBindings() {
         //Default pigeon
-        new JoystickButton(Driver_Ctrl,7).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
-        //DS arm target
-        new JoystickButton(Driver_Ctrl, 1).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
-                                                       .alongWith(new CoralStation(elevator, claw, arm)));
-        //                                              .onFalse(new InstantCommand(climber::Stop, climber));
+        new JoystickButton(Driver_Ctrl,3).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
+        //Ds pose
+        new JoystickButton(Driver_Ctrl, 1).onTrue(CoralStation);
         //coral
         new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
@@ -181,6 +179,8 @@ public class RobotContainer {
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
+        new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(intake::Intake_out, intake));
+        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(intake::Intake_Back, intake));
         //Elevator ctrl
         new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
@@ -217,10 +217,11 @@ public class RobotContainer {
     // }
 
     private void BIG_BUTTON_ConfigureBingdings(){
-        new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
-        new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
-        new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3);
-        new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
+        //backup 
+        // new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
+        // new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
+        // new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3);
+        // new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
         //elevator default
         new JoystickButton(BIG_BUTTON, 8).onTrue(CMD_RL1);
         //coral station autotarget
