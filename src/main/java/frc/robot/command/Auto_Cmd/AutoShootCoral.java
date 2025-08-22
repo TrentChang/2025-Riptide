@@ -20,12 +20,13 @@ public class AutoShootCoral extends SequentialCommandGroup {
   private final Claw claw;
   private final Arm arm;
   private final Elevator elevator;
-  // private final CommandSwerveDrivetrain commandSwerveDrivetrain;
-  public AutoShootCoral(Claw claw, Arm arm, Elevator elevator) {
+  private final CommandSwerveDrivetrain commandSwerveDrivetrain;
+
+  public AutoShootCoral(Claw claw, Arm arm, Elevator elevator, CommandSwerveDrivetrain commandSwerveDrivetrain) {
     this.claw = claw;
     this.arm = arm;
     this.elevator = elevator;
-    // this.commandSwerveDrivetrain= commandSwerveDrivetrain;
+    this.commandSwerveDrivetrain = commandSwerveDrivetrain;
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addRequirements(claw, arm, elevator);
@@ -39,7 +40,7 @@ public class AutoShootCoral extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> claw.Claw_Stop(), claw));
     addCommands(new InstantCommand(() -> elevator.ELE_Floor(), elevator));
     addCommands(new InstantCommand(() -> arm.Arm_StartUp(), arm));
-    // addCommands(new InstantCommand(()-> commandSwerveDrivetrain.ResetPigeon()));
+    addCommands(new InstantCommand(()-> commandSwerveDrivetrain.ResetPigeon()));
   }
 }
   

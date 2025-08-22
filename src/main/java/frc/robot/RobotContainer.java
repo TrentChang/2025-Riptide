@@ -99,7 +99,7 @@ public class RobotContainer {
     public final AutoL3 CMD_AutoL3 = new AutoL3(arm, elevator);
     public final AutoL2 CMD_AutoL2 = new AutoL2(arm, elevator);
     public final AutoL1 CMD_AutoL1 = new AutoL1(arm, elevator);
-    public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(claw, arm, elevator);
+    public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(claw, arm, elevator, drivetrain);
 
     // Group Command
     public final Barge CMD_Barege = new Barge(arm, claw, elevator); 
