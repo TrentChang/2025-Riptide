@@ -91,7 +91,7 @@ public class SmartDrive extends Command {
   @Override
   public void execute() {
     if (btnIsPressed.getAsBoolean()) {
-      isRobotRelative = true;
+      isRobotRelative = false; //TODO:orginally value = true, change it back after chassis is fixed.
     }
     
     if (isRobotRelative) {  // Robot Relative

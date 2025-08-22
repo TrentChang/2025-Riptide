@@ -42,3 +42,4 @@ public class AutoShootCoral extends SequentialCommandGroup {
     // addCommands(new InstantCommand(()-> commandSwerveDrivetrain.ResetPigeon()));
   }
 }
+  

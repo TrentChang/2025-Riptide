@@ -5,6 +5,7 @@
 package frc.robot;
 
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
@@ -142,6 +143,7 @@ public class RobotContainer {
         // Assist_ConfigureBindings();
         BIG_BUTTON_ConfigureBingdings();
         REEF_BUTTON_ConfigureBindings();
+        updateReefLevel();
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
         NamedCommands.registerCommand("AutoShootCoral", CMD_AutoShootCoral);
@@ -165,7 +167,7 @@ public class RobotContainer {
     private void Driver_ConfigureBindings() {
         //Default pigeon
         new JoystickButton(Driver_Ctrl,7).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
-        //DS auto_target
+        //DS arm target
         new JoystickButton(Driver_Ctrl, 1).whileTrue(drivetrain.driveToPose(reefMap.get(12).get(0))
                                                        .alongWith(new CoralStation(elevator, claw, arm)));
         //                                              .onFalse(new InstantCommand(climber::Stop, climber));
@@ -174,17 +176,16 @@ public class RobotContainer {
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
         new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(arm::Arm_Station, arm));
-        new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm));
         //algae
         new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
-        new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(intake::Intake_out, intake));
-        new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(intake::Intake_Zero, intake));
-        //elevator default
-        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
+        //Elevator ctrl
+        new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
+        new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
+        new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
+        new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
     }
 
     // private void Driver2_ConfigureBinding(){
@@ -216,14 +217,18 @@ public class RobotContainer {
     // }
 
     private void BIG_BUTTON_ConfigureBingdings(){
+        new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
+        new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
+        new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3);
+        new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
         //elevator default
         new JoystickButton(BIG_BUTTON, 8).onTrue(CMD_RL1);
         //coral station autotarget
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if (alliance.get() == Alliance.Red) {
-                //red right drivetrain.driveToPose(reefMap.get(2).get(0)
-                new JoystickButton(BIG_BUTTON, 5).whileTrue(new CoralStation(elevator, claw, arm))
+                //red right
+                new JoystickButton(BIG_BUTTON, 5).whileTrue(drivetrain.driveToPose(reefMap.get(2).get(0)).alongWith(new CoralStation(elevator, claw, arm)))
                                                                 .onFalse(stationAimStop);
                 //red left
                 new JoystickButton(BIG_BUTTON, 6).whileTrue(drivetrain.driveToPose(reefMap.get(1).get(0))
