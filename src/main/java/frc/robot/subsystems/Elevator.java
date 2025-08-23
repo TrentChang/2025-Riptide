@@ -22,7 +22,7 @@ public class Elevator extends SubsystemBase{
     private final TalonFX Left_Motor = new TalonFX(ElevatorConstants.LeftMotor_ID, "mech");
     private final TalonFX Right_Motor = new TalonFX(ElevatorConstants.RightMotor_ID, "mech");
 
-    private double LastPos = 0; 
+    private double LastPos = 0;
     private int rotation = 0;
 
     public Elevator(){

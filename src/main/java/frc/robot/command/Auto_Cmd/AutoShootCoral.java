@@ -11,6 +11,8 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Claw;
 import frc.robot.subsystems.Elevator;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -36,6 +38,9 @@ public class AutoShootCoral extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> claw.Claw_Suck(), claw));
     addCommands(new WaitCommand(2));
     addCommands(new InstantCommand(() -> claw.Claw_Shoot(), claw));
+    addCommands(new WaitCommand(1));
+    // addCommands(new InstantCommand(() -> commandSwerveDrivetrain.resetPose(new Pose2d(5.7, 3.886, Rotation2d.fromDegrees(180)))));
+    // addCommands(commandSwerveDrivetrain.driveToPose(new Pose2d(6, 3.886, Rotation2d.fromDegrees(180))));
     addCommands(new WaitCommand(0.5));
     addCommands(new InstantCommand(() -> claw.Claw_Stop(), claw));
     addCommands(new InstantCommand(() -> elevator.ELE_Floor(), elevator));
@@ -43,4 +48,4 @@ public class AutoShootCoral extends SequentialCommandGroup {
     addCommands(new InstantCommand(()-> commandSwerveDrivetrain.ResetPigeon()));
   }
 }
-  
+ 

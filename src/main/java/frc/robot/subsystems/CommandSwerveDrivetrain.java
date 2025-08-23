@@ -4,8 +4,11 @@ import static edu.wpi.first.units.Units.*;
 
 import java.util.function.Supplier;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -46,7 +49,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private static final double kSimLoopPeriod = 0.005; // 5 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
-
+    
     private Field2d m_field2d = new Field2d();
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
@@ -289,6 +292,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+        SmartDashboard.putNumber("Pigeon angle", getAngularVelocity());
+
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply it regardless of DS state.
@@ -318,18 +323,18 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("Pigeon", this.getYaw());
         double distance = Math.sqrt(Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("limelight-two").getX(), 2) + Math.pow(LimelightHelpers.getTargetPose3d_RobotSpace("limelight-two").getY(), 2));
 
-        if(!DriverStation.isAutonomous()){
-            if( (this.getState().Speeds.vxMetersPerSecond <= 0.3) && (this.getState().Speeds.vyMetersPerSecond <= 0.3)){
-                if (LimelightHelpers.getFiducialID("limelight-two") != -1 && distance < 1) {
-                    // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
-                    // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
-                    this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("limelight-two")); 
-                }
-            }
-        }
-        else {
-            System.out.println("Not Updating");
-        }
+        // if(!DriverStation.isAutonomous()){
+        //     if( (this.getState().Speeds.vxMetersPerSecond <= 0.3) && (this.getState().Speeds.vyMetersPerSecond <= 0.3)){
+        //         if (LimelightHelpers.getFiducialID("limelight-two") != -1 && distance < 1) {
+        //             // LimelightHelpers.SetRobotOrientation("", this.getYaw(), 0, 0, 0, 0, 0);
+        //             // this.resetPose(LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose);
+        //             this.resetPose(LimelightHelpers.getBotPose2d_wpiBlue("limelight-two")); 
+        //         }
+        //     }
+        // }
+        // else {
+        //     System.out.println("Not Updating");
+        // }
     }
 
     private void startSimThread() {

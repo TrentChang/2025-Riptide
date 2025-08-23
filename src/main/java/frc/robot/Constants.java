@@ -110,13 +110,13 @@ public final class Constants{
 
         public static final double Arm_Zero = 0.05;
         public static final double Arm_StartUp = 0.1;
-        public static final double Arm_Station = 0.32;
+        public static final double Arm_Station = 0.30;
         public static final double Arm_Barge = 0.30;
         public static final double Arm_Algae = 0.27;
-        public static final double Arm_RL1 = 0.17;  
-        public static final double Arm_RL2 = 0.19;
-        public static final double Arm_RL3 = 0.19;
-        public static final double Arm_RL4 = 0.18;
+        public static final double Arm_RL1 = 0.13;  
+        public static final double Arm_RL2 = 0.15;
+        public static final double Arm_RL3 = 0.15;
+        public static final double Arm_RL4 = 0.14;
 
         public static final double MAX_ACCEL = 500;
         public static final double MAX_VELOCITY = 200;

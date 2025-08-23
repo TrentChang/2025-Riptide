@@ -90,11 +90,11 @@ public class SmartDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (btnIsPressed.getAsBoolean()) {
-      isRobotRelative = true;
-    }
+    // if (btnIsPressed.getAsBoolean()) {
+    //   isRobotRelative = true; 
+    // }
     
-    if (isRobotRelative) {  // Robot Relative
+    if (false) {  // Robot Relative
       if (Math.abs(vR.getAsDouble()) >= 0.2) {
         isRobotRelative = false;
         return;

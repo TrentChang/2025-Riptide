@@ -43,9 +43,9 @@ public class AutoAim extends Command {
   public void initialize() {
     System.out.println("Init");
 
-    aprilTagID = (int)LimelightHelpers.getFiducialID("");
-    LimelightHelpers.SetRobotOrientation("", swerve.getYaw(), 0,0, 0, 0, 0);
-    llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("").pose;
+    aprilTagID = (int)LimelightHelpers.getFiducialID("limelight-two");
+    LimelightHelpers.SetRobotOrientation("limelight-two", swerve.getYaw(), 0,0, 0, 0, 0);
+    llPose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-two").pose;
     // llPose = LimelightHelpers.getBotPose2d_wpiBlue("");
     if ((6 <= aprilTagID && aprilTagID <= 11) || (17 <= aprilTagID && aprilTagID <= 22) || (1 <= aprilTagID && aprilTagID <= 2) || (12 <= aprilTagID && aprilTagID <= 13) ){
       if (llPose.getX() == 0 && llPose.getY() == 0) {  // invalid Pose2d data

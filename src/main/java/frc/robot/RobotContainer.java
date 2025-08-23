@@ -180,12 +180,16 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(intake::Intake_out, intake));
-        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(intake::Intake_Back, intake));
+        new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(intake::Intake_Zero, intake));
         //Elevator ctrl
         new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
         new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
+        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
+        new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
+            drivetrain.seedFieldCentric();
+        }, drivetrain));
     }
 
     // private void Driver2_ConfigureBinding(){

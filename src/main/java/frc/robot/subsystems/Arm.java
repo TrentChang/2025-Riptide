@@ -101,7 +101,6 @@ public class Arm extends SubsystemBase{
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL4).withSlot(0));
     }
 
-
     public void Arm_DOWN(){
        Arm_Motor.set(-0.2);
     }

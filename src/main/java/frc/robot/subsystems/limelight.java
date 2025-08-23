@@ -88,17 +88,17 @@ import frc.robot.LimelightHelpers.PoseEstimate;
 
     @Override
     public void periodic(){
-        getTag();
-        getRobotPose();
-        // LL_Pose.setRobotPose(avgPose);
-        LL_Pose.setRobotPose(getRobotPose());
-        SmartDashboard.putData("LL_Pose", LL_Pose);
-        SmartDashboard.putBoolean("getTag", tag);
-        // SmartDashboard.putNumber("LX", LimelightHelpers.getTX("limelight-two"));
-        // SmartDa  shboard.putNumber("LY", LimelightHelpers.getTY("limelight-two"));
-        // SmartDashboard.putNumber("LR", getRobotPose_two().getRotation().getAngle());
-        // SmartDashboard.putNumber("RY", LimelightHelpers.getTargetPose3d_CameraSpace("").getRotation().getY() * 57.3);
-        SmartDashboard.putNumber("Offset", LimelightHelpers.getTargetPose3d_RobotSpace("limelight-two").getY());
+        // getTag();
+        // getRobotPose();
+        // // LL_Pose.setRobotPose(avgPose);
+        // LL_Pose.setRobotPose(getRobotPose());
+        // SmartDashboard.putData("LL_Pose", LL_Pose);
+        // SmartDashboard.putBoolean("getTag", tag);
+        // // SmartDashboard.putNumber("LX", LimelightHelpers.getTX("limelight-two"));
+        // // SmartDa  shboard.putNumber("LY", LimelightHelpers.getTY("limelight-two"));
+        // // SmartDashboard.putNumber("LR", getRobotPose_two().getRotation().getAngle());
+        // // SmartDashboard.putNumber("RY", LimelightHelpers.getTargetPose3d_CameraSpace("").getRotation().getY() * 57.3);
+        // SmartDashboard.putNumber("Offset", LimelightHelpers.getTargetPose3d_RobotSpace("limelight-two").getY());
    }
 }
     
