@@ -165,8 +165,6 @@ public class RobotContainer {
     }
 
     private void Driver_ConfigureBindings() {
-        //Default pigeon
-        new JoystickButton(Driver_Ctrl,3).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
         //Ds pose
         new JoystickButton(Driver_Ctrl, 1).onTrue(CoralStation);
         //coral
@@ -191,7 +189,7 @@ public class RobotContainer {
             drivetrain.seedFieldCentric();
         }, drivetrain));
     }
-
+    
     // private void Driver2_ConfigureBinding(){
     //     new JoystickButton(Driver_Ctrl2, 1).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
     //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
