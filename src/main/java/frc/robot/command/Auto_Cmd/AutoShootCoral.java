@@ -44,7 +44,7 @@ public class AutoShootCoral extends SequentialCommandGroup {
     addCommands(new WaitCommand(0.5));
     addCommands(new InstantCommand(() -> claw.Claw_Stop(), claw));
     addCommands(new InstantCommand(() -> elevator.ELE_Floor(), elevator));
-    addCommands(new InstantCommand(() -> arm.Arm_StartUp(), arm));
+    //addCommands(new InstantCommand(() -> arm.Arm_StartUp(), arm));
     addCommands(new InstantCommand(()-> commandSwerveDrivetrain.ResetPigeon()));
   }
 }

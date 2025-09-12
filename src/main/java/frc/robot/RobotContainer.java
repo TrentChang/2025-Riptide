@@ -164,15 +164,17 @@ public class RobotContainer {
         DriverStation.silenceJoystickConnectionWarning(true);
     }
 
-    private void Driver_ConfigureBindings() {
-        //Ds pose
-        new JoystickButton(Driver_Ctrl, 1).onTrue(CoralStation);
-        //coral
+    private void Driver_ConfigureBindings(){
+        //pigeon reset
+        //new JoystickButton(Driver_Ctrl, 8).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
+        //coral&
+        new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(arm::Arm_Station, arm));
+        new JoystickButton(Driver_Ctrl, 3).onTrue(new InstantCommand(arm::Arm_RL1, arm));
         new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
         new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        //algae
+        //algae 
         new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
@@ -184,34 +186,36 @@ public class RobotContainer {
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
         new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
-        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
-        new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
-            drivetrain.seedFieldCentric();
-        }, drivetrain));
+        // new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
+        //     drivetrain.seedFieldCentric();
+        // }, drivetrain));
+        //Test Arm
+        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(arm::Arm_UP, arm))
+                                                        .onFalse(new InstantCommand(arm::Arm_Stop, arm));
+        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(arm::Arm_DOWN, arm))
+                                                        .onFalse(new InstantCommand(arm::Arm_Stop, arm));
     }
     
     // private void Driver2_ConfigureBinding(){
-    //     new JoystickButton(Driver_Ctrl2, 1).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
-    //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-    //     new JoystickButton(Driver_Ctrl2, 2).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
-    //                                                    .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-
-    //     new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(arm::Arm_Station, arm))
-    //                                                     .onTrue(new InstantCommand(elevator::ELE_Floor, elevator))
-    //                                                     .whileTrue(new InstantCommand(claw::Claw_Suck, claw ))
-    //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-
-    //     new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm))
-    //                                                     .onTrue(new InstantCommand(claw::Claw_Stop, claw))
-    //                                                     .onTrue(new InstantCommand(elevator::ELE_Floor, elevator));
-
+    //     //robotpose reset
+    //     new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
+    //         drivetrain.seedFieldCentric();
+    //     }, drivetrain));
+    //     // Coral
+    //     new JoystickButton(Driver_Ctrl2, 1).whileTrue(CoralStation)
+    //                                         .onFalse(CMD_RL1);
+    //     new Trigger(() -> Driver_Ctrl2.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+    //                                                                 .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+    //     new Trigger(() -> Driver_Ctrl2.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+    //                                                                 .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+    //     // Algae
+    //     new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(intake::Intake_out, intake));
+    //     new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(intake::Intake_Zero, intake));
     //     new JoystickButton(Driver_Ctrl2, 5).whileTrue(new InstantCommand(intake::suck, intake))
     //                                                     .onFalse(new InstantCommand(intake::Stop, intake));
-
     //     new JoystickButton(Driver_Ctrl2, 6).whileTrue(new InstantCommand(intake::shoot, intake))
-    //                                                      .onFalse(new InstantCommand(intake::Stop, intake));
-
-
+    //                                         .onFalse(new InstantCommand(intake::Stop, intake));
+    //     // elevator                                                          
     //     new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
     //     new POVButton(Driver_Ctrl2, 90).onTrue(CMD_RL2);
     //     new POVButton(Driver_Ctrl2, 180).onTrue(CMD_RL3);

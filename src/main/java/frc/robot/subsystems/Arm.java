@@ -69,9 +69,9 @@ public class Arm extends SubsystemBase{
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Zero).withSlot(0));
     }
 
-    public void Arm_StartUp(){
-        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_StartUp).withSlot(0));
-    }
+    // public void Arm_StartUp(){
+    //     Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_StartUp).withSlot(0));
+    // }
 
     public void Arm_Station(){
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Station).withSlot(1));

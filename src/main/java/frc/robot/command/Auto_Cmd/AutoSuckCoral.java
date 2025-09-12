@@ -28,7 +28,7 @@ public class AutoSuckCoral extends SequentialCommandGroup{
     addCommands(new InstantCommand(arm::Arm_Station));
     addCommands(new InstantCommand(claw::Claw_Suck));
     addCommands(new WaitCommand(1.5));
-    addCommands(new InstantCommand(arm::Arm_StartUp));
+    //addCommands(new InstantCommand(arm::Arm_StartUp));
     addCommands(new InstantCommand(claw::Claw_Stop));
 }
 }
