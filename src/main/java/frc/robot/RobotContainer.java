@@ -139,7 +139,7 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
-        //Driver2_ConfigureBinding();
+        Driver2_ConfigureBinding();
         // Assist_ConfigureBindings();
         BIG_BUTTON_ConfigureBingdings();
         REEF_BUTTON_ConfigureBindings();
@@ -164,7 +164,7 @@ public class RobotContainer {
         DriverStation.silenceJoystickConnectionWarning(true);
     }
 
-    private void Driver_ConfigureBindings() {
+    private void Driver_ConfigureBindings(){
         //Ds pose
         new JoystickButton(Driver_Ctrl, 1).onTrue(CoralStation);
         //coral
@@ -190,33 +190,31 @@ public class RobotContainer {
         }, drivetrain));
     }
     
-    // private void Driver2_ConfigureBinding(){
-    //     new JoystickButton(Driver_Ctrl2, 1).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
-    //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-    //     new JoystickButton(Driver_Ctrl2, 2).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
-    //                                                    .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-
-    //     new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(arm::Arm_Station, arm))
-    //                                                     .onTrue(new InstantCommand(elevator::ELE_Floor, elevator))
-    //                                                     .whileTrue(new InstantCommand(claw::Claw_Suck, claw ))
-    //                                                     .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-
-    //     new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(arm::Arm_Zero, arm))
-    //                                                     .onTrue(new InstantCommand(claw::Claw_Stop, claw))
-    //                                                     .onTrue(new InstantCommand(elevator::ELE_Floor, elevator));
-
-    //     new JoystickButton(Driver_Ctrl2, 5).whileTrue(new InstantCommand(intake::suck, intake))
-    //                                                     .onFalse(new InstantCommand(intake::Stop, intake));
-
-    //     new JoystickButton(Driver_Ctrl2, 6).whileTrue(new InstantCommand(intake::shoot, intake))
-    //                                                      .onFalse(new InstantCommand(intake::Stop, intake));
-
-
-    //     new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
-    //     new POVButton(Driver_Ctrl2, 90).onTrue(CMD_RL2);
-    //     new POVButton(Driver_Ctrl2, 180).onTrue(CMD_RL3);
-    //     new POVButton(Driver_Ctrl2, 270).onTrue(CMD_RL4);
-    // }
+    private void Driver2_ConfigureBinding(){
+        //robotpose reset
+        new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
+            drivetrain.seedFieldCentric();
+        }, drivetrain));
+        // Coral
+        new JoystickButton(Driver_Ctrl2, 1).whileTrue(CoralStation)
+                                                        .onFalse(CMD_RL1);
+        new Trigger(() -> Driver_Ctrl2.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+                                                                    .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+        new Trigger(() -> Driver_Ctrl2.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
+                                                                    .onFalse(new InstantCommand(claw::Claw_Stop, claw));
+        // Algae
+        new JoystickButton(Driver_Ctrl2, 3).onTrue(new InstantCommand(intake::Intake_out, intake));
+        new JoystickButton(Driver_Ctrl2, 4).onTrue(new InstantCommand(intake::Intake_Zero, intake));
+        new JoystickButton(Driver_Ctrl2, 5).whileTrue(new InstantCommand(intake::suck, intake))
+                                                        .onFalse(new InstantCommand(intake::Stop, intake));
+        new JoystickButton(Driver_Ctrl2, 6).whileTrue(new InstantCommand(intake::shoot, intake))
+                                            .onFalse(new InstantCommand(intake::Stop, intake));
+        // elevator                                                          
+        new POVButton(Driver_Ctrl2, 0).onTrue(CMD_RL1);
+        new POVButton(Driver_Ctrl2, 90).onTrue(CMD_RL2);
+        new POVButton(Driver_Ctrl2, 180).onTrue(CMD_RL3);
+        new POVButton(Driver_Ctrl2, 270).onTrue(CMD_RL4);
+    }
 
     private void BIG_BUTTON_ConfigureBingdings(){
         //backup 
