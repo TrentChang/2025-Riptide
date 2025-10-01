@@ -182,6 +182,10 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(intake::Intake_out, intake));
         new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(intake::Intake_Zero, intake));
         //Elevator ctrl
+        // new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(elevator::ELE_RL1, elevator));
+        // new POVButton(Driver_Ctrl, 90).onTrue(new InstantCommand(elevator::ELE_RL2, elevator));
+        // new POVButton(Driver_Ctrl, 180).onTrue(new InstantCommand(elevator::ELE_RL3, elevator));
+        // new POVButton(Driver_Ctrl, 270).onTrue(new InstantCommand(elevator::ELE_RL4, elevator));
         new POVButton(Driver_Ctrl, 0).onTrue(CMD_RL1);
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
