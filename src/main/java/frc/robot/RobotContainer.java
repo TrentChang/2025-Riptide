@@ -139,7 +139,7 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
-        //Driver2_ConfigureBinding();
+        Driver2_ConfigureBinding();
         // Assist_ConfigureBindings();
         BIG_BUTTON_ConfigureBingdings();
         REEF_BUTTON_ConfigureBindings();
