@@ -102,7 +102,7 @@ public class RobotContainer {
     public final AutoShootCoral CMD_AutoShootCoral = new AutoShootCoral(claw, arm, elevator, drivetrain);
 
     // Group Command
-    public final Barge CMD_Barege = new Barge(arm, claw, elevator); 
+    public final Barge CMD_Barge = new Barge(arm, claw, elevator); 
     public final ReefAlgae CMD_ReefAlgae = new ReefAlgae(arm, elevator);
     public final RL1 CMD_RL1 = new RL1(arm, claw, elevator);
     public final RL2 CMD_RL2 = new RL2(arm, claw, elevator);
@@ -139,7 +139,7 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         Driver_ConfigureBindings();
-        Driver2_ConfigureBinding();
+        //Driver2_ConfigureBinding();
         // Assist_ConfigureBindings();
         BIG_BUTTON_ConfigureBingdings();
         REEF_BUTTON_ConfigureBindings();
@@ -169,18 +169,19 @@ public class RobotContainer {
         //new JoystickButton(Driver_Ctrl, 8).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
         //coral&
         new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(arm::Arm_Station, arm));
-        new JoystickButton(Driver_Ctrl, 3).onTrue(new InstantCommand(arm::Arm_RL1, arm));
         new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
         new Trigger(() -> Driver_Ctrl.getRightTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Shoot, claw))
                                                         .onFalse(new InstantCommand(claw::Claw_Stop, claw));
-        //algae 
+        //algae corpressor
         new JoystickButton(Driver_Ctrl, 5).whileTrue(new InstantCommand(intake::suck, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 6).whileTrue(new InstantCommand(intake::shoot, intake))
                                                        .onFalse(new InstantCommand(intake::Stop, intake));
         new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(intake::Intake_out, intake));
         new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(intake::Intake_Zero, intake));
+        //algae barge
+        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_Barge);
         //Elevator ctrl
         // new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(elevator::ELE_RL1, elevator));
         // new POVButton(Driver_Ctrl, 90).onTrue(new InstantCommand(elevator::ELE_RL2, elevator));
@@ -228,10 +229,10 @@ public class RobotContainer {
 
     private void BIG_BUTTON_ConfigureBingdings(){
         //backup 
-        // new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
-        // new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
-        // new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3);
-        // new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
+        new JoystickButton(BIG_BUTTON, 4).onTrue(CMD_RL1);
+        new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
+        new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3); 
+        new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
         //elevator default
         new JoystickButton(BIG_BUTTON, 8).onTrue(CMD_RL1);
         //coral station autotarget
