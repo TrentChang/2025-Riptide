@@ -79,7 +79,7 @@ public final class Constants{
         public static final boolean Intake_ctrl_Inverted = true;
         public static final boolean Intake_Roller_Inverted = false;
 
-        public static final double Intake_Zero = 0.3;
+        public static final double Intake_Zero = 0;
         public static final double Intake_Out = 3;
         public static final double Intake_In = 0;
 
@@ -112,11 +112,11 @@ public final class Constants{
         //public static final double Arm_StartUp = 0.1;
         public static final double Arm_Station = -0.266;
         public static final double Arm_Barge = -0.22;
-        public static final double Arm_Algae = 0.27;
+        public static final double Arm_Algae = -0.22;
         public static final double Arm_RL1 = -0.2;
         public static final double Arm_RL2 = -0.129;  
         public static final double Arm_RL3 = -0.13;
-        public static final double Arm_RL4 = -0.11;
+        public static final double Arm_RL4 = -0.10;
         public static final double MAX_ACCEL = 500;
         public static final double MAX_VELOCITY = 200;
         
@@ -172,9 +172,8 @@ public final class Constants{
         public static final double L1 = -0.3;
         public static final double L2 = -9.16;
         public static final double L3 = -28;
-        public static final double L4 = -57;
+        public static final double L4 = -58;
         public static final double Algae = -10;
-
 
         public static final double MAX_ACCEL = 1000;
         public static final double MAX_VELOCITY = 400;

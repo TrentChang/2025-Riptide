@@ -27,7 +27,7 @@ public class ReefAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.ELE_Algae();
+    elevator.ELE_RL2();//ELE_Algae is too high
     arm.Arm_Algae();
   }
 

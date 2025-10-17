@@ -8,6 +8,7 @@ package frc.robot;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.BiFunction;
 import java.util.function.Supplier;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
@@ -142,7 +143,7 @@ public class RobotContainer {
         //Driver2_ConfigureBinding();
         // Assist_ConfigureBindings();
         BIG_BUTTON_ConfigureBingdings();
-        REEF_BUTTON_ConfigureBindings();
+        REEF_BUTTON_ConfigureBindings(); 
         updateReefLevel();
         
         NamedCommands.registerCommand("SetClimberAsHead", CMD_SetClimberAsHead);
@@ -181,7 +182,7 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 4).onTrue(new InstantCommand(intake::Intake_out, intake));
         new JoystickButton(Driver_Ctrl, 2).onTrue(new InstantCommand(intake::Intake_Zero, intake));
         //algae barge
-        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_Barge);
+        new JoystickButton(Driver_Ctrl, 3).onTrue(CMD_RL1);
         //Elevator ctrl
         // new POVButton(Driver_Ctrl, 0).onTrue(new InstantCommand(elevator::ELE_RL1, elevator));
         // new POVButton(Driver_Ctrl, 90).onTrue(new InstantCommand(elevator::ELE_RL2, elevator));
@@ -191,9 +192,10 @@ public class RobotContainer {
         new POVButton(Driver_Ctrl, 90).onTrue(CMD_RL2);
         new POVButton(Driver_Ctrl, 180).onTrue(CMD_RL3);
         new POVButton(Driver_Ctrl, 270).onTrue(CMD_RL4);
-        // new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
-        //     drivetrain.seedFieldCentric();
-        // }, drivetrain));
+        //Absolute/relatvie ctrl
+        new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
+            drivetrain.seedFieldCentric();
+        }, drivetrain));
         //Test Arm
         new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(arm::Arm_UP, arm))
                                                         .onFalse(new InstantCommand(arm::Arm_Stop, arm));
@@ -233,8 +235,13 @@ public class RobotContainer {
         new JoystickButton(BIG_BUTTON, 3).onTrue(CMD_RL2);
         new JoystickButton(BIG_BUTTON, 2).onTrue(CMD_RL3); 
         new JoystickButton(BIG_BUTTON, 1).onTrue(CMD_RL4);
-        //elevator default
-        new JoystickButton(BIG_BUTTON, 8).onTrue(CMD_RL1);
+        //CoralStation
+        new JoystickButton(BIG_BUTTON, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
+        new JoystickButton(BIG_BUTTON, 6).onTrue(new InstantCommand(arm::Arm_Station, arm));
+        //Reef Algae
+        new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_ReefAlgae);
+        //Barge Algae
+        new JoystickButton(BIG_BUTTON, 9).onTrue(CMD_Barge);
         //coral station autotarget
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
