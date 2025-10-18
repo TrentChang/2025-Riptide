@@ -85,6 +85,10 @@ public class Arm extends SubsystemBase{
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_Algae).withSlot(1));
     }
 
+    public void Arm_AlgaeLow(){
+        Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_AlgaeLow).withSlot(1));
+    }
+
     public void Arm_RL1(){
         Arm_Motor.setControl(new MotionMagicDutyCycle(ArmConstants.Arm_RL1).withSlot(0));
     }

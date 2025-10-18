@@ -52,7 +52,8 @@ import frc.robot.command.Group_Cmd.RL1;
 import frc.robot.command.Group_Cmd.RL2;
 import frc.robot.command.Group_Cmd.RL3;
 import frc.robot.command.Group_Cmd.RL4;
-import frc.robot.command.Group_Cmd.ReefAlgae;
+import frc.robot.command.Group_Cmd.highReefAlgae;
+import frc.robot.command.Group_Cmd.lowReefAlgae;
 import frc.robot.command.Group_Cmd.SetZero;
 import frc.robot.command.Group_Cmd.CoralStation;
 import frc.robot.command.Single_Cmd.CoralShoot;
@@ -104,7 +105,8 @@ public class RobotContainer {
 
     // Group Command
     public final Barge CMD_Barge = new Barge(arm, claw, elevator); 
-    public final ReefAlgae CMD_ReefAlgae = new ReefAlgae(arm, elevator);
+    public final highReefAlgae CMD_highReefAlgae = new highReefAlgae(arm, elevator);
+    public final lowReefAlgae CMD_lowReefAlgae = new lowReefAlgae(arm, elevator);
     public final RL1 CMD_RL1 = new RL1(arm, claw, elevator);
     public final RL2 CMD_RL2 = new RL2(arm, claw, elevator);
     public final RL3 CMD_RL3 = new RL3(arm, claw, elevator);
@@ -166,8 +168,8 @@ public class RobotContainer {
     }
 
     private void Driver_ConfigureBindings(){
-        //pigeon reset
-        //new JoystickButton(Driver_Ctrl, 8).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
+        // pigeon reset
+        new JoystickButton(Driver_Ctrl, 8).onTrue(new InstantCommand(drivetrain::ResetPigeon, drivetrain));
         //coral&
         new JoystickButton(Driver_Ctrl, 1).onTrue(new InstantCommand(arm::Arm_Station, arm));
         new Trigger(() -> Driver_Ctrl.getLeftTriggerAxis() >= 0.5).whileTrue(new InstantCommand(claw::Claw_Suck, claw))
@@ -196,11 +198,11 @@ public class RobotContainer {
         new JoystickButton(Driver_Ctrl, 7).onTrue(new InstantCommand(() -> {
             drivetrain.seedFieldCentric();
         }, drivetrain));
-        //Test Arm
-        new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(arm::Arm_UP, arm))
-                                                        .onFalse(new InstantCommand(arm::Arm_Stop, arm));
-        new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(arm::Arm_DOWN, arm))
-                                                        .onFalse(new InstantCommand(arm::Arm_Stop, arm));
+        //Test Arm3
+        // new JoystickButton(Driver_Ctrl, 7).whileTrue(new InstantCommand(arm::Arm_UP, arm))
+        //                                                 .onFalse(new InstantCommand(arm::Arm_Stop, arm));
+        // new JoystickButton(Driver_Ctrl, 8).whileTrue(new InstantCommand(arm::Arm_DOWN, arm))
+        //                                                 .onFalse(new InstantCommand(arm::Arm_Stop, arm));
     }
     
     // private void Driver2_ConfigureBinding(){
@@ -239,9 +241,10 @@ public class RobotContainer {
         new JoystickButton(BIG_BUTTON, 5).onTrue(new InstantCommand(arm::Arm_Station, arm));
         new JoystickButton(BIG_BUTTON, 6).onTrue(new InstantCommand(arm::Arm_Station, arm));
         //Reef Algae
-        new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_ReefAlgae);
-        //Barge Algae
-        new JoystickButton(BIG_BUTTON, 9).onTrue(CMD_Barge);
+        new JoystickButton(BIG_BUTTON, 10).onTrue(CMD_highReefAlgae);
+        new JoystickButton(BIG_BUTTON, 9).onTrue(CMD_lowReefAlgae);
+        //Barge
+        new JoystickButton(BIG_BUTTON, 8).onTrue(CMD_Barge);
         //coral station autotarget
         Optional<Alliance> alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {

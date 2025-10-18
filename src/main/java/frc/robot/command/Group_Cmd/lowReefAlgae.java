@@ -9,11 +9,11 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class ReefAlgae extends Command {
+public class lowReefAlgae extends Command {
   private final Arm arm;
   private final Elevator elevator;
   /** Creates a new ReefAlgae. */
-  public ReefAlgae(Arm arm, Elevator elevator) {
+  public lowReefAlgae(Arm arm, Elevator elevator) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.arm = arm;
     this.elevator = elevator;
@@ -27,8 +27,8 @@ public class ReefAlgae extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    elevator.ELE_RL2();//ELE_Algae is too high
-    arm.Arm_Algae();
+    elevator.ELE_RL1();//ELE_Algae is too high
+    arm.Arm_AlgaeLow();
   }
 
   // Called once the command ends or is interrupted.
